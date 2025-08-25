@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도쿄 개인/공동 맞춤형 대화형 플래너</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: A single-page dashboard with a sticky top navigation for sections (Overview, Itinerary, Expenses, Tips). The core is an interactive daily itinerary where clicking a day button dynamically displays that day's detailed plan, clearly tagging schedules as 'Group', 'Personal', or 'Optional'. This structure deconstructs the linear report into thematic, easily accessible sections, prioritizing user exploration over a static, long-scroll format. This is more usable as users can quickly jump to the information they need, like costs or booking deadlines. -->
+    <!-- Visualization & Content Choices: 
+    - Report Info: Overall trip costs (transport vs. admission). Goal: Compare proportions. Viz: Doughnut Chart. Interaction: Hover tooltips. Justification: Instantly shows the main cost drivers. Library: Chart.js.
+    - Report Info: Daily costs. Goal: Compare daily spending. Viz: Bar Chart. Interaction: Hover tooltips. Justification: Clearly highlights expensive days (e.g., Oarai trip) for better budget planning. Library: Chart.js.
+    - Report Info: Daily schedule. Goal: Organize information chronologically. Presentation: Interactive button-driven content panels. Interaction: Click to reveal day's details. Justification: Prevents overwhelming the user with all 8 days of information at once, allowing focused exploration. Method: Vanilla JS DOM manipulation.
+    - Report Info: Key advice (booking, transport, etc.). Goal: Inform. Presentation: Accordion/collapsible sections. Interaction: Click to expand. Justification: Keeps the UI clean and scannable, presenting critical information concisely. Method: Vanilla JS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #FDFBF5;
+            color: #4A4A4A;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link.active {
+            color: #C06C56;
+            border-bottom-color: #C06C56;
+        }
+        .day-btn {
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+        }
+        .day-btn.active {
+            background-color: #C06C56;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        .tag-group { background-color: #8AA8A1; color: white; }
+        .tag-personal { background-color: #D4A373; color: white; }
+        .tag-optional { background-color: #EAE0D5; color: #4A4A4A; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-2xl md:text-3xl font-bold text-center text-[#4A4A4A]">7박 8일 도쿄 여행 플래너 (Ver 2.0)</h1>
+            <p class="text-center text-gray-500 mt-1">2025년 9월 24일 - 10월 1일 | 개인 & 공동 일정</p>
+        </div>
+        <nav id="navbar" class="bg-white border-b">
+            <div class="container mx-auto px-4 flex justify-center space-x-4 sm:space-x-8">
+                <a href="#overview" class="nav-link py-3 px-2 text-sm sm:text-base font-medium text-gray-500 border-b-2 border-transparent hover:text-[#C06C56] hover:border-[#C06C56]">개요</a>
+                <a href="#itinerary" class="nav-link py-3 px-2 text-sm sm:text-base font-medium text-gray-500 border-b-2 border-transparent hover:text-[#C06C56] hover:border-[#C06C56]">상세 일정</a>
+                <a href="#expenses" class="nav-link py-3 px-2 text-sm sm:text-base font-medium text-gray-500 border-b-2 border-transparent hover:text-[#C06C56] hover:border-[#C06C56]">예상 경비</a>
+                <a href="#tips" class="nav-link py-3 px-2 text-sm sm:text-base font-medium text-gray-500 border-b-2 border-transparent hover:text-[#C06C56] hover:border-[#C06C56]">핵심 팁</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="overview" class="mb-16 scroll-mt-24">
+            <h2 class="text-2xl font-bold mb-6 text-center">여행 개요 및 핵심 전략</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
+                <p class="mb-4 text-gray-700">
+                    이번 7박 8일 도쿄 여행은 **개인 일정과 공동 일정이 혼합**된 형태로, 숙소는 **나리타 게이트웨이 호텔**로 고정되어 있습니다. 도심과의 거리가 상당하기 때문에, 이동 시간과 비용을 최적화하는 것이 이번 여행의 성공을 좌우하는 가장 중요한 요소입니다.
+                </p>
+                <div class="bg-[#F9F5EE] p-4 rounded-lg border border-[#EAE0D5]">
+                    <h3 class="font-bold text-lg text-[#C06C56] mb-2">💡 '나리타 허브' 전략 및 교통수단</h3>
+                    <p class="text-gray-600">
+                        모든 일정은 호텔의 무료 셔틀버스를 이용해 **나리타 공항 또는 JR 나리타역**에서 시작합니다. 일정이 개인/그룹으로 나뉘면서 특정 교통 패스의 효용성이 낮아졌으므로, 각자 일정에 맞춰 유연하게 사용할 수 있는 **IC카드(Suica/Pasmo)**를 사용하는 것이 가장 합리적입니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="itinerary" class="mb-16 scroll-mt-24">
+            <h2 class="text-2xl font-bold mb-6 text-center">상세 일정 플랜</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="text-center text-gray-600 mb-6">아래에서 날짜를 선택하여 그날의 상세 일정을 확인하세요.</p>
+                <div id="day-selector" class="flex flex-wrap justify-center gap-2 mb-6">
+                </div>
+                <div id="itinerary-content">
+                </div>
+            </div>
+        </section>
+
+        <section id="expenses" class="mb-16 scroll-mt-24">
+            <h2 class="text-2xl font-bold mb-6 text-center">예상 경비 분석 (1인 기준)</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="text-center text-gray-600 mb-8">
+                    항공 및 숙박비를 제외한 1인당 예상 경비는 약 **¥33,700** 입니다. 아래 차트를 통해 비용이 어떻게 구성되는지, 그리고 일자별 지출은 어떻게 달라지는지 확인해 보세요. (식비는 불포함)
+                </p>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-lg font-semibold text-center mb-2">총 경비 구성 (교통비 vs 입장료)</h3>
+                        <div class="chart-container">
+                            <canvas id="costBreakdownChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-center mb-2">일자별 예상 경비</h3>
+                        <div class="chart-container">
+                            <canvas id="dailyCostChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tips" class="scroll-mt-24">
+            <h2 class="text-2xl font-bold mb-6 text-center">성공적인 여행을 위한 핵심 팁</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto space-y-4" id="accordion-container">
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center py-8 text-gray-500">
+        <p>&copy; 2025 도쿄 여행 플래너. 즐거운 여행 되세요!</p>
+        <p><a href="index.html">기존 계획1</a></p>
+        <p><a href="index2.html">기존 계획2</a></p>
+      
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const itineraryData = [
+                {
+                    day: '1일차 (9/24 수)',
+                    title: '나리타 도착 및 현지 적응',
+                    type: 'group',
+                    details: [
+                        { time: '10:30-12:00', event: '나리타 공항 도착 및 입국 수속', icon: '✈️' },
+                        { time: '12:00-13:30', event: '나리타역 이동 후 점심 (장어 요리 추천)', icon: '🍱' },
+                        { time: '13:30-14:30', event: '나리타산 신쇼지 절 및 오모테산도 거리 탐방', icon: '🏯' },
+                        { time: '15:00', event: '호텔 셔틀버스로 이동 후 체크인 및 휴식', icon: '🏨' }
+                    ]
+                },
+                {
+                    day: '2일차 (9/25 목)',
+                    title: '서브컬처와 도심 트렌드 탐방',
+                    type: 'personal',
+                    details: [
+                        { time: '09:00', event: '호텔 출발, 나리타역에서 JR 소부선 탑승', icon: '🚆' },
+                        { time: '11:30-14:00', event: '나카노 브로드웨이 탐방', icon: '🤖' },
+                        { time: '14:30-18:00', event: '신주쿠 탐방 (신주쿠 교엔, 오모이데 요코초 등)', icon: '🏙️' },
+                        { time: '19:00 이후', event: '시부야 스카이에서 야경 감상 (온라인 예매 필수)', icon: '🌃' }
+                    ]
+                },
+                {
+                    day: '3일차 (9/26 금)',
+                    title: '동심의 세계로, 지브리 박물관',
+                    type: 'group',
+                    details: [
+                        { time: '08:30-11:00', event: '나리타역에서 미타카역으로 이동 (약 2시간 소요)', icon: '🚆' },
+                        { time: '11:00-12:30', event: '미타카역 주변 점심 식사', icon: '🍜' },
+                        { time: '14:00-16:00', event: '지브리 박물관 관람 (7/10 예매 필수!)', icon: '🎟️' },
+                        { time: '16:30 이후', event: '이노카시라 공원 산책 후 나리타로 복귀', icon: '🌲' }
+                    ]
+                },
+                {
+                    day: '4일차 (9/27 토)',
+                    title: '밤하늘의 장관, 오아라이 불꽃축제',
+                    type: 'group',
+                    details: [
+                        { time: '오후', event: '자유시간 (나리타 이온몰 쇼핑 등)', icon: '🛍️' },
+                        { time: '14:30-16:30', event: '나리타역에서 오아라이로 이동', icon: '🚆' },
+                        { time: '18:00-19:30', event: '오아라이 불꽃축제 관람', icon: '🎆' },
+                        { time: '20:00 이후', event: '귀가 시작 (교통 혼잡 및 막차 시간 극도 주의!)', icon: '⚠️' }
+                    ]
+                },
+                {
+                    day: '5일차 (9/28 일)',
+                    title: '세계 최대 게임 축제, 도쿄 게임쇼',
+                    type: 'personal',
+                    details: [
+                        { time: '09:00', event: '호텔 셔틀로 나리타 공항 이동', icon: '🚌' },
+                        { time: '09:30', event: '마쿠하리 멧세행 직통 고속버스 탑승 (가장 효율적)', icon: '💨' },
+                        { time: '10:30-17:00', event: '도쿄 게임쇼(TGS) 2025 관람 (온라인 예매 필수)', icon: '🎮' },
+                        { time: '17:30 이후', event: '고속버스로 공항 복귀 후 호텔로 이동', icon: '🏨' }
+                    ]
+                },
+                {
+                    day: '6일차 (9/29 월)',
+                    title: '항구 도시의 매력, 요코하마 탐방',
+                    type: 'optional',
+                    details: [
+                        { time: '09:30-11:30', event: '나리타에서 요코하마로 이동', icon: '🚆' },
+                        { time: '12:00-13:30', event: '신요코하마 라면 박물관 방문 및 점심', icon: '🍜' },
+                        { time: '15:00 이후', event: '요코하마 옥토버페스트 즐기기 (빨간 벽돌 창고)', icon: '🍻' },
+                        { time: '저녁', event: '차이나타운 또는 미나토미라이 야경 감상', icon: '🏮' }
+                    ]
+                },
+                {
+                    day: '7일차 (9/30 화)',
+                    title: '전통과 현대의 조화, 도쿄 동부',
+                    type: 'optional',
+                    details: [
+                        { time: '10:00-11:30', event: '나리타에서 아사쿠사로 이동 (게이세이 본선 추천)', icon: '🚆' },
+                        { time: '11:30-14:00', event: '아사쿠사 센소지 및 나카미세도리 탐방', icon: '⛩️' },
+                        { time: '오후', event: '도쿄 스카이트리에서 마지막 전경 감상', icon: '🗼' },
+                        { time: '저녁', event: '소라마치 쇼핑몰에서 식사 및 쇼핑', icon: '🛍️' }
+                    ]
+                },
+                {
+                    day: '8일차 (10/1 수)',
+                    title: '귀국 준비 및 마지막 여유',
+                    type: 'group',
+                    details: [
+                        { time: '오전', event: '호텔 체크아웃 후 짐 보관', icon: '🛅' },
+                        { time: '선택', event: '소라노유 온천 또는 이온몰 쇼핑', icon: '♨️' },
+                        { time: '16:00', event: '나리타 공항 도착 및 출국 수속', icon: '🛫' },
+                        { time: '18:00', event: '인천행 비행기 탑승', icon: '✈️' }
+                    ]
+                }
+            ];
+
+            const tipsData = [
+                {
+                    title: '🎫 필수 티켓 사전 예매 전략',
+                    content: `<strong>지브리 박물관:</strong> 9월 26일 방문을 위해 <strong>7월 10일 오전 10시(일본 시간)</strong>에 예매를 시작해야 합니다. 6인 그룹 성공률을 높이려면 여행사 대행 서비스를 이용하는 것을 강력히 추천합니다.<br><br><strong>도쿄 게임쇼(TGS):</strong> 입장권은 현장 판매를 하지 않으므로 반드시 온라인으로 사전 구매해야 합니다.<br><br><strong>시부야 스카이:</strong> 온라인 사전 예매 시 현장보다 저렴하며, 원하는 시간대(특히 야경)에 입장하려면 최소 한 달 전 예매하는 것이 안전합니다.`
+                },
+                {
+                    title: '🚨 주의! 오아라이 불꽃축제',
+                    content: `<strong>날짜 확인:</strong> 2025년 9월 27일 개최가 유력하지만, 여행 임박 시점에 공식 홈페이지를 통해 최종 날짜를 반드시 재확인하세요.<br><br><strong>교통 대란 대비:</strong> 축제 종료 후 귀가 시 극심한 교통 혼잡이 예상됩니다. 나리타행 막차 시간을 반드시 확인하고, 상황에 따라 조기 귀가 또는 미토역 근처 임시 숙박까지 고려하는 유연한 계획이 필요합니다.`
+                },
+                {
+                    title: '📱 실시간 정보 확인 및 그룹 여행 팁',
+                    content: `<strong>교통 앱 활용:</strong> 'Japan Transit Planner'나 'Navitime' 같은 일본 현지 경로 검색 앱을 사용하면 실시간 열차 시간과 최적 경로를 쉽게 찾을 수 있어 유연한 일정 관리에 큰 도움이 됩니다.<br><br><strong>식사 장소:</strong> 유명 맛집은 대기가 길고 좁아 6인이 함께 식사하기 어려울 수 있습니다. 구글맵 등에서 단체석이 있는 식당을 미리 찾아보거나, 피크 시간을 피해 방문하는 것이 좋습니다.`
+                }
+            ];
+
+            const daySelector = document.getElementById('day-selector');
+            const itineraryContent = document.getElementById('itinerary-content');
+
+            itineraryData.forEach((data, index) => {
+                const button = document.createElement('button');
+                button.className = 'day-btn px-3 py-2 text-sm sm:px-4 sm:py-2 sm:text-base rounded-full bg-gray-200 text-gray-700 font-medium';
+                button.textContent = data.day.split(' ')[0];
+                button.dataset.day = index;
+                if (index === 0) {
+                    button.classList.add('active');
+                }
+                daySelector.appendChild(button);
+            });
+
+            const renderItinerary = (dayIndex) => {
+                const data = itineraryData[dayIndex];
+                const typeMap = {
+                    group: { text: '공동 일정', class: 'tag-group' },
+                    personal: { text: '개인 일정', class: 'tag-personal' },
+                    optional: { text: '자유 선택', class: 'tag-optional' }
+                };
+                const typeInfo = typeMap[data.type];
+
+                itineraryContent.innerHTML = `
+                    <div class="border-t pt-6 animate-fade-in">
+                        <h3 class="text-xl font-bold text-center mb-4 flex items-center justify-center">${data.title} <span class="tag ${typeInfo.class}">${typeInfo.text}</span></h3>
+                        <div class="space-y-4 max-w-lg mx-auto">
+                            ${data.details.map(detail => `
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-24 text-right mr-4">
+                                        <div class="text-lg">${detail.icon}</div>
+                                        <div class="text-xs font-semibold text-gray-500">${detail.time}</div>
+                                    </div>
+                                    <div class="flex-grow bg-gray-50 p-3 rounded-lg">
+                                        <p class="font-medium">${detail.event}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            };
+
+            daySelector.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const dayIndex = e.target.dataset.day;
+                    daySelector.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    renderItinerary(dayIndex);
+                }
+            });
+
+            renderItinerary(0);
+
+            const accordionContainer = document.getElementById('accordion-container');
+            tipsData.forEach(tip => {
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'border rounded-lg';
+                accordionItem.innerHTML = `
+                    <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-semibold">
+                        <span>${tip.title}</span>
+                        <span class="transform transition-transform duration-300">▼</span>
+                    </button>
+                    <div class="accordion-content px-4 pb-4 text-gray-600">
+                       <p>${tip.content}</p>
+                    </div>
+                `;
+                accordionContainer.appendChild(accordionItem);
+            });
+
+            accordionContainer.addEventListener('click', (e) => {
+                const header = e.target.closest('.accordion-header');
+                if (header) {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('span:last-child');
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        document.querySelectorAll('.accordion-content').forEach(item => {
+                            item.style.maxHeight = null;
+                            item.previousElementSibling.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+                        });
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                }
+            });
+
+            const costData = { transport: 25500, admission: 8200 };
+            const dailyCostData = {
+                labels: ['1일차', '2일차', '3일차', '4일차', '5일차', '6일차', '7일차', '8일차'],
+                costs: [1000, 5700, 4500, 7000, 4000, 5000, 5500, 1000]
+            };
+
+            new Chart(document.getElementById('costBreakdownChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['교통비', '입장료'],
+                    datasets: [{
+                        data: [costData.transport, costData.admission],
+                        backgroundColor: ['#8AA8A1', '#D4A373'],
+                        borderColor: '#FDFBF5',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: { callbacks: { label: (c) => `${c.label}: ${new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(c.parsed)}` } }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('dailyCostChart'), {
+                type: 'bar',
+                data: {
+                    labels: dailyCostData.labels,
+                    datasets: [{
+                        label: '일일 예상 경비 (¥)',
+                        data: dailyCostData.costs,
+                        backgroundColor: '#C06C56',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: (c) => `${c.dataset.label || ''}: ${new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(c.parsed.y)}` } }
+                    }
+                }
+            });
+            
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { root: null, rootMargin: '0px', threshold: 0.4 });
+
+            sections.forEach(section => observer.observe(section));
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
