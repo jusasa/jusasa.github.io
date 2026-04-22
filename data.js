@@ -41,35 +41,6 @@ const AutoStudyData = {
             }
         ]
     },
-    "problems": {
-        "meta": {
-            "title": "🧩 Problems",
-            "desc": "문제 해결을 위한 다양한 예제와 풀이!",
-            "color": "cyan"
-        },
-        "files": [
-            {
-                "label": "📄 csharp2 중간고사",
-                "sub": "content/problems/csharp2_중간고사.md"
-            },
-            {
-                "label": "📄 csharp 중간고사",
-                "sub": "content/problems/csharp_중간고사.md"
-            },
-            {
-                "label": "📄 database 중간고사",
-                "sub": "content/problems/database_중간고사.md"
-            },
-            {
-                "label": "📄 database 중간고사 심화",
-                "sub": "content/problems/database_중간고사_심화.md"
-            },
-            {
-                "label": "📄 java 중간고사(끝남)",
-                "sub": "content/problems/java_중간고사(끝남).md"
-            }
-        ]
-    },
     "csharp": {
         "meta": {
             "title": "C# Programming",
@@ -119,5 +90,34 @@ const AutoStudyData = {
                 "sub": "content/java/13_stream.md"
             }
         ]
-    }
+    },
+    "problems": {
+        "meta": {
+            "title": "🧩 Problems",
+            "desc": "문제 해결을 위한 다양한 예제와 풀이!",
+            "color": "cyan"
+        },
+        "files": [
+            {
+                "label": "📄 csharp2 중간고사",
+                "sub": "content/problems/csharp2_중간고사.md"
+            },
+            {
+                "label": "📄 csharp 중간고사",
+                "sub": "content/problems/csharp_중간고사.md"
+            },
+            {
+                "label": "📄 database 중간고사",
+                "sub": "content/problems/database_중간고사.md"
+            },
+            {
+                "label": "📄 database 중간고사 심화",
+                "sub": "content/problems/database_중간고사_심화.md"
+            },
+            {
+                "label": "📄 java 중간고사(끝남)",
+                "sub": "content/problems/java_중간고사(끝남).md"
+            }
+        ]
+    },
 };
