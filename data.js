@@ -1,5 +1,34 @@
 // 이 파일은 build.py에 의해 자동 생성됩니다. 직접 수정하지 마세요.
 const AutoStudyData = {
+    "csharp": {
+        "meta": {
+            "title": "C# Programming",
+            "desc": "C# 언어!",
+            "color": "orange"
+        },
+        "files": [
+            {
+                "label": "📄 01 overview",
+                "sub": "content/csharp/01_overview.md"
+            },
+            {
+                "label": "📄 02 core",
+                "sub": "content/csharp/02_core.md"
+            },
+            {
+                "label": "📄 03 oop",
+                "sub": "content/csharp/03_oop.md"
+            },
+            {
+                "label": "📄 04 arrays",
+                "sub": "content/csharp/04_arrays.md"
+            },
+            {
+                "label": "📄 05 data",
+                "sub": "content/csharp/05_data.md"
+            }
+        ]
+    },
     "database": {
         "meta": {
             "title": "📊Database Management",
@@ -41,56 +70,6 @@ const AutoStudyData = {
             }
         ]
     },
-    "csharp": {
-        "meta": {
-            "title": "C# Programming",
-            "desc": "C# 언어 기초부터 ASP.NET Core까지!",
-            "color": "orange"
-        },
-        "files": [
-            {
-                "label": "📄 01 overview",
-                "sub": "content/csharp/01_overview.md"
-            },
-            {
-                "label": "📄 02 core",
-                "sub": "content/csharp/02_core.md"
-            },
-            {
-                "label": "📄 03 oop",
-                "sub": "content/csharp/03_oop.md"
-            },
-            {
-                "label": "📄 04 arrays",
-                "sub": "content/csharp/04_arrays.md"
-            },
-            {
-                "label": "📄 05 data",
-                "sub": "content/csharp/05_data.md"
-            }
-        ]
-    },
-    "java": {
-        "meta": {
-            "title": "☕Java Programming",
-            "desc": "Java 언어 기초부터 Spring Framework까지!",
-            "color": "rose"
-        },
-        "files": [
-            {
-                "label": "📄 11 basic class",
-                "sub": "content/java/11_basic_class.md"
-            },
-            {
-                "label": "📄 12 collection",
-                "sub": "content/java/12_collection.md"
-            },
-            {
-                "label": "📄 13 stream",
-                "sub": "content/java/13_stream.md"
-            }
-        ]
-    },
     "problems": {
         "meta": {
             "title": "🧩 Problems",
@@ -120,4 +99,25 @@ const AutoStudyData = {
             }
         ]
     },
+    "java": {
+        "meta": {
+            "title": "☕Java Programming",
+            "desc": "Java 언어 활용!",
+            "color": "rose"
+        },
+        "files": [
+            {
+                "label": "📄 11 basic class",
+                "sub": "content/java/11_basic_class.md"
+            },
+            {
+                "label": "📄 12 collection",
+                "sub": "content/java/12_collection.md"
+            },
+            {
+                "label": "📄 13 stream",
+                "sub": "content/java/13_stream.md"
+            }
+        ]
+    }
 };
