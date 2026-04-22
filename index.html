@@ -63,8 +63,8 @@
 
     <!-- 모바일 헤더 -->
     <div class="md:hidden fixed top-0 left-0 w-full bg-slate-900 dark:bg-slate-950 text-white z-50 flex justify-between items-center p-4 shadow-md">
-        <h1 class="text-xl font-bold" id="mobile-title">Study Hub</h1>
-        <select id="mobile-nav" class="bg-slate-800 dark:bg-slate-900 text-white border border-slate-700 dark:border-slate-800 rounded p-2 outline-none text-sm">
+        <h1 class="text-xl font-bold truncate" id="mobile-title">Study Hub</h1>
+        <select id="mobile-nav" class="bg-slate-800 dark:bg-slate-900 text-white border border-slate-700 dark:border-slate-800 rounded p-2 outline-none text-sm max-w-[50%]">
             <!-- JS 동적 렌더링 영역 -->
         </select>
     </div>
@@ -130,10 +130,8 @@
             </div>
         </div>
 
-        <!-- ==================== 1. C# 기초 (csharp.html 내용 복원) ==================== -->
+        <!-- ==================== 1. C# 기초 (csharp.html) ==================== -->
         <div id="page-csharp1" class="page-view hidden max-w-5xl mx-auto w-full">
-            
-            <!-- SECTION: Overview -->
             <section id="cs1-overview" class="cs1-sec block fade-in">
                 <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
                     <h2 class="text-3xl font-bold">학습 오버뷰</h2>
@@ -170,7 +168,6 @@
                 </div>
             </section>
 
-            <!-- SECTION: Core & Build -->
             <section id="cs1-core" class="cs1-sec hidden fade-in">
                 <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
                     <h2 class="text-3xl font-bold">핵심 문법 및 빌드 프로세스</h2>
@@ -213,7 +210,6 @@
                 </div>
             </section>
 
-            <!-- SECTION: OOP & Interfaces -->
             <section id="cs1-oop" class="cs1-sec hidden fade-in">
                 <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
                     <h2 class="text-3xl font-bold">객체지향 설계 및 인터페이스</h2>
@@ -278,7 +274,6 @@ class Sword : IWeapon {
                 </div>
             </section>
 
-            <!-- SECTION: Data Structures (Arrays) -->
             <section id="cs1-arrays" class="cs1-sec hidden fade-in">
                 <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
                     <h2 class="text-3xl font-bold">데이터 구조: 배열(Array) 분석</h2>
@@ -344,7 +339,6 @@ class Sword : IWeapon {
                 </div>
             </section>
 
-            <!-- SECTION: Data Management -->
             <section id="cs1-data" class="cs1-sec hidden fade-in">
                 <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
                     <h2 class="text-3xl font-bold">예외 처리 및 데이터 직렬화(I/O)</h2>
@@ -390,7 +384,7 @@ class Sword : IWeapon {
             </section>
         </div>
 
-        <!-- ==================== 2. C# 심화 (csharp2.html 내용 복원) ==================== -->
+        <!-- ==================== 2. C# 심화 (csharp2.html) ==================== -->
         <div id="page-csharp2" class="page-view hidden max-w-5xl mx-auto w-full">
             <section id="cs2-intro" class="cs2-sec block fade-in">
                 <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
@@ -505,7 +499,7 @@ class Sword : IWeapon {
             </section>
         </div>
 
-        <!-- ==================== 3. JAVA (java.html 내용 복원) ==================== -->
+        <!-- ==================== 3. JAVA (java.html) ==================== -->
         <div id="page-java" class="page-view hidden max-w-5xl mx-auto w-full">
             <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
                 <h2 class="text-3xl font-bold" id="java-title">11장. 기본 클래스</h2>
@@ -540,9 +534,8 @@ class Sword : IWeapon {
             </div>
         </div>
 
-        <!-- ==================== 4. DATABASE (database.html 내용 복원) ==================== -->
+        <!-- ==================== 4. DATABASE (database.html) ==================== -->
         <div id="page-database" class="page-view hidden h-full w-full max-w-none">
-            <!-- Split Pane Structure -->
             <div class="flex flex-col md:flex-row h-full w-full">
                 <!-- 좌측: 학습 콘텐츠 -->
                 <div class="flex-1 overflow-y-auto p-6 md:p-10 relative">
@@ -573,7 +566,7 @@ class Sword : IWeapon {
             </div>
         </div>
 
-        <!-- ==================== 5. PROBLEMS (problems.html 내용 복원) ==================== -->
+        <!-- ==================== 5. PROBLEMS ==================== -->
         <div id="page-problems" class="page-view hidden max-w-5xl mx-auto w-full h-full">
             <div class="bg-white dark:bg-slate-800 p-6 md:p-10 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 min-h-full">
                 <article id="md-content" class="markdown-body fade-in">
@@ -584,7 +577,7 @@ class Sword : IWeapon {
 
     </main>
 
-    <!-- SPA 통합 자바스크립트 관리자 -->
+    <!-- ==================== SPA 통합 자바스크립트 관리자 ==================== -->
     <script>
         const App = {
             state: {
@@ -605,16 +598,16 @@ class Sword : IWeapon {
                 problems: { title: '<span class="text-slate-500">📝 IT</span> Mastery', nav: [{ label: '← 홈으로 돌아가기', target: 'home' }, { label: '🗄️ Database 시험', sub: 'database' }, { label: '⚙️ C# 문제지', sub: 'csharp' }, { label: '☕ Java 실습 문제', sub: 'java' }]}
             },
 
-            // 원래 파일에 있던 DB 컨텐츠들 완벽 복원
+            // DB 과목 이론 내용
             dbContents: {
-                ch01: `<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터 vs 정보</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>데이터 (Data):</strong> 현실 세계에서 관찰이나 측정을 통해 수집된 순수한 사실이나 값</li><li><strong>정보 (Information):</strong> 데이터를 의사결정에 활용할 수 있도록 가공/처리한 결과물</li></ul></div><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터베이스의 4가지 정의</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>공용 데이터:</strong> 여러 사용자나 응용 프로그램이 공동으로 소유</li><li><strong>통합 데이터:</strong> 중복을 최소화하여 하나로 통합</li><li><strong>운영 데이터:</strong> 조직 운영을 위해 필수적인 데이터</li><li><strong>저장 데이터:</strong> 컴퓨터가 접근 가능한 매체에 디지털화되어 저장</li></ul></div>`,
-                ch02: `<h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400">데이터베이스 시스템 (DBS)</h2><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터베이스 언어</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>DDL (데이터 정의어):</strong> DB 구조, 스키마 정의 (CREATE, ALTER, DROP)</li><li><strong>DML (데이터 조작어):</strong> 데이터 검색, 삽입, 수정, 삭제 (SELECT, INSERT, UPDATE, DELETE)</li><li><strong>DCL (데이터 제어어):</strong> 보안, 권한 제어 (GRANT, REVOKE)</li></ul></div><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">ANSI/SPARC 3단계 스키마</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>외부 스키마:</strong> 개별 사용자 관점 (뷰)</li><li><strong>개념 스키마:</strong> 조직 전체 관점 (통합 논리 구조)</li><li><strong>내부 스키마:</strong> 물리적 저장 장치 관점</li></ul><div class="mt-3 p-3 bg-blue-50 text-blue-900 rounded border border-blue-200 dark:bg-blue-900/30 dark:text-blue-200"><strong>핵심 목적:</strong> 스키마 간 사상을 통해 응용 프로그램과 구조를 분리하는 <strong>데이터 독립성</strong> 제공</div></div>`,
-                ch03: `<h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400">관계형 데이터 모델 (RDM)</h2><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">릴레이션 구조</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>속성 (Attribute):</strong> 열(Column). 총 개수 = <strong>차수(Degree)</strong></li><li><strong>투플 (Tuple):</strong> 행(Row). 총 개수 = <strong>카디널리티(Cardinality)</strong></li><li><strong>도메인 (Domain):</strong> 속성이 가질 수 있는 값들의 집합</li></ul></div><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">키(Key)와 무결성 제약조건</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>후보키:</strong> 유일성 + 최소성 만족</li><li><strong>기본키 (Primary Key):</strong> 후보키 중 대표. <strong>개체 무결성</strong> (NULL/중복 불가)</li><li><strong>외래키 (Foreign Key):</strong> 다른 릴레이션 참조. <strong>참조 무결성</strong></li></ul></div>`,
-                ch04: `<h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400">관계 대수 (Relational Algebra)</h2><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">필수 5대 연산</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-blue-600 dark:text-blue-400">합집합 (∪), 차집합 (-)</strong></div><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-blue-600 dark:text-blue-400">카티션 프로덕트 (×)</strong><br/>모든 투플 조합 생성</div><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-purple-600 dark:text-purple-400">셀렉트 (σ)</strong><br/>조건 만족 투플 추출 (수평 분할)</div><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-purple-600 dark:text-purple-400">프로젝트 (π)</strong><br/>특정 속성 추출 (수직 분할)</div></div></div>`,
-                ch05: `<h2 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">MySQL 데이터 조작문 가이드</h2><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400">1. 기본 검색 및 조인 (SELECT)</h3><pre class="bg-gray-800 text-green-400 p-3 rounded text-sm overflow-x-auto dark:bg-black"><code>-- 조건 검색\nSELECT 이름, 학년 FROM 학생 \nWHERE 소속학과 = '컴퓨터' ORDER BY 학년 DESC;\n\n-- 내부 조인\nSELECT 학생.이름, 수강.기말성적\nFROM 학생 JOIN 수강 ON 학생.학번 = 수강.학번;</code></pre></div>`
+                ch01: `<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터 vs 정보</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>데이터 (Data):</strong> 현실 세계에서 관찰이나 측정을 통해 수집된 순수한 사실이나 값</li><li><strong>정보 (Information):</strong> 데이터를 의사결정에 활용할 수 있도록 가공/처리한 결과물</li></ul></div><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터베이스의 4가지 정의</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>공용 데이터:</strong> 여러 사용자나 응용 프로그램이 공동으로 소유</li><li><strong>통합 데이터:</strong> 중복을 최소화하여 하나로 통합</li><li><strong>운영 데이터:</strong> 조직 운영을 위해 필수적인 데이터</li><li><strong>저장 데이터:</strong> 컴퓨터가 접근 가능한 매체에 디지털화되어 저장</li></ul></div><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">주요 특성</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li>실시간 접근 (Real-time Accessibility)</li><li>끊임없는 변화 (Continuous Evolution)</li><li>동시 공용 (Concurrent Sharing)</li><li>내용에 의한 참조 (Content-based Referencing)</li></ul></div>`,
+                ch02: `<h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400 mb-4">데이터베이스 시스템 (DBS)</h2><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 mb-4"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터베이스 언어</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>DDL (데이터 정의어):</strong> DB 구조, 스키마 정의 (CREATE, ALTER, DROP)</li><li><strong>DML (데이터 조작어):</strong> 데이터 검색, 삽입, 수정, 삭제 (SELECT, INSERT, UPDATE, DELETE)</li><li><strong>DCL (데이터 제어어):</strong> 보안, 권한 제어 (GRANT, REVOKE)</li></ul></div><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">ANSI/SPARC 3단계 스키마</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>외부 스키마:</strong> 개별 사용자 관점 (뷰)</li><li><strong>개념 스키마:</strong> 조직 전체 관점 (통합 논리 구조)</li><li><strong>내부 스키마:</strong> 물리적 저장 장치 관점</li></ul><div class="mt-3 p-3 bg-blue-50 text-blue-900 rounded border border-blue-200 dark:bg-blue-900/30 dark:text-blue-200"><strong>핵심 목적:</strong> 스키마 간 사상을 통해 응용 프로그램과 구조를 분리하는 <strong>데이터 독립성</strong> 제공</div></div>`,
+                ch03: `<h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400 mb-4">관계형 데이터 모델 (RDM)</h2><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mb-4"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">릴레이션 구조</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>속성 (Attribute):</strong> 열(Column). 총 개수 = <strong>차수(Degree)</strong></li><li><strong>투플 (Tuple):</strong> 행(Row). 총 개수 = <strong>카디널리티(Cardinality)</strong></li><li><strong>도메인 (Domain):</strong> 속성이 가질 수 있는 값들의 집합</li></ul></div><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">키(Key)와 무결성 제약조건</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>후보키:</strong> 유일성 + 최소성 만족</li><li><strong>기본키 (Primary Key):</strong> 후보키 중 대표. <strong>개체 무결성</strong> (NULL/중복 불가)</li><li><strong>외래키 (Foreign Key):</strong> 다른 릴레이션 참조. <strong>참조 무결성</strong></li></ul></div>`,
+                ch04: `<h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400 mb-4">관계 대수 (Relational Algebra)</h2><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 mb-4"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">필수 5대 연산</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-blue-600 dark:text-blue-400">합집합 (∪), 차집합 (-)</strong></div><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-blue-600 dark:text-blue-400">카티션 프로덕트 (×)</strong><br/>모든 투플 조합 생성</div><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-purple-600 dark:text-purple-400">셀렉트 (σ)</strong><br/>조건 만족 투플 추출 (수평 분할)</div><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-purple-600 dark:text-purple-400">프로젝트 (π)</strong><br/>특정 속성 추출 (수직 분할)</div></div></div><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">확장 조인 연산</h3><ul class="list-disc pl-5 space-y-2 text-sm dark:text-slate-300"><li><strong>동등 조인 (Equi Join):</strong> '=' 연산자로 결합</li><li><strong>자연 조인 (Natural Join):</strong> 중복 속성 자동 제거</li><li><strong>외부 조인 (Outer Join):</strong> 조인에 실패한 투플도 널(NULL)로 채워 모두 반환 (LEFT, RIGHT, FULL)</li></ul></div>`,
+                ch05: `<h2 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">MySQL 데이터 조작문 가이드</h2><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 mb-4"><h3 class="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400">1. 기본 검색 및 조인 (SELECT)</h3><pre class="bg-gray-800 text-green-400 p-3 rounded text-sm overflow-x-auto dark:bg-black"><code>-- 조건 검색\nSELECT 이름, 학년 FROM 학생 \nWHERE 소속학과 = '컴퓨터' ORDER BY 학년 DESC;\n\n-- 내부 조인\nSELECT 학생.이름, 수강.기말성적\nFROM 학생 JOIN 수강 ON 학생.학번 = 수강.학번;</code></pre></div><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 mb-4"><h3 class="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400">2. 그룹화 및 부 질의문</h3><pre class="bg-gray-800 text-green-400 p-3 rounded text-sm overflow-x-auto dark:bg-black"><code>-- GROUP BY와 HAVING\nSELECT 소속학과, COUNT(*) as 학생수\nFROM 학생 GROUP BY 소속학과 HAVING COUNT(*) >= 2;\n\n-- 부 질의문 (수강 기록이 있는 학생의 이름 검색)\nSELECT 이름 FROM 학생 \nWHERE 학번 IN (SELECT 학번 FROM 수강 WHERE 평가학점 = 'A');</code></pre></div><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400">3. 삽입/수정/삭제 (INSERT/UPDATE/DELETE)</h3><pre class="bg-gray-800 text-green-400 p-3 rounded text-sm overflow-x-auto dark:bg-black"><code>-- 데이터 삽입\nINSERT INTO 학생(학년, 나이, 성별, 소속학과, 학번, 이름) \nVALUES (3, 30, '남', '정보통신', 'g003', '이승엽2');\n\n-- 수정 (UPDATE)\nUPDATE 학생 SET 학년 = 3 WHERE 이름 = '이은진';\n\n-- 삭제 (DELETE)\nDELETE FROM 학생 WHERE 소속학과 = '경영';</code></pre></div>`
             },
 
-            // Java 컨텐츠 완벽 복원
+            // Java 과목 내용
             javaContents: {
                 'java-ch11': {
                     desc: "자바 프로그래밍의 뼈대가 되는 클래스들입니다. 모든 클래스의 조상인 <code>Object</code>, 문자열 <code>String</code>, 기본형을 객체로 감싸는 <code>Wrapper</code> 클래스 등이 포함됩니다.",
@@ -627,15 +620,15 @@ class Sword : IWeapon {
                 'java-ch12': {
                     desc: "데이터를 효율적으로 저장하고 관리하기 위한 자료구조 클래스 모음입니다. <strong>제네릭(Generics)</strong>을 사용하여 컴파일 타임에 타입 안정성을 보장합니다.",
                     features: "<li><strong>제네릭 &lt;T&gt;:</strong> 다양한 타입을 하나로 일반화. 강제 형변환 방지</li><li><strong>List (ArrayList):</strong> 순서 보장, 중복 허용. 배열 기반의 빠른 조회</li><li><strong>Set (HashSet):</strong> 순서 없음, <strong>중복 불가</strong>. 집합 연산에 특화</li><li><strong>Map (HashMap):</strong> Key-Value 쌍 구조. Key는 중복 불가로 빠른 검색</li>",
-                    uses: "<li><strong>List:</strong> 쇼핑몰의 상품 목록, 게시판의 게시글 목록 조회</li><li><strong>Set:</strong> 오늘의 방문자 수 집계 (IP 주소 중복 제거), 로또 번호 생성</li><li><strong>Map:</strong> 회원 ID를 Key로 사용하는 세션(Session) 캐시 관리</li>",
+                    uses: "<li><strong>List:</strong> 쇼핑몰의 상품 목록, 게시판의 게시글 목록 조회</li><li><strong>Set:</strong> 오늘의 방문자 수 집계 (IP 주소 중복 제거), 로또 번호 생성</li><li><strong>Map:</strong> 회원 ID를 Key로 사용하는 세션(Session) 캐시 관리</li><li><strong>Comparable:</strong> 상품 가격순, 리뷰 별점순 커스텀 정렬 구현</li>",
                     filename: "CollectionTest.java",
                     code: `import java.util.*;\n\npublic class CollectionTest {\n    public static void main(String[] args) {\n        List<String> list = new ArrayList<>();\n        list.add("Apple"); list.add("Apple");\n        System.out.println("List 출력: " + list);\n        \n        Set<Integer> set = new HashSet<>(Arrays.asList(1, 2, 2, 3, 4));\n        System.out.println("Set (중복제거): " + set);\n        \n        Map<String, String> map = new HashMap<>();\n        map.put("admin", "관리자");\n        System.out.println("Map 검색: " + map.get("admin"));\n    }\n}`,
                     output: "List 출력: [Apple, Apple]\nSet (중복제거): [1, 2, 3, 4]\nMap 검색: 관리자"
                 },
                 'java-ch13': {
                     desc: "모던 자바의 꽃입니다. 익명 함수인 <strong>람다식</strong>과 컬렉션을 조작하는 <strong>스트림 API</strong>를 통해 복잡한 반복문을 간결한 파이프라인으로 처리합니다.",
-                    features: "<li><strong>내부/익명 클래스:</strong> 특정 클래스 안에서만 사용하거나, 1회용 객체를 즉석 생성</li><li><strong>람다식 <code>-&gt;</code>:</strong> 메서드 이름 없이 매개변수와 구현부만으로 함수 표현</li><li><strong>스트림 (Stream):</strong> <code>filter</code>, <code>map</code>, <code>collect</code>를 이용한 선언형 데이터 파이프라인</li>",
-                    uses: "<li><strong>스트림:</strong> 수만 건의 결제 데이터 중 '카드 결제'만 필터링하여 총 매출액 통계 산출</li><li><strong>스트림:</strong> 사용자 리스트(List<User>)에서 '이름'만 추출하여 List<String>으로 변환 (map)</li>",
+                    features: "<li><strong>내부/익명 클래스:</strong> 특정 클래스 안에서만 사용하거나, 1회용 객체를 즉석 생성</li><li><strong>람다식 <code>-&gt;</code>:</strong> 메서드 이름 없이 매개변수와 구현부만으로 함수 표현</li><li><strong>스트림 (Stream):</strong> <code>filter</code>, <code>map</code>, <code>collect</code>를 이용한 선언형 데이터 파이프라인</li><li><strong>Optional:</strong> null 반환 가능성을 대비한 안전한 래퍼 객체 (NPE 방어)</li>",
+                    uses: "<li><strong>스트림:</strong> 수만 건의 결제 데이터 중 '카드 결제'만 필터링하여 총 매출액 통계 산출</li><li><strong>스트림:</strong> 사용자 리스트(List<User>)에서 '이름'만 추출하여 List<String>으로 변환 (map)</li><li><strong>Optional:</strong> DB에서 회원을 조회할 때 없는 경우 <code>orElseThrow</code>로 안전하게 예외 발생</li>",
                     filename: "StreamTest.java",
                     code: `import java.util.*;\nimport java.util.stream.Collectors;\n\npublic class StreamTest {\n    public static void main(String[] args) {\n        List<String> logs = Arrays.asList("ERROR: Timeout", "INFO: Login", "ERROR: DB Down");\n        \n        List<String> errorLogs = logs.stream()\n            .filter(log -> log.startsWith("ERROR"))\n            .map(log -> log.replace("ERROR: ", ""))\n            .collect(Collectors.toList());\n\n        System.out.println("추출된 에러 원인: " + errorLogs);\n    }\n}`,
                     output: "추출된 에러 원인: [Timeout, DB Down]"
@@ -655,7 +648,7 @@ class Sword : IWeapon {
                 const pageEl = document.getElementById('page-' + pageId);
                 pageEl.classList.remove('hidden');
                 
-                // 레이아웃 패딩 조정
+                // 레이아웃 패딩 조정 (DB는 스플릿 뷰 적용)
                 const main = document.getElementById('main-content');
                 if(pageId === 'database') { main.classList.remove('p-6', 'md:p-10'); main.classList.add('p-0'); } 
                 else { main.classList.add('p-6', 'md:p-10'); main.classList.remove('p-0'); }
@@ -671,23 +664,55 @@ class Sword : IWeapon {
                 this.updateSubView();
             },
 
+            // 🐛 버그 수정 완료: 모바일 드롭다운 메뉴 개선
             renderSidebar() {
                 const conf = this.config[this.state.page];
                 document.getElementById('sidebar-header').innerHTML = `<h1 class="text-2xl font-bold text-white">${conf.title}</h1><p class="text-xs text-slate-400 mt-2">인터랙티브 학습 대시보드</p>`;
-                document.getElementById('mobile-title').innerHTML = conf.title;
                 
-                let html = '', mobHtml = '';
+                // 모바일 로고를 터치하면 바로 '홈'으로 가도록 클릭 이벤트 추가
+                document.getElementById('mobile-title').innerHTML = `<span onclick="App.navigate('home')" class="cursor-pointer hover:opacity-80 transition-opacity">${conf.title}</span>`;
+                
+                let html = '';
+                let mobHtml = '';
+
+                // 모바일 셀렉트 박스 최상단에 홈으로 가기 옵션 추가
+                if (this.state.page !== 'home') {
+                    mobHtml += `<option value="go-home">← 홈으로 돌아가기</option>`;
+                }
+
                 conf.nav.forEach(n => {
                     const isActive = (n.target === this.state.page) || (n.sub === this.state.sub[this.state.page]);
                     const cls = isActive ? 'bg-slate-800 text-white font-bold border-l-4 border-indigo-500' : 'text-slate-400 hover:bg-slate-800 hover:text-white border-l-4 border-transparent';
                     const act = n.target ? `App.navigate('${n.target}')` : `App.setSub('${n.sub}')`;
+                    
+                    // 데스크탑 메뉴
                     html += `<li><button onclick="${act}" class="w-full text-left px-6 py-3 text-sm transition-colors ${cls}">${n.label}</button></li>`;
-                    if(!n.target) mobHtml += `<option value="${n.sub}" ${isActive?'selected':''}>${n.label}</option>`;
+                    
+                    // 모바일 메뉴 (n.sub가 있는 하위 메뉴들만 셀렉트에 추가)
+                    if (n.sub) {
+                        mobHtml += `<option value="${n.sub}" ${isActive ? 'selected' : ''}>${n.label}</option>`;
+                    }
                 });
+
                 document.getElementById('sidebar-nav').innerHTML = html;
+                
                 const mobNav = document.getElementById('mobile-nav');
-                mobNav.innerHTML = mobHtml || '<option>홈</option>';
-                mobNav.onchange = (e) => { if(conf.nav[0].target) App.navigate('home'); else App.setSub(e.target.value); };
+                if (this.state.page === 'home') {
+                    mobNav.classList.add('hidden'); // 홈에서는 셀렉트 숨김
+                } else {
+                    mobNav.classList.remove('hidden');
+                    mobNav.innerHTML = mobHtml;
+                    
+                    // 🐛 해결된 로직: 선택된 value 값에 따라 정확하게 분기
+                    mobNav.onchange = (e) => {
+                        const selectedValue = e.target.value;
+                        if (selectedValue === 'go-home') {
+                            App.navigate('home');
+                        } else {
+                            App.setSub(selectedValue);
+                        }
+                    };
+                }
             },
 
             updateSubView() {
@@ -708,22 +733,22 @@ class Sword : IWeapon {
                     document.getElementById('java-output').innerText = '대기 중...';
                 } else if (p === 'database') {
                     document.getElementById('db-header-title').innerText = this.config.database.nav.find(n => n.sub === s).label;
-                    document.getElementById('db-study-content').innerHTML = this.dbContents[s];
-                    
-                    // Trigger reflow for animation
                     const contentDiv = document.getElementById('db-study-content');
+                    contentDiv.innerHTML = this.dbContents[s];
+                    
+                    // 애니메이션 리트리거
                     contentDiv.classList.remove('fade-in');
                     void contentDiv.offsetWidth; 
                     contentDiv.classList.add('fade-in');
                 } else if (p === 'problems') {
                     const contentDiv = document.getElementById('md-content');
-                    // 로딩 상태 표시
                     contentDiv.innerHTML = '<div class="flex items-center justify-center py-20"><p class="text-slate-500">문제를 불러오는 중입니다...</p></div>';
-                    
-                    // 서브 카테고리 이름(s)을 기반으로 파일명 생성 (예: database_problems.md)
+                    contentDiv.classList.remove('fade-in');
+                    void contentDiv.offsetWidth; 
+                    contentDiv.classList.add('fade-in');
+
+                    // 동적 마크다운 파일 호출 로직 (Fetch API)
                     const mdFile = s + '_problems.md';
-                    
-                    // fetch를 통한 외부 마크다운 파일 로드
                     fetch(mdFile)
                         .then(response => {
                             if (!response.ok) throw new Error('네트워크 응답이 정상이 아닙니다.');
@@ -731,41 +756,99 @@ class Sword : IWeapon {
                         })
                         .then(markdownRaw => {
                             contentDiv.innerHTML = marked.parse(markdownRaw);
-                            
-                            // MathJax 수식 렌더링
                             if (window.MathJax && window.MathJax.typesetPromise) {
-                                window.MathJax.typesetPromise([contentDiv]).catch(function (err) {
-                                    console.error('MathJax 렌더링 오류:', err);
-                                });
+                                window.MathJax.typesetPromise([contentDiv]).catch(err => console.error('MathJax 렌더링 오류:', err));
                             } else if (window.MathJax && window.MathJax.typeset) {
                                 window.MathJax.typeset();
                             }
                         })
                         .catch(error => {
                             console.error('마크다운 파일 로드 실패:', error);
-                            contentDiv.innerHTML = '<div class="py-20 text-center"><p class="text-rose-500 font-medium">마크다운 파일을 로드할 수 없습니다.</p><p class="text-sm text-slate-500 mt-2">파일 경로를 확인해주세요: ' + mdFile + '</p><p class="text-xs text-slate-400 mt-4">* 로컬 파일 열기(file://) 환경에서는 브라우저 보안 정책으로 인해 외부 파일을 불러올 수 없습니다. VS Code의 Live Server 등을 이용해주세요.</p></div>';
+                            contentDiv.innerHTML = `
+                                <div class="py-20 text-center">
+                                    <p class="text-rose-500 font-bold text-lg">⚠️ 마크다운 파일을 로드할 수 없습니다.</p>
+                                    <p class="text-slate-500 mt-2">요청한 파일: <strong>${mdFile}</strong></p>
+                                    <div class="mt-6 inline-block text-left bg-slate-100 dark:bg-slate-900 p-4 rounded border border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-400">
+                                        <p class="font-bold text-slate-800 dark:text-slate-200 mb-2">💡 해결 방법:</p>
+                                        1. <strong>VS Code</strong>에서 폴더를 열고 <strong>Live Server</strong> 익스텐션으로 실행해 주세요.<br>
+                                        2. HTML 파일을 브라우저로 직접 끌어다 놓으면 보안(CORS) 정책 때문에 파일 읽기가 차단됩니다.<br>
+                                        3. <code>${mdFile}</code> 파일이 같은 폴더에 있는지 확인해 주세요.
+                                    </div>
+                                </div>`;
                         });
                 }
             },
 
             lazyLoadDependencies(pageId) {
+                // C# 1 차트
                 if(pageId === 'csharp1' && !this.cs1ChartLoaded) {
-                    new Chart(document.getElementById('overviewChart').getContext('2d'), { type: 'doughnut', data: { labels: ['기본 문법 & 환경', '배열', 'OOP', 'I/O 및 예외처리'], datasets: [{ data: [15, 25, 35, 25], backgroundColor: ['#f59e0b', '#10b981', '#6366f1', '#f43f5e'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom'} } } });
-                    new Chart(document.getElementById('arrayChart').getContext('2d'), { type: 'bar', data: { labels: ['1차원 배열', '2차원 배열', '가변 배열(Jagged)'], datasets: [{ label: '구조적 복잡도', data: [20, 60, 90], backgroundColor: '#93c5fd', borderRadius: 4 }, { label: '메모리 할당 유연성', data: [10, 10, 80], backgroundColor: '#10b981', borderRadius: 4 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100, ticks: { display: false } }, x: { grid: { display: false } } } } });
+                    new Chart(document.getElementById('overviewChart').getContext('2d'), { type: 'doughnut', data: { labels: ['기본 문법 & 환경', '배열 (Data Structures)', 'OOP (클래스/인터페이스)', '파일 I/O 및 예외처리'], datasets: [{ data: [15, 25, 35, 25], backgroundColor: ['#f59e0b', '#10b981', '#6366f1', '#f43f5e'], borderWidth: 0, hoverOffset: 4 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom'} } } });
+                    new Chart(document.getElementById('arrayChart').getContext('2d'), { type: 'bar', data: { labels: ['1차원 배열', '2차원 배열', '가변 배열(Jagged)'], datasets: [{ label: '구조적 복잡도', data: [20, 60, 90], backgroundColor: '#93c5fd', borderRadius: 4 }, { label: '메모리 할당 유연성', data: [10, 10, 80], backgroundColor: '#10b981', borderRadius: 4 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100, ticks: { display: false }, grid: { drawBorder: false } }, x: { grid: { display: false } } }, plugins: { legend: { position: 'top' } } } });
                     this.cs1ChartLoaded = true;
                 }
+                // C# 2 차트
                 if(pageId === 'csharp2' && !this.cs2ChartLoaded) {
-                    new Chart(document.getElementById('featureChart').getContext('2d'), { type: 'radar', data: { labels: ['객체지향 설계(OOP)', '배우기 쉬운 문법', '다형성/유연성', '데이터/파일 관리', '예외 안정성'], datasets: [{ label: 'C# 강점 지수', data: [95, 85, 90, 80, 85], backgroundColor: 'rgba(99, 102, 241, 0.2)', borderColor: 'rgba(99, 102, 241, 1)', borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { r: { ticks: { display: false, min: 0, max: 100 } } }, plugins: { legend: { display: false } } } });
+                    new Chart(document.getElementById('featureChart').getContext('2d'), { type: 'radar', data: { labels: ['객체지향 설계(OOP)', '배우기 쉬운 문법', '다형성/유연성', '데이터/파일 관리', '예외 안정성'], datasets: [{ label: 'C# 강점 지수', data: [95, 85, 90, 80, 85], backgroundColor: 'rgba(99, 102, 241, 0.2)', borderColor: 'rgba(99, 102, 241, 1)', pointBackgroundColor: 'rgba(99, 102, 241, 1)', borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: 'rgba(0, 0, 0, 0.1)' }, grid: { color: 'rgba(0, 0, 0, 0.1)' }, ticks: { display: false, min: 0, max: 100 } } }, plugins: { legend: { display: false } } } });
                     this.cs2ChartLoaded = true;
                 }
+                // SQL.js DB 엔진
                 if(pageId === 'database' && !this.dbEngineLoaded) {
+                    const initSQL = `
+                        CREATE TABLE 학생 (
+                학번 VARCHAR(20), 
+                이름 VARCHAR(30), 
+                주소 VARCHAR(100), 
+                학년 INT, 
+                나이 INT, 
+                성별 VARCHAR(10), 
+                휴대폰번호 VARCHAR(30), 
+                소속학과 VARCHAR(50)
+            );
+            INSERT INTO 학생 VALUES ('s001', '김연아', '서울 서초', 4, 23, '여', '010-1111-2222', '컴퓨터');
+            INSERT INTO 학생 VALUES ('s002', '홍길동', '미정', 1, 26, '남', NULL, '통계');
+            INSERT INTO 학생 VALUES ('s003', '이승엽', NULL, 3, 30, '남', NULL, '정보통신');
+            INSERT INTO 학생 VALUES ('s004', '이영애', '경기 분당', 2, NULL, '여', '010-4444-5555', '정보통신');
+            INSERT INTO 학생 VALUES ('s005', '송윤아', '경기 분당', 4, 23, '여', '010-6666-7777', '컴퓨터');
+            INSERT INTO 학생 VALUES ('s006', '홍길동', '서울 종로', 2, 26, '남', '010-8888-9999', '컴퓨터');
+            INSERT INTO 학생 VALUES ('s007', '이은진', '경기 과천', 1, 23, '여', '010-2222-3333', '경영');
+
+            CREATE TABLE 과목 (
+                과목번호 VARCHAR(20), 
+                이름 VARCHAR(50), 
+                강의실 VARCHAR(30), 
+                개설학과 VARCHAR(50), 
+                시수 INT
+            );
+            INSERT INTO 과목 VALUES ('c001', '데이터베이스', '126', '컴퓨터', 3);
+            INSERT INTO 과목 VALUES ('c002', '정보보호', '137', '정보통신', 3);
+            INSERT INTO 과목 VALUES ('c003', '모바일웹', '128', '컴퓨터', 3);
+            INSERT INTO 과목 VALUES ('c004', '철학개론', '117', '철학', 2);
+            INSERT INTO 과목 VALUES ('c005', '전공글쓰기', '120', '교양학부', 1);
+
+            CREATE TABLE 수강 (
+                학번 VARCHAR(20), 
+                과목번호 VARCHAR(20), 
+                신청날짜 DATE, 
+                중간성적 INT, 
+                기말성적 INT, 
+                평가학점 VARCHAR(5)
+            );
+            INSERT INTO 수강 VALUES ('s001', 'c002', '2019-09-03', 93, 98, 'A');
+            INSERT INTO 수강 VALUES ('s004', 'c005', '2019-03-03', 72, 78, 'C');
+            INSERT INTO 수강 VALUES ('s003', 'c002', '2017-09-06', 85, 82, 'B');
+            INSERT INTO 수강 VALUES ('s002', 'c001', '2018-03-10', 31, 50, 'F');
+            INSERT INTO 수강 VALUES ('s001', 'c004', '2019-03-05', 82, 89, 'B');
+            INSERT INTO 수강 VALUES ('s004', 'c003', '2020-09-03', 91, 94, 'A');
+            INSERT INTO 수강 VALUES ('s001', 'c005', '2020-09-03', 74, 79, 'C');
+            INSERT INTO 수강 VALUES ('s003', 'c001', '2019-03-03', 81, 82, 'B');
+                    `;
                     initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/${file}` }).then(SQL => {
                         this.state.dbEngine = new SQL.Database();
-                        this.state.dbEngine.run(`CREATE TABLE 학생 (학번 VARCHAR(20), 이름 VARCHAR(30), 소속학과 VARCHAR(50), 학년 INT); INSERT INTO 학생 VALUES ('s001', '김연아', '컴퓨터', 4); INSERT INTO 학생 VALUES ('s002', '홍길동', '통계', 1);`);
+                        this.state.dbEngine.run(initSQL);
                         document.getElementById('db-status').innerHTML = '<span class="text-emerald-400">● Engine Ready</span>';
-                        document.getElementById('run-btn').disabled = false;
-                        document.getElementById('sql-input').value = "SELECT * FROM 학생;\n";
-                        document.getElementById('run-btn').onclick = () => this.runSQL();
+                        const runBtn = document.getElementById('run-btn');
+                        runBtn.disabled = false;
+                        runBtn.onclick = () => this.runSQL();
                     });
                     this.dbEngineLoaded = true;
                 }
@@ -781,19 +864,21 @@ class Sword : IWeapon {
                 const codeError = document.getElementById('code-error');
 
                 btnThrow.addEventListener('click', () => {
-                    blockTry.classList.remove('bg-rose-50', 'border-rose-400');
-                    blockCatch.classList.remove('bg-rose-100', 'border-rose-500');
-                    blockFinally.classList.remove('bg-emerald-50', 'border-emerald-400');
+                    blockTry.classList.remove('bg-rose-50', 'border-rose-400', 'dark:bg-rose-900/30', 'dark:border-rose-600');
+                    blockCatch.classList.remove('bg-rose-100', 'border-rose-500', 'dark:bg-rose-900/50', 'dark:border-rose-500');
+                    blockFinally.classList.remove('bg-emerald-50', 'border-emerald-400', 'dark:bg-emerald-900/30', 'dark:border-emerald-600');
                     
-                    setTimeout(() => { codeNormal.innerHTML = 'int result = 10 / 0; <span class="text-rose-500 font-bold">// 강제 예외 발생!</span>'; blockTry.classList.add('bg-rose-50', 'border-rose-400'); }, 100);
-                    setTimeout(() => { blockCatch.classList.add('bg-rose-100', 'border-rose-500'); codeError.innerHTML = 'Console.WriteLine("0으로 나눌 수 없음"); <span class="text-rose-600 font-bold">// 실행됨</span>'; }, 800);
-                    setTimeout(() => { blockFinally.classList.add('bg-emerald-50', 'border-emerald-400'); btnThrow.innerText = "리셋하기"; }, 1500);
+                    setTimeout(() => { codeNormal.innerHTML = 'int result = 10 / 0; <span class="text-rose-500 font-bold">// 강제 예외 발생!</span>'; blockTry.classList.add('bg-rose-50', 'border-rose-400', 'dark:bg-rose-900/30', 'dark:border-rose-600'); }, 100);
+                    setTimeout(() => { blockCatch.classList.add('bg-rose-100', 'border-rose-500', 'dark:bg-rose-900/50', 'dark:border-rose-500'); codeError.innerHTML = 'Console.WriteLine("0으로 나눌 수 없음"); <span class="text-rose-600 font-bold">// 실행됨</span>'; }, 800);
+                    setTimeout(() => { blockFinally.classList.add('bg-emerald-50', 'border-emerald-400', 'dark:bg-emerald-900/30', 'dark:border-emerald-600'); btnThrow.innerText = "리셋하기"; }, 1500);
 
                     btnThrow.onclick = function resetTryCatch() {
                         codeNormal.innerHTML = '// 정상 코드 실행 중...'; codeError.innerHTML = '// 오류 처리 (대기 중)';
-                        blockTry.classList.remove('bg-rose-50', 'border-rose-400'); blockCatch.classList.remove('bg-rose-100', 'border-rose-500'); blockFinally.classList.remove('bg-emerald-50', 'border-emerald-400');
+                        blockTry.classList.remove('bg-rose-50', 'border-rose-400', 'dark:bg-rose-900/30', 'dark:border-rose-600');
+                        blockCatch.classList.remove('bg-rose-100', 'border-rose-500', 'dark:bg-rose-900/50', 'dark:border-rose-500');
+                        blockFinally.classList.remove('bg-emerald-50', 'border-emerald-400', 'dark:bg-emerald-900/30', 'dark:border-emerald-600');
                         btnThrow.innerText = "예외 발생시키기"; btnThrow.onclick = null;
-                        App.initSimulators(); // Re-bind original click handler
+                        App.initSimulators(); // 핸들러 다시 바인딩
                     };
                 });
 
@@ -806,8 +891,10 @@ class Sword : IWeapon {
                 btnSerialize.addEventListener('click', () => {
                     serializeArrow.classList.add('text-indigo-500', 'translate-x-2');
                     setTimeout(() => {
-                        jsonBox.classList.replace('bg-slate-50', 'bg-emerald-50'); jsonBox.classList.replace('border-slate-200', 'border-emerald-300');
-                        jsonCode.classList.replace('bg-slate-100', 'bg-emerald-100'); jsonCode.classList.replace('text-slate-400', 'text-emerald-800');
+                        jsonBox.classList.replace('bg-slate-50', 'bg-emerald-50'); jsonBox.classList.replace('dark:bg-slate-800', 'dark:bg-emerald-900/30');
+                        jsonBox.classList.replace('border-slate-200', 'border-emerald-300'); jsonBox.classList.replace('dark:border-slate-700', 'dark:border-emerald-700');
+                        jsonCode.classList.replace('bg-slate-100', 'bg-emerald-100'); jsonCode.classList.replace('dark:bg-slate-900', 'dark:bg-emerald-900/50');
+                        jsonCode.classList.replace('text-slate-400', 'text-emerald-800'); jsonCode.classList.replace('dark:text-slate-500', 'dark:text-emerald-400');
                         jsonCode.innerHTML = `{<br>&nbsp;&nbsp;"Name": "홍길동",<br>&nbsp;&nbsp;"Age": 30<br>}`;
                         serializeArrow.classList.remove('translate-x-2');
                         btnSerialize.innerText = "완료"; btnSerialize.disabled = true; btnSerialize.classList.add('opacity-50', 'cursor-not-allowed');
@@ -820,8 +907,8 @@ class Sword : IWeapon {
                 const arrayContents = document.querySelectorAll('.array-content');
                 arrayTabs.forEach(tab => {
                     tab.addEventListener('click', (e) => {
-                        arrayTabs.forEach(t => { t.classList.remove('text-indigo-600', 'border-b-2', 'border-indigo-600'); t.classList.add('text-slate-500', 'border-transparent'); });
-                        e.target.classList.remove('text-slate-500', 'border-transparent'); e.target.classList.add('text-indigo-600', 'border-b-2', 'border-indigo-600');
+                        arrayTabs.forEach(t => { t.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400'); t.classList.add('text-slate-500', 'dark:text-slate-400', 'border-transparent'); });
+                        e.target.classList.remove('text-slate-500', 'dark:text-slate-400', 'border-transparent'); e.target.classList.add('text-indigo-600', 'dark:text-indigo-400', 'border-b-2', 'border-indigo-600', 'dark:border-indigo-400');
                         const target = e.target.dataset.target;
                         arrayContents.forEach(c => { if (c.id === target) { c.classList.remove('hidden'); c.classList.add('block'); } else { c.classList.remove('block'); c.classList.add('hidden'); } });
                     });
@@ -844,14 +931,14 @@ class Sword : IWeapon {
                     const resArray = db.exec(query);
                     if(resArray.length > 0) {
                         const { columns, values } = resArray[resArray.length-1];
-                        const ths = columns.map(c => `<th class="px-4 py-2 text-left text-xs font-bold text-slate-500 border-b bg-slate-50">${c}</th>`).join('');
-                        const trs = values.map(v => `<tr>${v.map(d => `<td class="px-4 py-2 text-sm text-slate-700 border-b">${d}</td>`).join('')}</tr>`).join('');
-                        resCon.innerHTML = `<div class="rounded border border-slate-200 overflow-x-auto w-full"><table class="min-w-full"><thead class="bg-slate-50"><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
+                        const ths = columns.map(c => `<th class="px-4 py-2 text-left text-xs font-bold text-slate-500 dark:text-slate-400 border-b dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50">${c}</th>`).join('');
+                        const trs = values.map(v => `<tr>${v.map(d => `<td class="px-4 py-2 text-sm text-slate-700 dark:text-slate-300 border-b dark:border-slate-600">${d}</td>`).join('')}</tr>`).join('');
+                        resCon.innerHTML = `<div class="rounded border border-slate-200 dark:border-slate-700 overflow-x-auto w-full"><table class="min-w-full"><thead class="bg-slate-50 dark:bg-slate-700/50"><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
                     } else {
-                        resCon.innerHTML = `<div class="p-3 bg-emerald-50 text-emerald-700 rounded font-bold w-full text-center">✓ SQL 명령이 성공적으로 실행되었습니다.</div>`;
+                        resCon.innerHTML = `<div class="p-3 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded font-bold w-full text-center">✓ SQL 명령이 성공적으로 실행되었습니다.</div>`;
                     }
                 } catch(err) { 
-                    resCon.innerHTML = `<div class="p-3 bg-rose-50 text-rose-700 rounded border border-rose-200 w-full"><strong>Error:</strong> ${err.message}</div>`; 
+                    resCon.innerHTML = `<div class="p-3 bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 rounded border border-rose-200 dark:border-rose-800 w-full text-left"><strong>Error:</strong> ${err.message}</div>`; 
                 }
             }
         };
