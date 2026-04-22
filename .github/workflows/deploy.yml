@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 1. 내 코드 가져오기
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 2. 파이썬 환경 세팅
         uses: actions/setup-python@v5
@@ -27,7 +27,7 @@ jobs:
         run: python build.py
 
       - name: 4. GitHub Pages로 최종 배포
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v5
         with:
           branch: gh-pages # 배포 전용 브랜치 자동 생성
           folder: . # 현재 폴더 전체를 배포
