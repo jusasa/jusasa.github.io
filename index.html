@@ -3,21 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공부 자료 모음</title>
+    <title>학습 자료 대시보드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body >
-    <h1>공부 자료 모음</h1>
-    <ul>
-    <li><p><a href="csharp.html">C#-1</a></p></li>
-    <li><p><a href="csharp2.html">C#-2</a></p></li>
-    <li><p><a href="java.html">JAVA</a></p></li>
-    <li><p><a href="database.html">DATA BASE</a></p></li>
-    </ul>
-    <h2>문제 풀이</h2>
-    <ul>
-        <li><a href="csharp_problems.html">C#</a></li>
-        <li><a href="java_problems.html">JAVA</a></li>
-        <li><a href="database_problems.html">DATA BASE</a></li>
-    </ul>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans antialiased overflow-hidden flex h-screen">
+
+    <!-- 사이드바 -->
+    <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-slate-300 flex-shrink-0 hidden md:flex flex-col shadow-xl z-10">
+        <div class="p-6 bg-slate-950 dark:bg-black border-b border-slate-800 dark:border-slate-900">
+            <h1 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+                <span class="text-indigo-500">Study</span> Hub
+            </h1>
+            <p class="text-xs text-slate-400 mt-2">통합 학습 대시보드</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1">
+                <li><a href="index.html" class="block px-6 py-3 bg-slate-800 dark:bg-slate-800 text-white border-l-4 border-indigo-500 font-medium">🏠 홈 (자료 모음)</a></li>
+                <li class="pt-4 pb-2 px-6 text-xs font-semibold text-slate-500 uppercase">개념 학습</li>
+                <li><a href="csharp.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent">🔷 C# 기초 (1)</a></li>
+                <li><a href="csharp2.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent">🔷 C# 심화 (2)</a></li>
+                <li><a href="java.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent">☕ JAVA 마스터</a></li>
+                <li><a href="database.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent">🗄️ DATA BASE</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- 모바일 헤더 -->
+    <div class="md:hidden fixed top-0 left-0 w-full bg-slate-900 dark:bg-slate-950 text-white z-50 flex justify-between items-center p-4 shadow-md">
+        <h1 class="text-xl font-bold text-indigo-400">Study Hub</h1>
+    </div>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="flex-1 overflow-y-auto p-6 md:p-10 pt-24 md:pt-10 relative bg-slate-50 dark:bg-slate-900">
+        <section class="content-section fade-in block max-w-5xl mx-auto">
+            <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <h2 class="text-3xl font-bold text-slate-800 dark:text-slate-100">📚 공부 자료 모음</h2>
+                <p class="text-slate-500 dark:text-slate-400 mt-2">오늘도 성장을 위한 기록을 이어갑니다. 학습할 과목을 선택하세요.</p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-12">
+                <!-- 카드 1 -->
+                <a href="csharp.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:shadow-md transition-all group">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">🔷</div>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">C# 프로그래밍 (1)</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">개발 환경, 빌드 프로세스, 객체지향 설계(OOP) 기초 및 데이터 구조에 대해 학습합니다.</p>
+                </a>
+
+                <!-- 카드 2 -->
+                <a href="csharp2.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:shadow-md transition-all group">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">🔷</div>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">C# 심화 및 실습 (2)</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">다차원 배열, 파일 I/O, 예외처리를 배우고 웹 기반 C# 플레이그라운드에서 실습합니다.</p>
+                </a>
+
+                <!-- 카드 3 -->
+                <a href="java.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-rose-500 dark:hover:border-rose-500 hover:shadow-md transition-all group">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-rose-50 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-rose-600 group-hover:text-white transition-colors">☕</div>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">JAVA 마스터 클래스</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">java.lang 기본 클래스, 제네릭과 컬렉션, 그리고 람다와 스트림 문법을 익히고 실행합니다.</p>
+                </a>
+
+                <!-- 카드 4 -->
+                <a href="database.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 hover:shadow-md transition-all group">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">🗄️</div>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">DB 마스터 클래스</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">데이터베이스 시스템, 관계형 모델, SQL 기본 문법을 배우고 Web SQL 엔진으로 실습합니다.</p>
+                </a>
+            </div>
+
+            <header class="mb-6 border-b border-slate-200 dark:border-slate-700 pb-4 mt-8">
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">✍️ 실습 및 평가</h2>
+            </header>
+            <div class="grid grid-cols-1 gap-4">
+                <a href="problems.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all group flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-100 dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">📝</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">IT 종합 평가 문제지 대시보드</h3>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">C#, Java, Database 모든 과목의 실습 문제를 통합 대시보드에서 풀어보세요.</p>
+                        </div>
+                    </div>
+                    <div class="text-indigo-500 dark:text-indigo-400 font-bold group-hover:translate-x-2 transition-transform hidden md:block">
+                        문제 풀러 가기 &rarr;
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

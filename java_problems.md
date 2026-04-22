@@ -1,44 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마크다운 뷰어</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <style>
-        /* 페이지 기본 레이아웃 설정 */
-        .markdown-body {
-            box-sizing: border-box;
-            min-width: 200px;
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 45px;
-        }
-
-        /* 모바일 대응 */
-        @media (max-width: 767px) {
-            .markdown-body {
-                padding: 15px;
-            }
-        }
-
-        /* 다크 모드/라이트 모드 자동 대응 (선택 사항) */
-        @media (prefers-color-scheme: dark) {
-            body { background-color: #0d1117; }
-        }
-    </style>
-</head>
-<body>
-
-    <article id="content" class="markdown-body"></article>
-
-    <script>
-        // 3. 여기에 보여주고 싶은 마크다운 내용을 넣으세요 (백틱 ` 사용)
-        const markdownRaw = `
 📝 Java 실습 시험 대비 30제 (Ch.11 ~ Ch.13)
 
 본 실습 문제는 자바의 주요 개념을 코드로 직접 구현하며 이해도를 높이기 위해 제작되었습니다. 각 문제의 요구사항에 맞게 코드를 작성해 보세요.
@@ -175,8 +134,11 @@
 
 📝 Java 실습 시험 30선 정답 및 해설 (Ch.11 ~ Ch.13)
 
-🎯 [11장] java.lang 기본 클래스 정답문제 1 & 2. equals(), hashCode() 오버라이딩
-\`\`\`java
+🎯 [11장] java.lang 기본 클래스 정답
+
+문제 1 & 2. equals(), hashCode() 오버라이딩
+
+```java
 class Student {
     int studentId;
     String name;
@@ -203,11 +165,13 @@ class Student {
         return studentId;
     }
 }
-\`\`\`
+```
 
 해설: 논리적 동등성을 위해 equals를 재정의했다면, 해시 기반 컬렉션(HashSet, HashMap 등)에서 정상 작동하도록 hashCode도 반드시 재정의해야 합니다.
+
 문제3. toString() 오버라이딩
-\`\`\`java
+
+```java
 class Book {
     String title;
     String author;
@@ -222,10 +186,11 @@ class Book {
         return "책제목: " + title + ", 저자: " + author;
     }
 }
-\`\`\`
+```
     
 문제 4 ~ 10. String, StringBuilder, Wrapper, Class, Clone
-\`\`\`java
+
+```java
 public class LangClassTest {
     public static void printObject(Object obj) {
         System.out.println("전달된 객체 타입: " + obj.getClass().getName());
@@ -281,11 +246,15 @@ class Point implements Cloneable {
         return super.clone();
     }
 }
-\`\`\`
+```
 
 해설: String은 불변이므로 값을 변경하려면 str = str.concat(...) 처럼 다시 대입해야 합니다. 잦은 문자열 결합은 메모리 낭비가 심하므로 StringBuilder를 사용합니다.
-🎯 [12장] 제네릭과 컬렉션 프레임워크 정답문제 11 & 12. 제네릭 클래스
-\`\`\`java
+
+🎯 [12장] 제네릭과 컬렉션 프레임워크 정답
+
+문제 11 & 12. 제네릭 클래스
+
+```java
 // 문제 11. 제네릭 기본
 class Box<T> {
     private T item;
@@ -301,9 +270,13 @@ class MathBox<T extends Number> {
         System.out.println(num.doubleValue());
     }
 }
-    \`\`\`
-문제 13 ~ 20. 컬렉션 프레임워크 (List, Set, Map, Queue)import java.util.*;
-\`\`\`java
+```
+
+문제 13 ~ 20. 컬렉션 프레임워크 (List, Set, Map, Queue)
+
+```java
+import java.util.*;
+
 // 문제 15를 위한 Member 클래스
 class Member {
     int id; String name;
@@ -320,9 +293,7 @@ class Member {
     @Override
     public int hashCode() { return id; }
 }
-\`\`\`
 
-\`\`\`java
 // 문제 17 & 18을 위한 Employee 클래스
 class Employee implements Comparable<Employee> {
     int id; String name;
@@ -335,9 +306,7 @@ class Employee implements Comparable<Employee> {
     @Override
     public String toString() { return name + "(" + id + ")"; }
 }
-\`\`\`
 
-\`\`\`java
 public class CollectionTest {
     public static void main(String[] args) {
         // 문제 13. ArrayList 기본
@@ -395,10 +364,13 @@ public class CollectionTest {
         System.out.println("문제 20: " + numList); // [1, 3, 5]
     }
 }
-\`\`\`
+```
 
-🎯 [13장] 내부 클래스, 람다식, 스트림, Optional 정답문제 21 ~ 23. 내부 클래스 및 람다식
-\`\`\`java
+🎯 [13장] 내부 클래스, 람다식, 스트림, Optional 정답
+
+문제 21 ~ 23. 내부 클래스 및 람다식
+
+```java
 // 문제 21. 인스턴스 내부 클래스
 class Computer {
     class CPU {
@@ -433,10 +405,11 @@ public class LambdaTest {
         System.out.println("문제 23 최대값: " + max.getMax(10, 20));
     }
 }
-\`\`\`
+```
 
 문제 24 ~ 30. 스트림(Stream)과 Optional
-\`\`\`java
+
+```java
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -495,14 +468,6 @@ public class StreamOptionalTest {
         optStr.ifPresent(s -> System.out.println(s.length()));
     }
 }
-\`\`\`
+```
 
-해설: * Stream은 filter로 조건을 걸러내고, map으로 데이터를 변형하며, collect나 reduce 등의 최종 연산으로 결과를 묶어냅니다.Optional은 null 참조로 인한 예외(NPE)를 방지하기 위해 사용되며, orElse로 기본값을 지정하거나 ifPresent로 값이 존재할 때만 안전하게 코드를 실행할 수 있습니다.
-    `;
-
-        // 4. 마크다운을 HTML로 변환하여 삽입
-        document.getElementById('content').innerHTML = marked.parse(markdownRaw);
-    </script>
-
-</body>
-</html>
+해설: Stream은 filter로 조건을 걸러내고, map으로 데이터를 변형하며, collect나 reduce 등의 최종 연산으로 결과를 묶어냅니다. Optional은 null 참조로 인한 예외(NPE)를 방지하기 위해 사용되며, orElse로 기본값을 지정하거나 ifPresent로 값이 존재할 때만 안전하게 코드를 실행할 수 있습니다.

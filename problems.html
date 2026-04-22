@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT 종합 평가 문제지 대시보드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* github-markdown-css 기본 스타일을 전체 테마에 맞게 자연스럽게 오버라이드 */
+        .markdown-body {
+            background-color: transparent !important;
+            font-family: inherit !important;
+            color: inherit !important;
+        }
+        .markdown-body pre {
+            background-color: #f1f5f9 !important; /* Tailwind bg-slate-100 */
+            border: 1px solid #e2e8f0 !important; /* Tailwind border-slate-200 */
+        }
+        @media (prefers-color-scheme: dark) {
+            .markdown-body pre {
+                background-color: #0f172a !important; /* Tailwind bg-slate-900 */
+                border-color: #1e293b !important; /* Tailwind border-slate-800 */
+            }
+            .markdown-body code {
+                color: #e2e8f0 !important; /* Tailwind text-slate-200 */
+                background-color: rgba(255, 255, 255, 0.1) !important;
+            }
+            .markdown-body table tr,
+            .markdown-body table tr:nth-child(2n) {
+                background-color: transparent !important;
+            }
+            .markdown-body table th,
+            .markdown-body table td {
+                border-color: #334155 !important; /* Tailwind border-slate-700 */
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans antialiased overflow-x-hidden">
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-slate-300 flex-shrink-0 hidden md:flex flex-col shadow-xl z-10">
+            <div class="p-6 bg-slate-950 dark:bg-black border-b border-slate-800 dark:border-slate-900">
+                <h1 class="text-2xl font-bold text-white tracking-tight">IT Mastery</h1>
+                <p class="text-sm text-slate-400 mt-1">종합 평가 문제지</p>
+            </div>
+            <nav class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1">
+                    <li><a href="index.html" class="block px-6 py-3 hover:bg-slate-800 dark:hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent text-slate-400 text-sm">← 홈으로 돌아가기</a></li>
+                    <li class="pt-4 pb-2 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">과목 선택</li>
+                    <li><button data-target="database" data-md="database_problems.md" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-800 dark:hover:bg-slate-800 hover:text-white transition-colors bg-slate-800 dark:bg-slate-800 text-white font-medium">🗄️ Database 시험</button></li>
+                    <li><button data-target="csharp" data-md="csharp_problems.md" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-800 dark:hover:bg-slate-800 hover:text-white transition-colors text-slate-300">⚙️ C# 문제지</button></li>
+                    <li><button data-target="java" data-md="java_problems.md" class="nav-btn w-full text-left px-6 py-3 hover:bg-slate-800 dark:hover:bg-slate-800 hover:text-white transition-colors text-slate-300">☕ Java 실습 문제</button></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Mobile Header (Visible only on small screens) -->
+        <div class="md:hidden fixed top-0 left-0 w-full bg-slate-900 dark:bg-slate-950 text-white z-50 flex justify-between items-center p-4 shadow-md">
+            <h1 class="text-xl font-bold">IT Mastery</h1>
+            <select id="mobile-nav" class="bg-slate-800 dark:bg-slate-900 text-white border border-slate-700 dark:border-slate-800 rounded p-2 outline-none">
+                <option value="database" data-md="database_problems.md">🗄️ Database 시험</option>
+                <option value="csharp" data-md="csharp_problems.md">⚙️ C# 문제지</option>
+                <option value="java" data-md="java_problems.md">☕ Java 실습 문제</option>
+            </select>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-6 md:p-10 pt-24 md:pt-10 bg-slate-50 dark:bg-slate-900 relative" id="main-content">
+            <div class="bg-white dark:bg-slate-800 p-6 md:p-10 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 max-w-5xl mx-auto min-h-full">
+                <!-- Markdown Content Container -->
+                <article id="content" class="markdown-body fade-in">
+                    <div class="flex items-center justify-center py-20">
+                        <p class="text-slate-500 dark:text-slate-400">문제를 불러오는 중입니다...</p>
+                    </div>
+                </article>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contentDiv = document.getElementById('content');
+            const navBtns = document.querySelectorAll('.nav-btn');
+            const mobileNav = document.getElementById('mobile-nav');
+
+            function loadMarkdown(mdFile) {
+                // 로딩 상태 표시 및 애니메이션 트리거 초기화
+                contentDiv.innerHTML = '<div class="flex items-center justify-center py-20"><p class="text-slate-500">문제를 불러오는 중입니다...</p></div>';
+                contentDiv.classList.remove('fade-in');
+                void contentDiv.offsetWidth; // Trigger DOM reflow
+                contentDiv.classList.add('fade-in');
+
+                fetch(mdFile)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('네트워크 응답이 정상이 아닙니다.');
+                        }
+                        return response.text();
+                    })
+                    .then(markdownRaw => {
+                        contentDiv.innerHTML = marked.parse(markdownRaw);
+                        
+                        // MathJax 수식 렌더링 재실행
+                        if (window.MathJax && window.MathJax.typesetPromise) {
+                            window.MathJax.typesetPromise([contentDiv]).catch(function (err) {
+                                console.error('MathJax 렌더링 오류:', err);
+                            });
+                        } else if (window.MathJax && window.MathJax.typeset) {
+                            window.MathJax.typeset();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('마크다운 파일 로드 실패:', error);
+                        contentDiv.innerHTML = '<div class="py-20 text-center"><p class="text-rose-500 font-medium">마크다운 파일을 로드할 수 없습니다.</p><p class="text-sm text-slate-500 mt-2">파일 경로를 확인해주세요: ' + mdFile + '</p></div>';
+                    });
+            }
+
+            function activateSection(targetId, mdFile) {
+                // 데스크톱 사이드바 버튼 활성화 상태 업데이트
+                navBtns.forEach(btn => {
+                    if (btn.dataset.target === targetId) {
+                        btn.classList.add('bg-slate-800', 'dark:bg-slate-800', 'text-white', 'font-medium');
+                        btn.classList.remove('text-slate-300');
+                    } else {
+                        btn.classList.remove('bg-slate-800', 'dark:bg-slate-800', 'text-white', 'font-medium');
+                        btn.classList.add('text-slate-300');
+                    }
+                });
+
+                // 모바일 네비게이션 동기화
+                if(mobileNav.value !== targetId) {
+                    mobileNav.value = targetId;
+                }
+
+                // 해당 마크다운 파일 로드 호출
+                loadMarkdown(mdFile);
+            }
+
+            // 사이드바 버튼 클릭 이벤트 할당
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const targetBtn = e.currentTarget;
+                    activateSection(targetBtn.dataset.target, targetBtn.dataset.md);
+                });
+            });
+
+            // 모바일 셀렉트 변경 이벤트 할당
+            mobileNav.addEventListener('change', (e) => {
+                const selectedOption = e.target.options[e.target.selectedIndex];
+                activateSection(e.target.value, selectedOption.dataset.md);
+            });
+
+            // 페이지 최초 로드 시 첫 번째 과목(Database) 불러오기
+            loadMarkdown('database_problems.md');
+        });
+    </script>
+</body>
+</html>

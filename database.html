@@ -3,155 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DB 마스터 클래스 (MySQL 환경)</title>
-    <!-- Tailwind CSS CDN -->
+    <title>DB 마스터 클래스 (MySQL)</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- SQL.js CDN (WebAssembly 기반 SQL 엔진, MySQL 표준 문법 호환용) -->
+    <!-- SQL.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/sql-wasm.js"></script>
-    
-    <style>
-        /* 커스텀 스크롤바 */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100 font-sans text-gray-800 h-screen flex flex-col md:flex-row overflow-hidden">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans antialiased overflow-hidden flex h-screen">
 
-    <!-- Sidebar Navigation -->
-    <div class="w-full md:w-64 bg-slate-900 text-white flex flex-col shadow-lg shrink-0 h-auto md:h-full z-10">
-        <div class="p-5 flex items-center gap-3 border-b border-slate-700">
-            <svg class="w-6 h-6 text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg>
-            <h1 class="font-bold text-lg tracking-tight">DB 마스터 클래스</h1>
+    <!-- 사이드바 -->
+    <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-slate-300 flex-shrink-0 hidden md:flex flex-col shadow-xl z-20">
+        <div class="p-6 bg-slate-950 dark:bg-black border-b border-slate-800 dark:border-slate-900">
+            <h1 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+                <span class="text-emerald-500">🗄️ DB</span> Hub
+            </h1>
+            <p class="text-xs text-slate-400 mt-2">이론 학습 & SQL 플레이그라운드</p>
         </div>
-        
-        <nav class="flex-1 overflow-x-auto md:overflow-y-auto py-2 md:py-4 flex md:block">
-            <div class="hidden md:block px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                이론 학습 (CH01~CH05)
-            </div>
-            <ul class="flex md:flex-col space-x-2 md:space-x-0 space-y-0 md:space-y-1 px-2 md:px-0" id="nav-list">
-                <!-- Navigation Items Will Be Injected Here -->
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1">
+                <li><a href="index.html" class="block px-6 py-3 hover:bg-slate-800 dark:hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent text-slate-400 text-sm">← 홈으로 돌아가기</a></li>
+                <li class="pt-4 pb-2 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider">이론 학습</li>
+            </ul>
+            <ul class="space-y-1" id="nav-list">
+                <!-- JS에서 동적으로 생성됨 -->
             </ul>
         </nav>
-        
-        <div class="hidden md:block p-4 border-t border-slate-700 text-xs text-slate-400 text-center flex flex-col items-center gap-1">
-            <svg class="w-4 h-4 mx-auto opacity-50" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-            <span>MySQL Syntax Mode</span>
-            <span class="text-[10px] text-slate-500">(Simulated via Web SQL)</span>
+        <div class="p-4 bg-slate-950 dark:bg-black text-xs text-center text-slate-500 border-t border-slate-800 dark:border-slate-900">
+            Powered by Web SQL Engine
         </div>
+    </aside>
+
+    <!-- 모바일 헤더 -->
+    <div class="md:hidden fixed top-0 left-0 w-full bg-slate-900 dark:bg-slate-950 text-white z-50 flex justify-between items-center p-4 shadow-md">
+        <h1 class="text-xl font-bold text-emerald-400">🗄️ DB Hub</h1>
     </div>
 
-    <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col h-full overflow-hidden">
+    <!-- 메인 레이아웃 (좌측 내용, 우측 SQL) -->
+    <main class="flex-1 flex flex-col md:flex-row bg-slate-50 dark:bg-slate-900 pt-16 md:pt-0 overflow-hidden">
         
-        <!-- Top Header -->
-        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shrink-0 shadow-sm z-0">
-            <h2 id="header-title" class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                <!-- Title Will Be Injected Here -->
-            </h2>
-        </header>
+        <!-- 좌측: 학습 콘텐츠 -->
+        <div class="flex-1 overflow-y-auto p-6 md:p-10 relative" id="study-content-container">
+            <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <h2 id="header-title" class="text-3xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                    <!-- Title Injected Here -->
+                </h2>
+            </header>
+            <div id="study-content" class="fade-in">
+                <!-- Content Injected Here -->
+            </div>
+        </div>
 
-        <!-- Workspace -->
-        <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+        <!-- 우측: SQL 에디터 -->
+        <div class="w-full md:w-5/12 border-l border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex flex-col shadow-lg z-10">
+            <div class="bg-slate-800 dark:bg-slate-950 text-white px-4 py-3 flex justify-between items-center shrink-0">
+                <span class="font-bold text-sm flex items-center gap-2">💻 MySQL 플레이그라운드</span>
+                <span id="db-status" class="text-xs text-yellow-400">Loading Engine...</span>
+            </div>
             
-            <!-- Left: Study Content -->
-            <div id="study-content" class="w-full md:w-1/2 h-1/2 md:h-full overflow-y-auto p-6 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
-                <!-- Content Will Be Injected Here -->
+            <div class="h-2/5 shrink-0 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 relative flex flex-col">
+                <textarea id="sql-input" class="flex-1 w-full p-4 font-mono text-sm bg-transparent outline-none resize-none text-slate-800 dark:text-slate-200" spellcheck="false" placeholder="SQL 명령어를 입력하세요..."></textarea>
+                <div class="absolute bottom-3 right-3">
+                    <button id="run-btn" disabled class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded shadow-md font-bold text-sm disabled:opacity-50 transition-colors">
+                        ▶ SQL 실행
+                    </button>
+                </div>
             </div>
 
-            <!-- Right: SQL Playground -->
-            <div class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col bg-white">
-                <div class="bg-slate-800 text-slate-200 px-4 py-2 text-sm font-semibold flex items-center justify-between shrink-0">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                        MySQL 실습 플레이그라운드
-                    </div>
-                    <div class="flex items-center gap-2 text-xs" id="db-status">
-                        <span class="text-yellow-400">Loading Engine...</span>
-                    </div>
+            <div class="flex-1 flex flex-col bg-white dark:bg-slate-800 overflow-hidden">
+                <div class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 px-4 py-2 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider shrink-0">
+                    실행 결과
                 </div>
-                
-                <!-- SQL Editor -->
-                <div class="relative h-1/2 md:h-2/5 shrink-0 border-b border-gray-200 bg-gray-50 flex flex-col">
-                    <textarea id="sql-input" class="flex-1 w-full p-4 font-mono text-sm bg-transparent outline-none resize-none text-slate-800" spellcheck="false" placeholder="여기에 MySQL 문장을 입력하세요..."></textarea>
-                    <div class="absolute bottom-4 right-4">
-                        <button id="run-btn" disabled class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-md transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                            SQL 실행
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Results Area -->
-                <div class="flex-1 flex flex-col bg-white overflow-hidden">
-                    <div class="bg-gray-100 border-b border-gray-200 px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider shrink-0 flex justify-between">
-                        <span>실행 결과</span>
-                        <span class="text-[10px] text-gray-400 font-normal">Standard SQL Compatible</span>
-                    </div>
-                    <div id="results-container" class="flex-1 p-4 overflow-auto">
-                        <div class="text-gray-400 text-sm flex items-center justify-center h-full text-center px-4">
-                            위에서 SQL을 작성하고 실행 버튼을 눌러보세요.<br>
-                            (교재 CH05의 학생, 수강, 과목 테이블이 기본 생성되어 있습니다.)
-                        </div>
+                <div id="results-container" class="flex-1 p-4 overflow-auto bg-white dark:bg-slate-800">
+                    <div class="text-slate-400 dark:text-slate-500 text-sm flex items-center justify-center h-full text-center">
+                        SQL을 작성하고 실행 버튼을 눌러보세요.<br>(기본 학생/과목/수강 테이블이 준비되어 있습니다.)
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    </main>
 
     <script>
-        // --- 아이콘 SVG ---
-        const icons = {
-            db: `<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg>`,
-            network: `<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>`,
-            layout: `<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>`,
-            code: `<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
-            terminal: `<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>`,
-            check: `<svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
-            checkLarge: `<svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
-            alert: `<svg class="w-5 h-5 shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`,
-            info: `<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`
-        };
-
         // --- 데이터베이스 교재 내용 ---
         const studyMaterials = [
             {
-                id: 'ch01',
-                title: 'CH01. 데이터베이스 개념',
-                icon: icons.db,
+                id: 'ch01', title: 'CH01. DB 개념', 
                 content: `
-                <div class="space-y-4 text-gray-800">
-                    <h2 class="text-2xl font-bold text-blue-800">데이터베이스 개념</h2>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2">데이터 vs 정보</h3>
-                        <ul class="list-disc pl-5 space-y-2">
+                <div class="space-y-6">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터 vs 정보</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
                             <li><strong>데이터 (Data):</strong> 현실 세계에서 관찰이나 측정을 통해 수집된 순수한 사실이나 값</li>
                             <li><strong>정보 (Information):</strong> 데이터를 의사결정에 활용할 수 있도록 가공/처리한 결과물</li>
                         </ul>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2">데이터베이스의 4가지 정의</h3>
-                        <ul class="list-disc pl-5 space-y-2">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터베이스의 4가지 정의</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
                             <li><strong>공용 데이터:</strong> 여러 사용자나 응용 프로그램이 공동으로 소유</li>
                             <li><strong>통합 데이터:</strong> 중복을 최소화하여 하나로 통합</li>
                             <li><strong>운영 데이터:</strong> 조직 운영을 위해 필수적인 데이터</li>
                             <li><strong>저장 데이터:</strong> 컴퓨터가 접근 가능한 매체에 디지털화되어 저장</li>
                         </ul>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2">주요 특성</h3>
-                        <ul class="list-disc pl-5 space-y-2">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">주요 특성</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
                             <li>실시간 접근 (Real-time Accessibility)</li>
                             <li>끊임없는 변화 (Continuous Evolution)</li>
                             <li>동시 공용 (Concurrent Sharing)</li>
@@ -161,51 +119,47 @@
                 </div>`
             },
             {
-                id: 'ch02',
-                title: 'CH02. 데이터베이스 시스템',
-                icon: icons.network,
+                id: 'ch02', title: 'CH02. DB 시스템',
                 content: `
-                <div class="space-y-4 text-gray-800">
-                    <h2 class="text-2xl font-bold text-blue-800">데이터베이스 시스템 (DBS)</h2>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2">데이터베이스 언어</h3>
-                        <ul class="list-disc pl-5 space-y-2">
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400">데이터베이스 시스템 (DBS)</h2>
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터베이스 언어</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
                             <li><strong>DDL (데이터 정의어):</strong> DB 구조, 스키마 정의 (CREATE, ALTER, DROP)</li>
                             <li><strong>DML (데이터 조작어):</strong> 데이터 검색, 삽입, 수정, 삭제 (SELECT, INSERT, UPDATE, DELETE)</li>
                             <li><strong>DCL (데이터 제어어):</strong> 보안, 권한 제어 (GRANT, REVOKE)</li>
                         </ul>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2">ANSI/SPARC 3단계 스키마</h3>
-                        <ul class="list-disc pl-5 space-y-2">
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">ANSI/SPARC 3단계 스키마</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
                             <li><strong>외부 스키마:</strong> 개별 사용자 관점 (뷰)</li>
                             <li><strong>개념 스키마:</strong> 조직 전체 관점 (통합 논리 구조)</li>
                             <li><strong>내부 스키마:</strong> 물리적 저장 장치 관점</li>
                         </ul>
-                        <div class="mt-3 p-3 bg-blue-50 text-blue-900 rounded border border-blue-200">
+                        <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-200 rounded border border-blue-200 dark:border-blue-800">
                             <strong>핵심 목적:</strong> 스키마 간 사상(Mapping)을 통해 응용 프로그램과 구조를 분리하는 <strong>데이터 독립성</strong> 제공
                         </div>
                     </div>
                 </div>`
             },
             {
-                id: 'ch03',
-                title: 'CH03. 관계형 데이터 모델',
-                icon: icons.layout,
+                id: 'ch03', title: 'CH03. 관계형 모델',
                 content: `
-                <div class="space-y-4 text-gray-800">
-                    <h2 class="text-2xl font-bold text-blue-800">관계형 데이터 모델 (RDM)</h2>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2">릴레이션 구조</h3>
-                        <ul class="list-disc pl-5 space-y-2">
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400">관계형 데이터 모델 (RDM)</h2>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">릴레이션 구조</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
                             <li><strong>속성 (Attribute):</strong> 열(Column). 총 개수 = <strong>차수(Degree)</strong></li>
                             <li><strong>투플 (Tuple):</strong> 행(Row). 총 개수 = <strong>카디널리티(Cardinality)</strong></li>
                             <li><strong>도메인 (Domain):</strong> 속성이 가질 수 있는 값들의 집합</li>
                         </ul>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2">키(Key)와 무결성 제약조건</h3>
-                        <ul class="list-disc pl-5 space-y-2">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">키(Key)와 무결성 제약조건</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm">
                             <li><strong>후보키:</strong> 유일성 + 최소성 만족</li>
                             <li><strong>기본키 (Primary Key):</strong> 후보키 중 대표. <strong>개체 무결성</strong> (NULL/중복 불가)</li>
                             <li><strong>외래키 (Foreign Key):</strong> 다른 릴레이션 참조. <strong>참조 무결성</strong></li>
@@ -214,32 +168,30 @@
                 </div>`
             },
             {
-                id: 'ch04',
-                title: 'CH04. 관계 대수',
-                icon: icons.code,
+                id: 'ch04', title: 'CH04. 관계 대수',
                 content: `
-                <div class="space-y-4 text-gray-800">
-                    <h2 class="text-2xl font-bold text-blue-800">관계 대수 (Relational Algebra)</h2>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2">필수 5대 연산</h3>
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400">관계 대수 (Relational Algebra)</h2>
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">필수 5대 연산</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-3 bg-gray-50 rounded text-sm">
-                                <strong class="text-blue-600">합집합 (∪), 차집합 (-)</strong>
+                            <div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm">
+                                <strong class="text-blue-600 dark:text-blue-400">합집합 (∪), 차집합 (-)</strong>
                             </div>
-                            <div class="p-3 bg-gray-50 rounded text-sm">
-                                <strong class="text-blue-600">카티션 프로덕트 (×)</strong><br/>모든 투플 조합 생성
+                            <div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm">
+                                <strong class="text-blue-600 dark:text-blue-400">카티션 프로덕트 (×)</strong><br/>모든 투플 조합 생성
                             </div>
-                            <div class="p-3 bg-gray-50 rounded text-sm">
-                                <strong class="text-purple-600">셀렉트 (σ)</strong><br/>조건 만족 투플 추출 (수평 분할)
+                            <div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm">
+                                <strong class="text-purple-600 dark:text-purple-400">셀렉트 (σ)</strong><br/>조건 만족 투플 추출 (수평 분할)
                             </div>
-                            <div class="p-3 bg-gray-50 rounded text-sm">
-                                <strong class="text-purple-600">프로젝트 (π)</strong><br/>특정 속성 추출 (수직 분할)
+                            <div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm">
+                                <strong class="text-purple-600 dark:text-purple-400">프로젝트 (π)</strong><br/>특정 속성 추출 (수직 분할)
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2">확장 조인 연산</h3>
-                        <ul class="list-disc pl-5 space-y-2 text-sm">
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">확장 조인 연산</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-sm dark:text-slate-300">
                             <li><strong>동등 조인 (Equi Join):</strong> '=' 연산자로 결합</li>
                             <li><strong>자연 조인 (Natural Join):</strong> 중복 속성 자동 제거</li>
                             <li><strong>외부 조인 (Outer Join):</strong> 조인에 실패한 투플도 널(NULL)로 채워 모두 반환 (LEFT, RIGHT, FULL)</li>
@@ -248,15 +200,13 @@
                 </div>`
             },
             {
-                id: 'ch05',
-                title: 'CH05. SQL 기초 (MySQL 기준)',
-                icon: icons.terminal,
+                id: 'ch05', title: 'CH05. SQL 기초 (실습)',
                 content: `
-                <div class="space-y-4 text-gray-800">
-                    <h2 class="text-2xl font-bold text-blue-800">MySQL 데이터 조작문 가이드</h2>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2 text-indigo-700">1. 기본 검색 및 조인 (SELECT)</h3>
-                        <pre class="bg-gray-800 text-green-400 p-3 rounded text-sm overflow-x-auto"><code>-- 조건 검색
+                <div class="space-y-6 text-gray-800 dark:text-slate-200">
+                    <h2 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">MySQL 데이터 조작문 가이드</h2>
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400">1. 기본 검색 및 조인 (SELECT)</h3>
+                        <pre class="bg-gray-800 dark:bg-black text-green-400 dark:text-green-500 p-3 rounded text-sm overflow-x-auto"><code>-- 조건 검색
 SELECT 이름, 학년 FROM 학생 
 WHERE 소속학과 = '컴퓨터' ORDER BY 학년 DESC;
 
@@ -267,9 +217,9 @@ SELECT * FROM 학생 WHERE 이름 LIKE '김%';
 SELECT 학생.이름, 수강.기말성적
 FROM 학생 JOIN 수강 ON 학생.학번 = 수강.학번;</code></pre>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2 text-indigo-700">2. 그룹화 및 부 질의문</h3>
-                        <pre class="bg-gray-800 text-green-400 p-3 rounded text-sm overflow-x-auto"><code>-- GROUP BY와 HAVING
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400">2. 그룹화 및 부 질의문</h3>
+                        <pre class="bg-gray-800 dark:bg-black text-green-400 dark:text-green-500 p-3 rounded text-sm overflow-x-auto"><code>-- GROUP BY와 HAVING
 SELECT 소속학과, COUNT(*) as 학생수
 FROM 학생 GROUP BY 소속학과 HAVING COUNT(*) >= 2;
 
@@ -277,9 +227,9 @@ FROM 학생 GROUP BY 소속학과 HAVING COUNT(*) >= 2;
 SELECT 이름 FROM 학생 
 WHERE 학번 IN (SELECT 학번 FROM 수강 WHERE 평가학점 = 'A');</code></pre>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-lg font-bold mb-2 text-indigo-700">3. 삽입/수정/삭제 (INSERT/UPDATE/DELETE)</h3>
-                        <pre class="bg-gray-800 text-green-400 p-3 rounded text-sm overflow-x-auto"><code>-- 데이터 삽입
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700">
+                        <h3 class="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400">3. 삽입/수정/삭제 (INSERT/UPDATE/DELETE)</h3>
+                        <pre class="bg-gray-800 dark:bg-black text-green-400 dark:text-green-500 p-3 rounded text-sm overflow-x-auto"><code>-- 데이터 삽입
 INSERT INTO 학생(학년, 나이, 성별, 소속학과, 학번, 이름) 
 VALUES (3, 30, '남', '정보통신', 'g003', '이승엽2');
 
@@ -293,9 +243,9 @@ DELETE FROM 학생 WHERE 소속학과 = '경영';</code></pre>
             }
         ];
 
-        // --- SQL 초기화 데이터 (MySQL 표준 타입인 VARCHAR, INT, DATE 사용) ---
-        const initSQL = `
-            CREATE TABLE 학생 (
+        // --- SQL 초기 데이터 ---
+        const initSQL =`
+        CREATE TABLE 학생 (
                 학번 VARCHAR(20), 
                 이름 VARCHAR(30), 
                 주소 VARCHAR(100), 
@@ -344,11 +294,9 @@ DELETE FROM 학생 WHERE 소속학과 = '경영';</code></pre>
             INSERT INTO 수강 VALUES ('s003', 'c001', '2019-03-03', 81, 82, 'B');
         `;
 
-        // --- 상태 변수 ---
         let db = null;
         let activeTab = 'ch01';
 
-        // --- DOM 엘리먼트 ---
         const navList = document.getElementById('nav-list');
         const headerTitle = document.getElementById('header-title');
         const studyContent = document.getElementById('study-content');
@@ -357,157 +305,85 @@ DELETE FROM 학생 WHERE 소속학과 = '경영';</code></pre>
         const sqlInput = document.getElementById('sql-input');
         const resultsContainer = document.getElementById('results-container');
 
-        // --- 초기화 함수 ---
+        // 앱 초기화
         function initApp() {
             renderNav();
             setTab(activeTab);
-            sqlInput.value = "SELECT * FROM 학생;\n-- 본 시스템은 MySQL 표준 문법을 호환하여 실행됩니다.";
+            sqlInput.value = "SELECT * FROM 학생;\n";
 
-            // SQL.js 로딩 및 데이터베이스 초기화
             initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/${file}` })
-                .then(function(SQL){
-                    try {
-                        db = new SQL.Database();
-                        db.run(initSQL);
-                        
-                        // 성공적으로 준비됨
-                        dbStatus.innerHTML = `<span class="flex items-center gap-1 text-green-400">${icons.check} Web SQL Ready (MySQL Syntax)</span>`;
-                        runBtn.disabled = false;
-                    } catch(err) {
-                        showError('DB 초기화 오류: ' + err.message);
-                    }
-                })
-                .catch(function(err){
-                    showError('엔진 로드 오류: ' + err.message);
+                .then(SQL => {
+                    db = new SQL.Database();
+                    db.run(initSQL);
+                    dbStatus.innerHTML = `<span class="text-emerald-400">● Engine Ready</span>`;
+                    runBtn.disabled = false;
                 });
 
-            // 실행 버튼 이벤트
             runBtn.addEventListener('click', executeSql);
         }
 
-        // --- 네비게이션 렌더링 ---
+        // 네비게이션 렌더링
         function renderNav() {
             navList.innerHTML = '';
             studyMaterials.forEach(item => {
                 const li = document.createElement('li');
-                li.className = 'w-auto md:w-full shrink-0';
-                
                 const btn = document.createElement('button');
                 btn.onclick = () => setTab(item.id);
                 
                 const isActive = activeTab === item.id;
-                btn.className = `w-full flex items-center gap-3 px-4 md:px-5 py-3 text-sm transition-colors rounded md:rounded-none whitespace-nowrap ${
+                btn.className = `w-full text-left px-6 py-3 transition-colors text-sm ${
                     isActive 
-                        ? 'bg-blue-600 text-white md:border-r-4 md:border-blue-400' 
-                        : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                        ? 'bg-slate-800 dark:bg-slate-800 text-white border-l-4 border-emerald-500 dark:border-emerald-400 font-bold' 
+                        : 'text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-800 hover:text-white border-l-4 border-transparent dark:border-transparent'
                 }`;
-                
-                btn.innerHTML = `${item.icon} <span class="hidden md:inline">${item.title}</span><span class="md:hidden">${item.title.split('.')[0]}</span>`;
-                
+                btn.innerHTML = item.title;
                 li.appendChild(btn);
                 navList.appendChild(li);
             });
         }
 
-        // --- 탭 변경 로직 ---
+        // 탭 컨텐츠 변경
         function setTab(id) {
             activeTab = id;
-            renderNav(); // Update active state
-            
+            renderNav();
             const tabData = studyMaterials.find(item => item.id === id);
             if(tabData) {
-                headerTitle.innerHTML = `${tabData.icon} ${tabData.title}`;
+                headerTitle.innerHTML = tabData.title;
                 studyContent.innerHTML = tabData.content;
+                
+                // 애니메이션 리트리거
+                studyContent.classList.remove('fade-in');
+                void studyContent.offsetWidth; // DOM 재계산 유도
+                studyContent.classList.add('fade-in');
             }
         }
 
-        // --- SQL 실행 로직 ---
+        // SQL 실행 및 테이블 생성
         function executeSql() {
             if (!db) return;
             const query = sqlInput.value;
-            resultsContainer.innerHTML = ''; // Clear previous
+            resultsContainer.innerHTML = '';
 
             try {
-                // db.exec() 반환: [ {columns:['a','b'], values:[[1,2],[3,4]]}, ... ]
                 const resArray = db.exec(query);
-                
-                if (resArray && resArray.length > 0) {
-                    // 마지막 질의 결과 가져오기
-                    const lastResult = resArray[resArray.length - 1];
-                    renderTable(lastResult.columns, lastResult.values);
+                if (resArray.length > 0) {
+                    const { columns, values } = resArray[resArray.length - 1];
+                    let thead = columns.map(col => `<th class="px-4 py-2 text-left text-xs font-bold text-slate-500 dark:text-slate-400 border-b dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50">${col}</th>`).join('');
+                    let tbody = values.map(row => `<tr>${row.map(val => `<td class="px-4 py-2 text-sm text-slate-700 dark:text-slate-300 border-b dark:border-slate-600">${val}</td>`).join('')}</tr>`).join('');
+                    
+                    resultsContainer.innerHTML = `
+                        <div class="rounded border border-slate-200 dark:border-slate-700 overflow-x-auto">
+                            <table class="min-w-full"><thead class="bg-slate-50 dark:bg-slate-700/50"><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table>
+                        </div>`;
                 } else {
-                    // SELECT가 아닌 명령 (INSERT, UPDATE 등)
-                    if (query.trim().length > 0) {
-                        renderSuccess('MySQL 명령어가 성공적으로 실행되었습니다.');
-                    } else {
-                        resultsContainer.innerHTML = `
-                            <div class="text-gray-400 text-sm flex items-center justify-center h-full">
-                                위에서 SQL을 작성하고 실행 버튼을 눌러보세요.
-                            </div>`;
-                    }
+                    resultsContainer.innerHTML = `<div class="p-3 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded font-bold">✓ SQL 명령이 성공적으로 실행되었습니다.</div>`;
                 }
             } catch (err) {
-                showError(err.message);
+                resultsContainer.innerHTML = `<div class="p-3 bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 rounded border border-rose-200 dark:border-rose-800"><strong>Error:</strong> ${err.message}</div>`;
             }
         }
 
-        // --- 결과 테이블 렌더링 ---
-        function renderTable(columns, values) {
-            if (values.length === 0) {
-                resultsContainer.innerHTML = `
-                    <div class="text-gray-500 text-sm italic flex items-center gap-2">
-                        ${icons.info} 결과 행이 없습니다. (조회 조건에 맞는 데이터가 없음)
-                    </div>`;
-                return;
-            }
-
-            let theadHtml = columns.map(col => `<th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b">${col}</th>`).join('');
-            
-            let tbodyHtml = values.map(row => {
-                let rowHtml = row.map(val => {
-                    const displayVal = val === null ? '<span class="text-gray-400 italic">NULL</span>' : String(val);
-                    return `<td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${displayVal}</td>`;
-                }).join('');
-                return `<tr class="hover:bg-blue-50 transition-colors border-b last:border-b-0">${rowHtml}</tr>`;
-            }).join('');
-
-            resultsContainer.innerHTML = `
-                <div class="rounded border border-gray-200 shadow-sm overflow-hidden inline-block min-w-full">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>${theadHtml}</tr>
-                        </thead>
-                        <tbody class="bg-white">
-                            ${tbodyHtml}
-                        </tbody>
-                    </table>
-                </div>`;
-        }
-
-        // --- 에러 메세지 렌더링 ---
-        function showError(msg) {
-            resultsContainer.innerHTML = `
-                <div class="flex items-start gap-2 p-3 bg-red-50 text-red-700 rounded border border-red-200">
-                    ${icons.alert}
-                    <div>
-                        <h4 class="font-bold">SQL Error</h4>
-                        <p class="text-sm font-mono mt-1">${msg}</p>
-                    </div>
-                </div>`;
-        }
-
-        // --- 성공 메세지 렌더링 ---
-        function renderSuccess(msg) {
-            resultsContainer.innerHTML = `
-                <div class="flex items-center gap-2 text-green-600 font-semibold bg-green-50 p-3 rounded border border-green-200">
-                    ${icons.checkLarge}
-                    ${msg}
-                </div>`;
-        }
-
-        // --- 앱 시작 ---
         document.addEventListener('DOMContentLoaded', initApp);
-
     </script>
 </body>
 </html>
