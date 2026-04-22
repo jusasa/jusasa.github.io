@@ -1,36 +1,30 @@
-name: Deploy to GitHub Pages
+name: 자동 빌드 및 배포 (Deploy to GitHub Pages)
 
 on:
   push:
     branches:
-      - main # 메인 브랜치에 코드가 올라올 때마다 실행
+      - main # main 브랜치에 코드가 올라올 때마다 실행
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: 1. 내 코드 가져오기
+        uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 2. 파이썬 환경 세팅
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - name: Generate data.js
-        run: |
-          python build.py # 파이썬 스크립트 실행하여 data.js 갱신
+      - name: 3. data.js 자동 생성 (build.py 실행)
+        run: python build.py
 
-      - name: Commit and Push data.js
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.js
-          # 변경사항이 있을 때만 커밋
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update data.js" && git push)
-
-      - name: Deploy to GitHub Pages
+      - name: 4. GitHub Pages로 최종 배포
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: . # 현재 폴더의 모든 내용을 배포
-          branch: gh-pages # 배포용 브랜치 (설정에서 이 브랜치를 소스로 지정하세요)
+          branch: gh-pages # 배포 전용 브랜치 자동 생성
+          folder: . # 현재 폴더 전체를 배포
