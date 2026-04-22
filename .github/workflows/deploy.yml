@@ -27,7 +27,7 @@ jobs:
         run: python build.py
 
       - name: 4. GitHub Pages로 최종 배포
-        uses: JamesIves/github-pages-deploy-action@v5
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages # 배포 전용 브랜치 자동 생성
           folder: . # 현재 폴더 전체를 배포
