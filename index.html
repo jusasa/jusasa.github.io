@@ -3,101 +3,861 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>학습 자료 대시보드</title>
+    <title>IT 통합 학습 마스터리 대시보드</title>
+    <!-- Tailwind CSS & 외부 라이브러리 -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/sql-wasm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+    
+    <style>
+        /* ============================================
+           공통 스타일 시트 (최적화 결합)
+           ============================================ */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+        html, body { height: 100%; }
+        .code-editor { font-family: 'Consolas', 'Monaco', 'Courier New', monospace; tab-size: 4; }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (max-width: 768px) { .chart-container { height: 250px; } }
+        .card-hover { transition: all 0.2s ease-in-out; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        button { transition-colors: color 0.2s ease; transition-property: background-color, color, border-color; transition-timing-function: ease; transition-duration: 0.2s; }
+        /* Markdown 오버라이드 */
+        .markdown-body { background-color: transparent !important; font-family: inherit !important; color: inherit !important; }
+        .markdown-body pre { background-color: #f1f5f9 !important; border: 1px solid #e2e8f0 !important; }
+        @media (prefers-color-scheme: dark) {
+            .markdown-body pre { background-color: #0f172a !important; border-color: #1e293b !important; }
+            .markdown-body code { color: #e2e8f0 !important; background-color: rgba(255, 255, 255, 0.1) !important; }
+            .markdown-body table tr, .markdown-body table tr:nth-child(2n) { background-color: transparent !important; }
+            .markdown-body table th, .markdown-body table td { border-color: #334155 !important; }
+        }
+    </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans antialiased overflow-hidden flex h-screen">
 
-    <!-- 사이드바 -->
-    <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-slate-300 flex-shrink-0 hidden md:flex flex-col shadow-xl z-10">
-        <div class="p-6 bg-slate-950 dark:bg-black border-b border-slate-800 dark:border-slate-900">
-            <h1 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-                <span class="text-indigo-500">Study</span> Hub
-            </h1>
-            <p class="text-xs text-slate-400 mt-2">통합 학습 대시보드</p>
+    <!-- SPA 통합 사이드바 -->
+    <aside class="w-64 bg-slate-900 dark:bg-slate-950 text-slate-300 flex-shrink-0 hidden md:flex flex-col shadow-xl z-20">
+        <div class="p-6 bg-slate-950 dark:bg-black border-b border-slate-800 dark:border-slate-900" id="sidebar-header">
+            <!-- JS 동적 렌더링 영역 -->
         </div>
         <nav class="flex-1 overflow-y-auto py-4">
-            <ul class="space-y-1">
-                <li><a href="index.html" class="block px-6 py-3 bg-slate-800 dark:bg-slate-800 text-white border-l-4 border-indigo-500 font-medium">🏠 홈 (자료 모음)</a></li>
-                <li class="pt-4 pb-2 px-6 text-xs font-semibold text-slate-500 uppercase">개념 학습</li>
-                <li><a href="csharp.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent">🔷 C# 기초 (1)</a></li>
-                <li><a href="csharp2.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent">🔷 C# 심화 (2)</a></li>
-                <li><a href="java.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent">☕ JAVA 마스터</a></li>
-                <li><a href="database.html" class="block px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent">🗄️ DATA BASE</a></li>
+            <ul class="space-y-1" id="sidebar-nav">
+                <!-- JS 동적 렌더링 영역 -->
             </ul>
         </nav>
+        <div class="p-4 bg-slate-950 dark:bg-black text-xs text-center text-slate-500 border-t border-slate-800 dark:border-slate-900" id="sidebar-footer">
+            Interactive Dashboard
+        </div>
     </aside>
 
     <!-- 모바일 헤더 -->
     <div class="md:hidden fixed top-0 left-0 w-full bg-slate-900 dark:bg-slate-950 text-white z-50 flex justify-between items-center p-4 shadow-md">
-        <h1 class="text-xl font-bold text-indigo-400">Study Hub</h1>
+        <h1 class="text-xl font-bold" id="mobile-title">Study Hub</h1>
+        <select id="mobile-nav" class="bg-slate-800 dark:bg-slate-900 text-white border border-slate-700 dark:border-slate-800 rounded p-2 outline-none text-sm">
+            <!-- JS 동적 렌더링 영역 -->
+        </select>
     </div>
 
-    <!-- 메인 콘텐츠 -->
-    <main class="flex-1 overflow-y-auto p-6 md:p-10 pt-24 md:pt-10 relative bg-slate-50 dark:bg-slate-900">
-        <section class="content-section fade-in block max-w-5xl mx-auto">
+    <!-- 메인 콘텐츠 영역 -->
+    <main id="main-content" class="flex-1 overflow-y-auto p-6 md:p-10 pt-24 md:pt-10 relative bg-slate-50 dark:bg-slate-900 flex flex-col">
+        
+        <!-- ==================== 0. HOME (인덱스) ==================== -->
+        <div id="page-home" class="page-view max-w-5xl mx-auto w-full">
             <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
                 <h2 class="text-3xl font-bold text-slate-800 dark:text-slate-100">📚 공부 자료 모음</h2>
                 <p class="text-slate-500 dark:text-slate-400 mt-2">오늘도 성장을 위한 기록을 이어갑니다. 학습할 과목을 선택하세요.</p>
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-12">
-                <!-- 카드 1 -->
-                <a href="csharp.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:shadow-md transition-all group">
+                <button onclick="App.navigate('csharp1')" class="text-left bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:shadow-md transition-all group">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">🔷</div>
-                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">C# 프로그래밍 (1)</h3>
+                        <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 rounded-lg flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">🔷</div>
+                        <h3 class="text-xl font-bold">C# 프로그래밍 (1)</h3>
                     </div>
                     <p class="text-slate-600 dark:text-slate-400 text-sm">개발 환경, 빌드 프로세스, 객체지향 설계(OOP) 기초 및 데이터 구조에 대해 학습합니다.</p>
-                </a>
+                </button>
 
-                <!-- 카드 2 -->
-                <a href="csharp2.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:shadow-md transition-all group">
+                <button onclick="App.navigate('csharp2')" class="text-left bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:shadow-md transition-all group">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">🔷</div>
-                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">C# 심화 및 실습 (2)</h3>
+                        <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 rounded-lg flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">🔷</div>
+                        <h3 class="text-xl font-bold">C# 심화 및 실습 (2)</h3>
                     </div>
                     <p class="text-slate-600 dark:text-slate-400 text-sm">다차원 배열, 파일 I/O, 예외처리를 배우고 웹 기반 C# 플레이그라운드에서 실습합니다.</p>
-                </a>
+                </button>
 
-                <!-- 카드 3 -->
-                <a href="java.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-rose-500 dark:hover:border-rose-500 hover:shadow-md transition-all group">
+                <button onclick="App.navigate('java')" class="text-left bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-rose-500 hover:shadow-md transition-all group">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-rose-50 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-rose-600 group-hover:text-white transition-colors">☕</div>
-                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">JAVA 마스터 클래스</h3>
+                        <div class="w-12 h-12 bg-rose-50 dark:bg-rose-900/50 text-rose-600 rounded-lg flex items-center justify-center text-2xl group-hover:bg-rose-600 group-hover:text-white transition-colors">☕</div>
+                        <h3 class="text-xl font-bold">JAVA 마스터 클래스</h3>
                     </div>
                     <p class="text-slate-600 dark:text-slate-400 text-sm">java.lang 기본 클래스, 제네릭과 컬렉션, 그리고 람다와 스트림 문법을 익히고 실행합니다.</p>
-                </a>
+                </button>
 
-                <!-- 카드 4 -->
-                <a href="database.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 hover:shadow-md transition-all group">
+                <button onclick="App.navigate('database')" class="text-left bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:shadow-md transition-all group">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">🗄️</div>
-                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">DB 마스터 클래스</h3>
+                        <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/50 text-emerald-600 rounded-lg flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">🗄️</div>
+                        <h3 class="text-xl font-bold">DB 마스터 클래스</h3>
                     </div>
                     <p class="text-slate-600 dark:text-slate-400 text-sm">데이터베이스 시스템, 관계형 모델, SQL 기본 문법을 배우고 Web SQL 엔진으로 실습합니다.</p>
-                </a>
+                </button>
             </div>
 
             <header class="mb-6 border-b border-slate-200 dark:border-slate-700 pb-4 mt-8">
-                <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">✍️ 실습 및 평가</h2>
+                <h2 class="text-2xl font-bold">✍️ 실습 및 평가</h2>
             </header>
             <div class="grid grid-cols-1 gap-4">
-                <a href="problems.html" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all group flex items-center justify-between">
+                <button onclick="App.navigate('problems')" class="w-full text-left bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 transition-all group flex items-center justify-between">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-slate-100 dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 rounded-lg flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">📝</div>
+                        <div class="w-12 h-12 bg-slate-100 dark:bg-slate-700 text-indigo-600 rounded-lg flex items-center justify-center text-2xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">📝</div>
                         <div>
-                            <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">IT 종합 평가 문제지 대시보드</h3>
-                            <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">C#, Java, Database 모든 과목의 실습 문제를 통합 대시보드에서 풀어보세요.</p>
+                            <h3 class="text-xl font-bold">IT 종합 평가 문제지 대시보드</h3>
+                            <p class="text-slate-600 text-sm mt-1">C#, Java, Database 모든 과목의 실습 문제를 통합 대시보드에서 풀어보세요.</p>
                         </div>
                     </div>
-                    <div class="text-indigo-500 dark:text-indigo-400 font-bold group-hover:translate-x-2 transition-transform hidden md:block">
-                        문제 풀러 가기 &rarr;
-                    </div>
-                </a>
+                    <div class="text-indigo-500 font-bold group-hover:translate-x-2 transition-transform hidden md:block">문제 풀러 가기 &rarr;</div>
+                </button>
             </div>
-        </section>
+        </div>
+
+        <!-- ==================== 1. C# 기초 (csharp.html 내용 복원) ==================== -->
+        <div id="page-csharp1" class="page-view hidden max-w-5xl mx-auto w-full">
+            
+            <!-- SECTION: Overview -->
+            <section id="cs1-overview" class="cs1-sec block fade-in">
+                <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <h2 class="text-3xl font-bold">학습 오버뷰</h2>
+                </header>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mb-8">
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+                        이 섹션은 전체 C# 프로그래밍 강의의 핵심 주제 분포를 한눈에 파악할 수 있도록 돕습니다. 
+                        주차별로 나열된 강의 자료를 종합하여, 어떤 개념들이 과정의 주축을 이루고 있는지 도넛 차트를 통해 시각화했습니다. 
+                        이를 통해 학습자는 전체 숲을 보고 각 세부 주제로 깊이 들어갈 수 있습니다.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h3 class="text-xl font-semibold mb-6 text-center">주요 학습 주제 비중</h3>
+                        <div class="chart-container"><canvas id="overviewChart"></canvas></div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-center">
+                        <h3 class="text-xl font-semibold mb-4">핵심 성취 목표</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-3 text-xl">✔️</span>
+                                <div><strong class="block">개발 환경 및 빌드 이해</strong><span class="text-sm text-slate-500">Visual Studio를 활용한 소스코드 작성부터 실행 파일 생성까지의 과정 숙지.</span></div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-3 text-xl">✔️</span>
+                                <div><strong class="block">객체지향 설계(OOP)</strong><span class="text-sm text-slate-500">클래스, 속성(Property), 인덱서, 인터페이스를 활용한 다형성 및 캡슐화 구현.</span></div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-3 text-xl">✔️</span>
+                                <div><strong class="block">효율적인 데이터 관리</strong><span class="text-sm text-slate-500">다차원 배열 및 File I/O, JSON 직렬화를 통한 영구적 데이터 관리.</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Core & Build -->
+            <section id="cs1-core" class="cs1-sec hidden fade-in">
+                <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <h2 class="text-3xl font-bold">핵심 문법 및 빌드 프로세스</h2>
+                </header>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mb-8">
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+                        프로그램이 어떻게 작성되고 실행되는지 근본적인 과정을 이해하는 섹션입니다. 
+                        사람이 작성한 텍스트 코드가 기계가 이해할 수 있는 실행 파일로 변환되는 전체 흐름(빌드, 컴파일, 링크)을 
+                        인터랙티브 다이어그램을 통해 직관적으로 확인할 수 있습니다.
+                    </p>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                    <h3 class="text-xl font-semibold mb-6 text-center">C# 프로그램 빌드 순서</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 relative w-full max-w-4xl mx-auto px-4">
+                        <div class="group relative flex flex-col items-center cursor-pointer">
+                            <div class="w-24 h-24 bg-indigo-50 dark:bg-indigo-900/40 border-2 border-indigo-200 dark:border-indigo-800 rounded-lg flex items-center justify-center text-3xl shadow-sm group-hover:bg-indigo-100 transition-colors">📝</div>
+                            <span class="mt-3 font-semibold">소스 파일</span><span class="text-xs text-slate-500">*.cs</span>
+                        </div>
+                        <div class="hidden md:flex text-2xl text-slate-300 font-bold">&#8594;</div><div class="md:hidden text-2xl text-slate-300 font-bold">&#8595;</div>
+                        <div class="group relative flex flex-col items-center cursor-pointer">
+                            <div class="w-24 h-24 bg-amber-50 dark:bg-amber-900/40 border-2 border-amber-200 dark:border-amber-800 rounded-lg flex items-center justify-center text-3xl shadow-sm group-hover:bg-amber-100 transition-colors">⚙️</div>
+                            <span class="mt-3 font-semibold">컴파일</span><span class="text-xs text-slate-500">기계어 변환</span>
+                        </div>
+                        <div class="hidden md:flex text-2xl text-slate-300 font-bold">&#8594;</div><div class="md:hidden text-2xl text-slate-300 font-bold">&#8595;</div>
+                        <div class="group relative flex flex-col items-center cursor-pointer">
+                            <div class="w-24 h-24 bg-emerald-50 dark:bg-emerald-900/40 border-2 border-emerald-200 dark:border-emerald-800 rounded-lg flex items-center justify-center text-3xl shadow-sm group-hover:bg-emerald-100 transition-colors">🧱</div>
+                            <span class="mt-3 font-semibold">오브젝트 파일</span><span class="text-xs text-slate-500">중간 산출물</span>
+                        </div>
+                        <div class="hidden md:flex text-2xl text-slate-300 font-bold">&#8594;</div><div class="md:hidden text-2xl text-slate-300 font-bold">&#8595;</div>
+                        <div class="group relative flex flex-col items-center cursor-pointer">
+                            <div class="w-24 h-24 bg-blue-50 dark:bg-blue-900/40 border-2 border-blue-200 dark:border-blue-800 rounded-lg flex items-center justify-center text-3xl shadow-sm group-hover:bg-blue-100 transition-colors">🔗</div>
+                            <span class="mt-3 font-semibold">링크</span><span class="text-xs text-slate-500">라이브러리 결합</span>
+                        </div>
+                        <div class="hidden md:flex text-2xl text-slate-300 font-bold">&#8594;</div><div class="md:hidden text-2xl text-slate-300 font-bold">&#8595;</div>
+                        <div class="group relative flex flex-col items-center cursor-pointer">
+                            <div class="w-24 h-24 bg-rose-50 dark:bg-rose-900/40 border-2 border-rose-200 dark:border-rose-800 rounded-lg flex items-center justify-center text-3xl shadow-sm group-hover:bg-rose-100 transition-colors">🚀</div>
+                            <span class="mt-3 font-semibold">실행 파일</span><span class="text-xs text-slate-500">*.exe</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: OOP & Interfaces -->
+            <section id="cs1-oop" class="cs1-sec hidden fade-in">
+                <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <h2 class="text-3xl font-bold">객체지향 설계 및 인터페이스</h2>
+                </header>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mb-8">
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+                        클래스를 통한 데이터 캡슐화부터, 인터페이스를 활용한 다형성 구현까지 객체지향의 핵심을 다룹니다.
+                        단순한 변수 접근(필드)을 넘어 속성(Property)과 인덱서(Indexer)를 통해 데이터를 안전하게 관리하고,
+                        구현부가 없는 '기능의 약속'인 인터페이스가 어떻게 유연한 코드 구조를 만드는지 탐색할 수 있습니다.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h3 class="text-xl font-bold border-b pb-2 mb-4">속성 (Property) & 인덱서</h3>
+                        <div class="space-y-4">
+                            <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
+                                <h4 class="font-semibold text-indigo-600 mb-2">왜 속성을 사용하는가?</h4>
+                                <ul class="list-disc pl-5 text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                    <li>데이터 보호 (캡슐화) 및 제어</li>
+                                    <li>잘못된 값 입력 방지 (예: 나이가 음수)</li>
+                                    <li>읽기 전용(`get`), 쓰기 전용 구현 가능</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900 dark:bg-black text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto">
+<pre><code>private int age;
+public int Age 
+{
+  get { return age; }
+  set { 
+    if(value < 0) return; 
+    age = value; 
+  }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+                        <h3 class="text-xl font-bold border-b pb-2 mb-4">인터페이스 (Interface)</h3>
+                        <div class="space-y-4">
+                            <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
+                                <h4 class="font-semibold text-indigo-600 mb-2">인터페이스의 특징</h4>
+                                <ul class="list-disc pl-5 text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                    <li>클래스가 반드시 구현해야 하는 <strong>기능의 규약</strong></li>
+                                    <li>구현부 없음 (선언만 존재), 객체 생성 불가(`new` 불가)</li>
+                                    <li>다중 상속 가능</li>
+                                    <li><strong>다형성</strong> 구현의 핵심 (예: 무기 교체 시스템)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900 dark:bg-black text-blue-300 p-4 rounded-lg font-mono text-sm overflow-x-auto">
+<pre><code>interface IWeapon { 
+  void Attack(); 
+}
+
+class Sword : IWeapon {
+  public void Attack() {
+    Console.WriteLine("칼로 공격!");
+  }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Data Structures (Arrays) -->
+            <section id="cs1-arrays" class="cs1-sec hidden fade-in">
+                <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <h2 class="text-3xl font-bold">데이터 구조: 배열(Array) 분석</h2>
+                </header>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mb-8">
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+                        동일한 자료형의 데이터를 체계적으로 관리하는 배열의 종류와 특징을 비교합니다.
+                        단순한 목록형 데이터(1차원)부터 표 형태의 데이터(2차원), 그리고 복잡한 계층형 데이터(가변 배열)의 
+                        메모리 할당 및 선언 방식을 차트와 탭 인터페이스를 통해 효율적으로 파악할 수 있습니다.
+                    </p>
+                </div>
+                <div class="mb-8">
+                    <div class="flex space-x-2 border-b border-slate-200 dark:border-slate-700 mb-4" id="array-tabs">
+                        <button class="array-tab active px-4 py-2 font-medium text-indigo-600 border-b-2 border-indigo-600" data-target="tab-1d">1차원 배열</button>
+                        <button class="array-tab px-4 py-2 font-medium text-slate-500 hover:text-indigo-600 border-b-2 border-transparent" data-target="tab-2d">2차원 배열</button>
+                        <button class="array-tab px-4 py-2 font-medium text-slate-500 hover:text-indigo-600 border-b-2 border-transparent" data-target="tab-jagged">가변 배열</button>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 min-h-[150px]">
+                        <div id="tab-1d" class="array-content block fade-in">
+                            <h4 class="font-bold text-lg mb-2">1차원 배열 (1D Array)</h4>
+                            <p class="text-sm text-slate-600 mb-3">가장 기본적인 형태. 하나의 선(Line) 구조로 데이터를 저장합니다.</p>
+                            <code class="bg-slate-100 dark:bg-slate-900 px-2 py-1 rounded text-rose-600 font-mono text-sm">int[] numbers = new int[5];</code>
+                            <div class="mt-4 flex space-x-1">
+                                <div class="w-10 h-10 border-2 border-indigo-300 bg-indigo-50 flex items-center justify-center text-xs text-indigo-800">0</div>
+                                <div class="w-10 h-10 border-2 border-indigo-300 bg-indigo-50 flex items-center justify-center text-xs text-indigo-800">1</div>
+                                <div class="w-10 h-10 border-2 border-indigo-300 bg-indigo-50 flex items-center justify-center text-xs text-indigo-800">2</div>
+                                <div class="w-10 h-10 border-2 border-indigo-300 bg-indigo-50 flex items-center justify-center text-xs text-indigo-800">3</div>
+                            </div>
+                        </div>
+                        <div id="tab-2d" class="array-content hidden fade-in">
+                            <h4 class="font-bold text-lg mb-2">2차원 배열 (2D Array)</h4>
+                            <p class="text-sm text-slate-600 mb-3">행(Row)과 열(Column)로 구성된 표(Table) 구조. 모든 행의 길이가 동일합니다.</p>
+                            <code class="bg-slate-100 dark:bg-slate-900 px-2 py-1 rounded text-rose-600 font-mono text-sm">int[,] matrix = new int[2, 3];</code>
+                            <div class="mt-4 flex flex-col space-y-1">
+                                <div class="flex space-x-1">
+                                    <div class="w-10 h-10 border-2 border-emerald-300 bg-emerald-50 flex items-center justify-center text-xs text-emerald-800">0,0</div>
+                                    <div class="w-10 h-10 border-2 border-emerald-300 bg-emerald-50 flex items-center justify-center text-xs text-emerald-800">0,1</div>
+                                    <div class="w-10 h-10 border-2 border-emerald-300 bg-emerald-50 flex items-center justify-center text-xs text-emerald-800">0,2</div>
+                                </div>
+                                <div class="flex space-x-1">
+                                    <div class="w-10 h-10 border-2 border-emerald-300 bg-emerald-50 flex items-center justify-center text-xs text-emerald-800">1,0</div>
+                                    <div class="w-10 h-10 border-2 border-emerald-300 bg-emerald-50 flex items-center justify-center text-xs text-emerald-800">1,1</div>
+                                    <div class="w-10 h-10 border-2 border-emerald-300 bg-emerald-50 flex items-center justify-center text-xs text-emerald-800">1,2</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-jagged" class="array-content hidden fade-in">
+                            <h4 class="font-bold text-lg mb-2">가변 배열 (Jagged Array)</h4>
+                            <p class="text-sm text-slate-600 mb-3">'배열의 배열'. 각 행의 열 크기가 다를 수 있어 동적인 메모리 관리에 유리합니다.</p>
+                            <code class="bg-slate-100 dark:bg-slate-900 px-2 py-1 rounded text-rose-600 font-mono text-sm">int[][] jagged = new int[3][];</code>
+                            <div class="mt-4 flex flex-col space-y-2">
+                                <div class="flex space-x-1 items-center"><span class="text-xs text-slate-400 w-8">[0] &rarr;</span><div class="w-8 h-8 border-2 border-amber-300 bg-amber-50"></div><div class="w-8 h-8 border-2 border-amber-300 bg-amber-50"></div></div>
+                                <div class="flex space-x-1 items-center"><span class="text-xs text-slate-400 w-8">[1] &rarr;</span><div class="w-8 h-8 border-2 border-amber-300 bg-amber-50"></div><div class="w-8 h-8 border-2 border-amber-300 bg-amber-50"></div><div class="w-8 h-8 border-2 border-amber-300 bg-amber-50"></div><div class="w-8 h-8 border-2 border-amber-300 bg-amber-50"></div></div>
+                                <div class="flex space-x-1 items-center"><span class="text-xs text-slate-400 w-8">[2] &rarr;</span><div class="w-8 h-8 border-2 border-amber-300 bg-amber-50"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h3 class="text-xl font-semibold mb-6 text-center">구조별 상대적 복잡도 및 메모리 유연성 비교</h3>
+                    <div class="chart-container"><canvas id="arrayChart"></canvas></div>
+                    <p class="text-center text-sm text-slate-500 mt-4">* 가변 배열은 구조적 복잡도가 높지만 메모리 낭비를 줄이는 유연성을 제공합니다.</p>
+                </div>
+            </section>
+
+            <!-- SECTION: Data Management -->
+            <section id="cs1-data" class="cs1-sec hidden fade-in">
+                <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <h2 class="text-3xl font-bold">예외 처리 및 데이터 직렬화(I/O)</h2>
+                </header>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mb-8">
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+                        프로그램의 안정성을 보장하는 <strong>예외 처리(Exception Handling)</strong> 메커니즘과,
+                        메모리의 객체 데이터를 파일이나 네트워크용 텍스트 포맷으로 변환하는 <strong>직렬화(Serialization)</strong> 개념을 다룹니다.
+                        직접 인터랙션 버튼을 눌러 예외 발생 시 코드 흐름이나 객체가 JSON으로 변환되는 과정을 시뮬레이션해 보세요.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100">
+                        <h3 class="text-xl font-bold mb-4 flex justify-between items-center">
+                            <span>예외 처리 (Try-Catch-Finally)</span>
+                            <button id="btn-throw" class="px-3 py-1 bg-rose-500 text-white text-sm rounded hover:bg-rose-600">예외 발생시키기</button>
+                        </h3>
+                        <div class="space-y-2 font-mono text-sm relative">
+                            <div id="block-try" class="p-3 bg-slate-100 dark:bg-slate-900 border-l-4 border-slate-400 rounded-r transition-colors"><span class="text-indigo-600 font-bold">try</span> {<br>&nbsp;&nbsp;<span id="code-normal" class="text-slate-600">// 정상 코드 실행 중...</span><br>}</div>
+                            <div id="block-catch" class="p-3 bg-slate-100 dark:bg-slate-900 border-l-4 border-slate-400 rounded-r transition-colors"><span class="text-rose-600 font-bold">catch</span> (Exception ex) {<br>&nbsp;&nbsp;<span id="code-error" class="text-slate-600">// 오류 처리 (대기 중)</span><br>}</div>
+                            <div id="block-finally" class="p-3 bg-slate-100 dark:bg-slate-900 border-l-4 border-slate-400 rounded-r transition-colors"><span class="text-emerald-600 font-bold">finally</span> {<br>&nbsp;&nbsp;<span class="text-slate-600">// 무조건 실행 (자원 해제)</span><br>}</div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100">
+                        <h3 class="text-xl font-bold mb-4 flex justify-between items-center">
+                            <span>직렬화 (Serialization)</span>
+                            <button id="btn-serialize" class="px-3 py-1 bg-indigo-500 text-white text-sm rounded hover:bg-indigo-600">JSON 변환</button>
+                        </h3>
+                        <div class="flex items-center justify-between mt-8">
+                            <div class="w-1/3 bg-slate-50 border border-slate-200 p-3 rounded text-center dark:bg-slate-800 dark:border-slate-700">
+                                <div class="font-bold mb-2">C# Object</div>
+                                <div class="text-xs text-left text-indigo-700 font-mono bg-indigo-50 p-2 rounded dark:bg-indigo-900/50 dark:text-indigo-300">Person p = new Person();<br>p.Name = "홍길동";<br>p.Age = 30;</div>
+                            </div>
+                            <div class="text-2xl text-slate-300 font-bold px-2" id="serialize-arrow">&#8594;</div>
+                            <div class="w-1/3 bg-slate-50 border border-slate-200 p-3 rounded text-center transition-all duration-500 dark:bg-slate-800 dark:border-slate-700" id="json-box">
+                                <div class="font-bold mb-2">JSON Text</div>
+                                <div class="text-xs text-left text-slate-400 font-mono bg-slate-100 p-2 rounded dark:bg-slate-900 dark:text-slate-500" id="json-code">(대기 중...)</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-4 text-center">객체를 저장하거나 네트워크로 전송 가능한 포맷으로 변환합니다.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== 2. C# 심화 (csharp2.html 내용 복원) ==================== -->
+        <div id="page-csharp2" class="page-view hidden max-w-5xl mx-auto w-full">
+            <section id="cs2-intro" class="cs2-sec block fade-in">
+                <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <h2 class="text-3xl font-bold">C# 언어 개요 및 특징</h2>
+                    <p class="text-slate-500 mt-2">Microsoft에서 개발한 강력하고 배우기 쉬운 완전한 객체지향 언어입니다.</p>
+                </header>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 mb-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+                        <h3 class="text-lg font-bold text-indigo-600 mb-4">C#으로 할 수 있는 것들</h3>
+                        <ul class="space-y-4 text-slate-700 dark:text-slate-300">
+                            <li class="flex items-start gap-3"><span class="text-2xl">🖥️</span><div><strong>데스크톱 응용 프로그램:</strong> WinForms, WPF를 활용한 윈도우용 소프트웨어 (예: 계산기, 사내 관리 프로그램)</div></li>
+                            <li class="flex items-start gap-3"><span class="text-2xl">🎮</span><div><strong>게임 프로그래밍:</strong> Unity 엔진을 기반으로 한 2D/3D 게임 개발 (예: 콘솔 RPG 게임 프로젝트)</div></li>
+                            <li class="flex items-start gap-3"><span class="text-2xl">🌐</span><div><strong>웹 및 클라우드:</strong> ASP.NET을 이용한 웹 서버 및 클라우드 서비스 개발</div></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 class="text-lg font-bold text-indigo-600 mb-4">언어 주요 특징</h3>
+                        <div class="chart-container"><canvas id="featureChart"></canvas></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cs2-oop" class="cs2-sec hidden fade-in">
+                <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <h2 class="text-3xl font-bold">객체지향(OOP) 문법 및 활용</h2>
+                    <p class="text-slate-500 mt-2">클래스, 속성, 인덱서, 그리고 다형성의 핵심인 인터페이스를 배웁니다.</p>
+                </header>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 col-span-1">
+                        <h3 class="font-bold text-lg mb-2 border-b pb-2">핵심 문법 요소</h3>
+                        <ul class="space-y-3 mt-4 text-sm text-slate-600 dark:text-slate-400">
+                            <li><strong class="text-indigo-600">클래스(Class):</strong> 객체의 설계도 (예: Player, Monster)</li>
+                            <li><strong class="text-indigo-600">속성(Property):</strong> 변수처럼 보이지만 내부적으로 get/set 메서드로 동작하여 데이터 캡슐화 및 유효성 검사 수행.</li>
+                            <li><strong class="text-indigo-600">인덱서(Indexer):</strong> 객체를 배열처럼 `[]`로 접근하게 해주는 문법.</li>
+                            <li><strong class="text-indigo-600">인터페이스(Interface):</strong> 다중 상속이 가능하며, 구체적 구현 없이 '기능의 약속'만 정의하여 다형성을 제공.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 col-span-1 lg:col-span-2">
+                        <h3 class="font-bold text-lg mb-4">실제 사용 예시 (Real-world Use Cases)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded border border-slate-200 hover:shadow-md transition-shadow">
+                                <div class="text-2xl mb-2">⚔️</div><h4 class="font-bold">RPG 게임 전투 시스템</h4>
+                                <p class="text-xs text-slate-500 mt-1">`Player`와 `Monster` 클래스를 정의. 각 객체는 체력(HP) 속성을 가지며, 무기 인터페이스(`IWeapon`)를 통해 다형성(검, 총 등)을 구현하여 공격(`Attack()`) 메서드 실행.</p>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded border border-slate-200 hover:shadow-md transition-shadow">
+                                <div class="text-2xl mb-2">🏠</div><h4 class="font-bold">스마트홈 기기 제어</h4>
+                                <p class="text-xs text-slate-500 mt-1">`IPower`(전원 켜기/끄기), `IInternet`(네트워크 연결) 인터페이스를 분리. 스마트TV, 밥솥 클래스가 필요한 규약만 다중 상속받아 각각의 방식대로 기능 구현.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cs2-array" class="cs2-sec hidden fade-in">
+                <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <h2 class="text-3xl font-bold">다차원 배열과 가변 배열</h2>
+                    <p class="text-slate-500 mt-2">같은 자료형의 데이터를 묶어서 관리하는 구조. 차원(Dimension)에 따라 활용처가 다릅니다.</p>
+                </header>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="bg-slate-100 dark:bg-slate-700/50 px-4 py-2 border-b border-slate-200 font-bold">1차원 배열</div>
+                        <div class="p-4">
+                            <code class="text-xs bg-slate-800 text-green-400 px-2 py-1 rounded block mb-3">int[] scores = new int[5];</code>
+                            <p class="text-sm text-slate-600 mb-4">단일 목록형 데이터를 저장합니다. 반복문(`for`)과 함께 사용되어 효율성을 극대화합니다.</p>
+                            <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-lg dark:bg-indigo-900/30 dark:border-indigo-800"><strong class="text-xs text-indigo-800 block mb-1">실 사용 예시: 학생 성적 관리</strong><span class="text-xs text-slate-600 dark:text-slate-400">5명의 학생 점수를 하나의 배열에 담고, 반복문으로 총점, 평균, 최고/최저점을 계산.</span></div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="bg-slate-100 dark:bg-slate-700/50 px-4 py-2 border-b border-slate-200 font-bold">2차원 배열</div>
+                        <div class="p-4">
+                            <code class="text-xs bg-slate-800 text-green-400 px-2 py-1 rounded block mb-3">int[,] lotto = new int[5, 6];</code>
+                            <p class="text-sm text-slate-600 mb-4">행과 열로 구성된 표(Table/Grid) 형태의 데이터를 저장합니다.</p>
+                            <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg dark:bg-emerald-900/30 dark:border-emerald-800"><strong class="text-xs text-emerald-800 block mb-1">실 사용 예시: 로또 번호 생성기</strong><span class="text-xs text-slate-600 dark:text-slate-400">5줄(행)의 로또를 구매할 때, 각 줄마다 6개(열)의 당첨 번호를 중복 없이 저장하고 출력.</span></div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="bg-slate-100 dark:bg-slate-700/50 px-4 py-2 border-b border-slate-200 font-bold">가변 배열 (Jagged)</div>
+                        <div class="p-4">
+                            <code class="text-xs bg-slate-800 text-green-400 px-2 py-1 rounded block mb-3">int[][] seats = new int[3][];</code>
+                            <p class="text-sm text-slate-600 mb-4">배열 안의 배열. 각 행마다 열의 길이가 다를 수 있어 메모리를 유연하게 사용합니다.</p>
+                            <div class="bg-amber-50 border border-amber-100 p-3 rounded-lg dark:bg-amber-900/30 dark:border-amber-800"><strong class="text-xs text-amber-800 block mb-1">실 사용 예시: 영화관 좌석 예약</strong><span class="text-xs text-slate-600 dark:text-slate-400">1관(10석), 2관(8석), 3관(12석)처럼 상영관마다 다른 좌석 수를 가변 배열로 최적화하여 구현.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cs2-io" class="cs2-sec hidden fade-in">
+                <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <h2 class="text-3xl font-bold">예외 처리 및 파일/데이터 관리</h2>
+                    <p class="text-slate-500 mt-2">프로그램의 안정성을 높이고 데이터를 영구적으로 보존하는 기법입니다.</p>
+                </header>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-rose-200 border-t-4 dark:border-t-rose-500">
+                        <h3 class="font-bold text-lg mb-2">예외 처리 (try-catch-finally)</h3>
+                        <p class="text-sm text-slate-600 mb-4">실행 중 발생하는 오류로 인한 프로그램의 강제 종료를 방지합니다.</p>
+                        <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded text-sm font-mono">
+                            <span class="text-indigo-600 font-bold">try</span> {<br>&nbsp;&nbsp;<span class="text-slate-500">// 오류 발생 가능 코드 (ex: 0으로 나누기)</span><br>} <span class="text-rose-600 font-bold">catch</span> (DivideByZeroException) {<br>&nbsp;&nbsp;<span class="text-slate-500">// 예외 발생 시 처리 로직</span><br>} <span class="text-emerald-600 font-bold">finally</span> {<br>&nbsp;&nbsp;<span class="text-slate-500">// 항상 실행 (ex: ATM 카드 반환, 자원 해제)</span><br>}
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-indigo-200 border-t-4 dark:border-t-indigo-500">
+                        <h3 class="font-bold text-lg mb-2">파일 입출력 & JSON 직렬화</h3>
+                        <p class="text-sm text-slate-600 mb-4">메모리의 휘발성 데이터를 `FileStream`, `StreamWriter`를 통해 하드디스크에 저장합니다.</p>
+                        <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded">
+                            <strong class="text-sm text-indigo-700 block mb-2">실 사용 예시: 학생 데이터 저장/불러오기</strong>
+                            <ul class="text-xs text-slate-600 space-y-2">
+                                <li><strong>텍스트 기반(TXT):</strong> 데이터를 구분자(',')로 저장 후 분리(`Split`)하여 읽기.</li>
+                                <li><strong>직렬화(JSON):</strong> `Student` 객체 자체를 표준 텍스트 포맷(JSON)으로 변환하여 통신/저장. <code>JsonSerializer.Serialize(student)</code> 활용.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== 3. JAVA (java.html 내용 복원) ==================== -->
+        <div id="page-java" class="page-view hidden max-w-5xl mx-auto w-full">
+            <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                <h2 class="text-3xl font-bold" id="java-title">11장. 기본 클래스</h2>
+            </header>
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mb-8">
+                <p id="java-desc" class="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">자바 프로그래밍의 뼈대가 되는 클래스들입니다.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-lg border border-slate-100 dark:border-slate-700">
+                    <h3 class="font-bold text-lg text-indigo-600 dark:text-indigo-400 mb-2">📌 핵심 특징</h3>
+                    <ul id="java-features" class="list-disc list-inside space-y-1 text-sm text-slate-700 dark:text-slate-300"></ul>
+                </div>
+                <div class="bg-indigo-50 dark:bg-indigo-900/30 p-5 rounded-lg border border-indigo-100 dark:border-indigo-800">
+                    <h3 class="font-bold text-lg text-indigo-700 dark:text-indigo-400 mb-2">💼 실무 활용 예시</h3>
+                    <ul id="java-uses" class="list-disc list-inside space-y-1 text-sm text-indigo-900 dark:text-indigo-200"></ul>
+                </div>
+            </div>
+
+            <div class="rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm mb-8">
+                <div class="flex justify-between items-center bg-slate-100 dark:bg-slate-800/80 px-4 py-3 border-b border-slate-200 dark:border-slate-700">
+                    <span id="java-filename" class="text-slate-700 dark:text-slate-200 text-sm font-bold flex items-center">LangTest.java</span>
+                    <button onclick="App.runJavaCode()" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-1.5 rounded-md text-sm font-bold shadow flex items-center gap-2 transition-colors">▶ 실행 (Run)</button>
+                </div>
+                <div class="flex flex-col lg:flex-row">
+                    <textarea id="java-editor" spellcheck="false" class="code-editor lg:w-2/3 h-64 bg-slate-900 dark:bg-black text-green-400 p-4 focus:outline-none resize-none text-sm"></textarea>
+                    <div class="bg-black dark:bg-gray-950 lg:w-1/3 p-4 flex flex-col border-t lg:border-t-0 lg:border-l border-slate-700">
+                        <div class="text-slate-500 text-xs mb-2 font-mono">Console Output:</div>
+                        <div id="java-output" class="text-slate-300 font-mono text-sm whitespace-pre-wrap flex-1">대기 중...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 4. DATABASE (database.html 내용 복원) ==================== -->
+        <div id="page-database" class="page-view hidden h-full w-full max-w-none">
+            <!-- Split Pane Structure -->
+            <div class="flex flex-col md:flex-row h-full w-full">
+                <!-- 좌측: 학습 콘텐츠 -->
+                <div class="flex-1 overflow-y-auto p-6 md:p-10 relative">
+                    <header class="mb-8 border-b border-slate-200 dark:border-slate-700 pb-4">
+                        <h2 id="db-header-title" class="text-3xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">DB 이론</h2>
+                    </header>
+                    <div id="db-study-content" class="fade-in space-y-6"></div>
+                </div>
+                <!-- 우측: SQL 에디터 -->
+                <div class="w-full md:w-5/12 border-l border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex flex-col shadow-lg z-10 min-h-[500px]">
+                    <div class="bg-slate-800 dark:bg-slate-950 text-white px-4 py-3 flex justify-between items-center shrink-0">
+                        <span class="font-bold text-sm flex items-center gap-2">💻 MySQL 플레이그라운드</span>
+                        <span id="db-status" class="text-xs text-yellow-400">Loading Engine...</span>
+                    </div>
+                    <div class="h-2/5 shrink-0 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 relative flex flex-col">
+                        <textarea id="sql-input" class="flex-1 w-full p-4 font-mono text-sm bg-transparent outline-none resize-none text-slate-800 dark:text-slate-200" spellcheck="false" placeholder="SQL 명령어를 입력하세요..."></textarea>
+                        <div class="absolute bottom-3 right-3">
+                            <button id="run-btn" disabled class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded shadow-md font-bold text-sm disabled:opacity-50 transition-colors">▶ SQL 실행</button>
+                        </div>
+                    </div>
+                    <div class="flex-1 flex flex-col bg-white dark:bg-slate-800 overflow-hidden">
+                        <div class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 px-4 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0">실행 결과</div>
+                        <div id="results-container" class="flex-1 p-4 overflow-auto bg-white dark:bg-slate-800 text-slate-400 text-sm flex items-center justify-center text-center">
+                            SQL을 작성하고 실행 버튼을 눌러보세요.<br>(기본 학생/과목/수강 테이블이 준비되어 있습니다.)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 5. PROBLEMS (problems.html 내용 복원) ==================== -->
+        <div id="page-problems" class="page-view hidden max-w-5xl mx-auto w-full h-full">
+            <div class="bg-white dark:bg-slate-800 p-6 md:p-10 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 min-h-full">
+                <article id="md-content" class="markdown-body fade-in">
+                    <div class="flex items-center justify-center py-20"><p class="text-slate-500">문제를 불러오는 중입니다...</p></div>
+                </article>
+            </div>
+        </div>
+
     </main>
+
+    <!-- SPA 통합 자바스크립트 관리자 -->
+    <script>
+        const App = {
+            state: {
+                page: 'home',
+                sub: { csharp1: 'cs1-overview', csharp2: 'cs2-intro', java: 'java-ch11', database: 'ch01', problems: 'database' },
+                dbEngine: null,
+                cs1ChartLoaded: false,
+                cs2ChartLoaded: false,
+                dbEngineLoaded: false
+            },
+            
+            config: {
+                home: { title: '<span class="text-indigo-500">Study</span> Hub', nav: [{ label: '🏠 홈 (자료 모음)', target: 'home', active: true }] },
+                csharp1: { title: '<span class="text-indigo-500">C#</span> Mastery', nav: [{ label: '← 홈으로 돌아가기', target: 'home' }, { label: '📊 학습 오버뷰', sub: 'cs1-overview' }, { label: '⚙️ 핵심 및 빌드 환경', sub: 'cs1-core' }, { label: '🧩 객체지향 및 인터페이스', sub: 'cs1-oop' }, { label: '📦 데이터 구조 (배열)', sub: 'cs1-arrays' }, { label: '💾 예외 처리 및 파일 I/O', sub: 'cs1-data' }]},
+                csharp2: { title: '<span class="text-indigo-500">C#</span> Hub', nav: [{ label: '← 홈으로 돌아가기', target: 'home' }, { label: '📚 언어 개요', sub: 'cs2-intro' }, { label: '🧩 객체지향 및 인터페이스', sub: 'cs2-oop' }, { label: '📦 다차원 배열 구조', sub: 'cs2-array' }, { label: '💾 파일 I/O 및 예외처리', sub: 'cs2-io' }]},
+                java: { title: '<span class="text-rose-500">☕ Java</span> Hub', nav: [{ label: '← 홈으로 돌아가기', target: 'home' }, { label: '11장. 기본 클래스', sub: 'java-ch11' }, { label: '12장. 제네릭과 컬렉션', sub: 'java-ch12' }, { label: '13장. 람다와 스트림', sub: 'java-ch13' }]},
+                database: { title: '<span class="text-emerald-500">🗄️ DB</span> Hub', nav: [{ label: '← 홈으로 돌아가기', target: 'home' }, { label: 'CH01. DB 개념', sub: 'ch01' }, { label: 'CH02. DB 시스템', sub: 'ch02' }, { label: 'CH03. 관계형 모델', sub: 'ch03' }, { label: 'CH04. 관계 대수', sub: 'ch04' }, { label: 'CH05. SQL 기초 (실습)', sub: 'ch05' }]},
+                problems: { title: '<span class="text-slate-500">📝 IT</span> Mastery', nav: [{ label: '← 홈으로 돌아가기', target: 'home' }, { label: '🗄️ Database 시험', sub: 'database' }, { label: '⚙️ C# 문제지', sub: 'csharp' }, { label: '☕ Java 실습 문제', sub: 'java' }]}
+            },
+
+            // 원래 파일에 있던 DB 컨텐츠들 완벽 복원
+            dbContents: {
+                ch01: `<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터 vs 정보</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>데이터 (Data):</strong> 현실 세계에서 관찰이나 측정을 통해 수집된 순수한 사실이나 값</li><li><strong>정보 (Information):</strong> 데이터를 의사결정에 활용할 수 있도록 가공/처리한 결과물</li></ul></div><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터베이스의 4가지 정의</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>공용 데이터:</strong> 여러 사용자나 응용 프로그램이 공동으로 소유</li><li><strong>통합 데이터:</strong> 중복을 최소화하여 하나로 통합</li><li><strong>운영 데이터:</strong> 조직 운영을 위해 필수적인 데이터</li><li><strong>저장 데이터:</strong> 컴퓨터가 접근 가능한 매체에 디지털화되어 저장</li></ul></div>`,
+                ch02: `<h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400">데이터베이스 시스템 (DBS)</h2><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">데이터베이스 언어</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>DDL (데이터 정의어):</strong> DB 구조, 스키마 정의 (CREATE, ALTER, DROP)</li><li><strong>DML (데이터 조작어):</strong> 데이터 검색, 삽입, 수정, 삭제 (SELECT, INSERT, UPDATE, DELETE)</li><li><strong>DCL (데이터 제어어):</strong> 보안, 권한 제어 (GRANT, REVOKE)</li></ul></div><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">ANSI/SPARC 3단계 스키마</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>외부 스키마:</strong> 개별 사용자 관점 (뷰)</li><li><strong>개념 스키마:</strong> 조직 전체 관점 (통합 논리 구조)</li><li><strong>내부 스키마:</strong> 물리적 저장 장치 관점</li></ul><div class="mt-3 p-3 bg-blue-50 text-blue-900 rounded border border-blue-200 dark:bg-blue-900/30 dark:text-blue-200"><strong>핵심 목적:</strong> 스키마 간 사상을 통해 응용 프로그램과 구조를 분리하는 <strong>데이터 독립성</strong> 제공</div></div>`,
+                ch03: `<h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400">관계형 데이터 모델 (RDM)</h2><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">릴레이션 구조</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>속성 (Attribute):</strong> 열(Column). 총 개수 = <strong>차수(Degree)</strong></li><li><strong>투플 (Tuple):</strong> 행(Row). 총 개수 = <strong>카디널리티(Cardinality)</strong></li><li><strong>도메인 (Domain):</strong> 속성이 가질 수 있는 값들의 집합</li></ul></div><div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">키(Key)와 무결성 제약조건</h3><ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 text-sm"><li><strong>후보키:</strong> 유일성 + 최소성 만족</li><li><strong>기본키 (Primary Key):</strong> 후보키 중 대표. <strong>개체 무결성</strong> (NULL/중복 불가)</li><li><strong>외래키 (Foreign Key):</strong> 다른 릴레이션 참조. <strong>참조 무결성</strong></li></ul></div>`,
+                ch04: `<h2 class="text-2xl font-bold text-blue-800 dark:text-blue-400">관계 대수 (Relational Algebra)</h2><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">필수 5대 연산</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-blue-600 dark:text-blue-400">합집합 (∪), 차집합 (-)</strong></div><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-blue-600 dark:text-blue-400">카티션 프로덕트 (×)</strong><br/>모든 투플 조합 생성</div><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-purple-600 dark:text-purple-400">셀렉트 (σ)</strong><br/>조건 만족 투플 추출 (수평 분할)</div><div class="p-3 bg-gray-50 dark:bg-slate-900 rounded text-sm"><strong class="text-purple-600 dark:text-purple-400">프로젝트 (π)</strong><br/>특정 속성 추출 (수직 분할)</div></div></div>`,
+                ch05: `<h2 class="text-lg font-bold mb-3 text-emerald-700 dark:text-emerald-400">MySQL 데이터 조작문 가이드</h2><div class="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700"><h3 class="text-lg font-bold mb-2 text-indigo-700 dark:text-indigo-400">1. 기본 검색 및 조인 (SELECT)</h3><pre class="bg-gray-800 text-green-400 p-3 rounded text-sm overflow-x-auto dark:bg-black"><code>-- 조건 검색\nSELECT 이름, 학년 FROM 학생 \nWHERE 소속학과 = '컴퓨터' ORDER BY 학년 DESC;\n\n-- 내부 조인\nSELECT 학생.이름, 수강.기말성적\nFROM 학생 JOIN 수강 ON 학생.학번 = 수강.학번;</code></pre></div>`
+            },
+
+            // Java 컨텐츠 완벽 복원
+            javaContents: {
+                'java-ch11': {
+                    desc: "자바 프로그래밍의 뼈대가 되는 클래스들입니다. 모든 클래스의 조상인 <code>Object</code>, 문자열 <code>String</code>, 기본형을 객체로 감싸는 <code>Wrapper</code> 클래스 등이 포함됩니다.",
+                    features: "<li><strong>Object:</strong> <code>equals()</code>(동등성 비교), <code>toString()</code>(객체 문자열 반환) 제공</li><li><strong>String:</strong> 불변성(Immutability). 변경이 잦으면 <code>StringBuilder</code> 사용</li><li><strong>Wrapper:</strong> 기본형(int, double)을 객체형(Integer, Double)으로 감싸 오토박싱 지원</li><li><strong>Class:</strong> 런타임에 클래스 정보를 동적으로 로딩(Reflection)</li>",
+                    uses: "<li>데이터베이스에서 조회한 <strong>DTO 객체 간의 논리적 동일성 검사</strong> (equals 재정의)</li><li>로그 파일에 객체의 현재 상태를 텍스트로 남길 때 (toString 재정의)</li><li>웹 API로 들어온 문자열 파라미터를 숫자로 파싱 <code>Integer.parseInt()</code></li>",
+                    filename: "LangTest.java",
+                    code: `public class LangTest {\n    public static void main(String[] args) {\n        // String은 불변(Immutable)입니다.\n        String str = "Hello";\n        str.concat(" World"); \n        System.out.println("String 결과: " + str);\n        \n        // StringBuilder는 가변적입니다.\n        StringBuilder sb = new StringBuilder("Hello");\n        sb.append(" World");\n        System.out.println("StringBuilder 결과: " + sb.toString());\n    }\n}`,
+                    output: "String 결과: Hello\nStringBuilder 결과: Hello World"
+                },
+                'java-ch12': {
+                    desc: "데이터를 효율적으로 저장하고 관리하기 위한 자료구조 클래스 모음입니다. <strong>제네릭(Generics)</strong>을 사용하여 컴파일 타임에 타입 안정성을 보장합니다.",
+                    features: "<li><strong>제네릭 &lt;T&gt;:</strong> 다양한 타입을 하나로 일반화. 강제 형변환 방지</li><li><strong>List (ArrayList):</strong> 순서 보장, 중복 허용. 배열 기반의 빠른 조회</li><li><strong>Set (HashSet):</strong> 순서 없음, <strong>중복 불가</strong>. 집합 연산에 특화</li><li><strong>Map (HashMap):</strong> Key-Value 쌍 구조. Key는 중복 불가로 빠른 검색</li>",
+                    uses: "<li><strong>List:</strong> 쇼핑몰의 상품 목록, 게시판의 게시글 목록 조회</li><li><strong>Set:</strong> 오늘의 방문자 수 집계 (IP 주소 중복 제거), 로또 번호 생성</li><li><strong>Map:</strong> 회원 ID를 Key로 사용하는 세션(Session) 캐시 관리</li>",
+                    filename: "CollectionTest.java",
+                    code: `import java.util.*;\n\npublic class CollectionTest {\n    public static void main(String[] args) {\n        List<String> list = new ArrayList<>();\n        list.add("Apple"); list.add("Apple");\n        System.out.println("List 출력: " + list);\n        \n        Set<Integer> set = new HashSet<>(Arrays.asList(1, 2, 2, 3, 4));\n        System.out.println("Set (중복제거): " + set);\n        \n        Map<String, String> map = new HashMap<>();\n        map.put("admin", "관리자");\n        System.out.println("Map 검색: " + map.get("admin"));\n    }\n}`,
+                    output: "List 출력: [Apple, Apple]\nSet (중복제거): [1, 2, 3, 4]\nMap 검색: 관리자"
+                },
+                'java-ch13': {
+                    desc: "모던 자바의 꽃입니다. 익명 함수인 <strong>람다식</strong>과 컬렉션을 조작하는 <strong>스트림 API</strong>를 통해 복잡한 반복문을 간결한 파이프라인으로 처리합니다.",
+                    features: "<li><strong>내부/익명 클래스:</strong> 특정 클래스 안에서만 사용하거나, 1회용 객체를 즉석 생성</li><li><strong>람다식 <code>-&gt;</code>:</strong> 메서드 이름 없이 매개변수와 구현부만으로 함수 표현</li><li><strong>스트림 (Stream):</strong> <code>filter</code>, <code>map</code>, <code>collect</code>를 이용한 선언형 데이터 파이프라인</li>",
+                    uses: "<li><strong>스트림:</strong> 수만 건의 결제 데이터 중 '카드 결제'만 필터링하여 총 매출액 통계 산출</li><li><strong>스트림:</strong> 사용자 리스트(List<User>)에서 '이름'만 추출하여 List<String>으로 변환 (map)</li>",
+                    filename: "StreamTest.java",
+                    code: `import java.util.*;\nimport java.util.stream.Collectors;\n\npublic class StreamTest {\n    public static void main(String[] args) {\n        List<String> logs = Arrays.asList("ERROR: Timeout", "INFO: Login", "ERROR: DB Down");\n        \n        List<String> errorLogs = logs.stream()\n            .filter(log -> log.startsWith("ERROR"))\n            .map(log -> log.replace("ERROR: ", ""))\n            .collect(Collectors.toList());\n\n        System.out.println("추출된 에러 원인: " + errorLogs);\n    }\n}`,
+                    output: "추출된 에러 원인: [Timeout, DB Down]"
+                }
+            },
+
+            init() {
+                this.renderSidebar();
+                this.navigate('home');
+                this.initSimulators();
+                this.initArrayTabs();
+            },
+
+            navigate(pageId) {
+                this.state.page = pageId;
+                document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
+                const pageEl = document.getElementById('page-' + pageId);
+                pageEl.classList.remove('hidden');
+                
+                // 레이아웃 패딩 조정
+                const main = document.getElementById('main-content');
+                if(pageId === 'database') { main.classList.remove('p-6', 'md:p-10'); main.classList.add('p-0'); } 
+                else { main.classList.add('p-6', 'md:p-10'); main.classList.remove('p-0'); }
+
+                this.renderSidebar();
+                this.lazyLoadDependencies(pageId);
+                this.updateSubView();
+            },
+
+            setSub(subId) {
+                this.state.sub[this.state.page] = subId;
+                this.renderSidebar();
+                this.updateSubView();
+            },
+
+            renderSidebar() {
+                const conf = this.config[this.state.page];
+                document.getElementById('sidebar-header').innerHTML = `<h1 class="text-2xl font-bold text-white">${conf.title}</h1><p class="text-xs text-slate-400 mt-2">인터랙티브 학습 대시보드</p>`;
+                document.getElementById('mobile-title').innerHTML = conf.title;
+                
+                let html = '', mobHtml = '';
+                conf.nav.forEach(n => {
+                    const isActive = (n.target === this.state.page) || (n.sub === this.state.sub[this.state.page]);
+                    const cls = isActive ? 'bg-slate-800 text-white font-bold border-l-4 border-indigo-500' : 'text-slate-400 hover:bg-slate-800 hover:text-white border-l-4 border-transparent';
+                    const act = n.target ? `App.navigate('${n.target}')` : `App.setSub('${n.sub}')`;
+                    html += `<li><button onclick="${act}" class="w-full text-left px-6 py-3 text-sm transition-colors ${cls}">${n.label}</button></li>`;
+                    if(!n.target) mobHtml += `<option value="${n.sub}" ${isActive?'selected':''}>${n.label}</option>`;
+                });
+                document.getElementById('sidebar-nav').innerHTML = html;
+                const mobNav = document.getElementById('mobile-nav');
+                mobNav.innerHTML = mobHtml || '<option>홈</option>';
+                mobNav.onchange = (e) => { if(conf.nav[0].target) App.navigate('home'); else App.setSub(e.target.value); };
+            },
+
+            updateSubView() {
+                const p = this.state.page, s = this.state.sub[p];
+                if (p === 'csharp1') {
+                    document.querySelectorAll('.cs1-sec').forEach(el => el.classList.add('hidden'));
+                    document.getElementById(s).classList.remove('hidden');
+                } else if (p === 'csharp2') {
+                    document.querySelectorAll('.cs2-sec').forEach(el => el.classList.add('hidden'));
+                    document.getElementById(s).classList.remove('hidden');
+                } else if (p === 'java') {
+                    document.getElementById('java-title').innerText = this.config.java.nav.find(n => n.sub === s).label;
+                    document.getElementById('java-desc').innerHTML = this.javaContents[s].desc;
+                    document.getElementById('java-features').innerHTML = this.javaContents[s].features;
+                    document.getElementById('java-uses').innerHTML = this.javaContents[s].uses;
+                    document.getElementById('java-filename').innerText = this.javaContents[s].filename;
+                    document.getElementById('java-editor').value = this.javaContents[s].code;
+                    document.getElementById('java-output').innerText = '대기 중...';
+                } else if (p === 'database') {
+                    document.getElementById('db-header-title').innerText = this.config.database.nav.find(n => n.sub === s).label;
+                    document.getElementById('db-study-content').innerHTML = this.dbContents[s];
+                    
+                    // Trigger reflow for animation
+                    const contentDiv = document.getElementById('db-study-content');
+                    contentDiv.classList.remove('fade-in');
+                    void contentDiv.offsetWidth; 
+                    contentDiv.classList.add('fade-in');
+                } else if (p === 'problems') {
+                    const contentDiv = document.getElementById('md-content');
+                    // 로딩 상태 표시
+                    contentDiv.innerHTML = '<div class="flex items-center justify-center py-20"><p class="text-slate-500">문제를 불러오는 중입니다...</p></div>';
+                    
+                    // 서브 카테고리 이름(s)을 기반으로 파일명 생성 (예: database_problems.md)
+                    const mdFile = s + '_problems.md';
+                    
+                    // fetch를 통한 외부 마크다운 파일 로드
+                    fetch(mdFile)
+                        .then(response => {
+                            if (!response.ok) throw new Error('네트워크 응답이 정상이 아닙니다.');
+                            return response.text();
+                        })
+                        .then(markdownRaw => {
+                            contentDiv.innerHTML = marked.parse(markdownRaw);
+                            
+                            // MathJax 수식 렌더링
+                            if (window.MathJax && window.MathJax.typesetPromise) {
+                                window.MathJax.typesetPromise([contentDiv]).catch(function (err) {
+                                    console.error('MathJax 렌더링 오류:', err);
+                                });
+                            } else if (window.MathJax && window.MathJax.typeset) {
+                                window.MathJax.typeset();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('마크다운 파일 로드 실패:', error);
+                            contentDiv.innerHTML = '<div class="py-20 text-center"><p class="text-rose-500 font-medium">마크다운 파일을 로드할 수 없습니다.</p><p class="text-sm text-slate-500 mt-2">파일 경로를 확인해주세요: ' + mdFile + '</p><p class="text-xs text-slate-400 mt-4">* 로컬 파일 열기(file://) 환경에서는 브라우저 보안 정책으로 인해 외부 파일을 불러올 수 없습니다. VS Code의 Live Server 등을 이용해주세요.</p></div>';
+                        });
+                }
+            },
+
+            lazyLoadDependencies(pageId) {
+                if(pageId === 'csharp1' && !this.cs1ChartLoaded) {
+                    new Chart(document.getElementById('overviewChart').getContext('2d'), { type: 'doughnut', data: { labels: ['기본 문법 & 환경', '배열', 'OOP', 'I/O 및 예외처리'], datasets: [{ data: [15, 25, 35, 25], backgroundColor: ['#f59e0b', '#10b981', '#6366f1', '#f43f5e'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom'} } } });
+                    new Chart(document.getElementById('arrayChart').getContext('2d'), { type: 'bar', data: { labels: ['1차원 배열', '2차원 배열', '가변 배열(Jagged)'], datasets: [{ label: '구조적 복잡도', data: [20, 60, 90], backgroundColor: '#93c5fd', borderRadius: 4 }, { label: '메모리 할당 유연성', data: [10, 10, 80], backgroundColor: '#10b981', borderRadius: 4 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100, ticks: { display: false } }, x: { grid: { display: false } } } } });
+                    this.cs1ChartLoaded = true;
+                }
+                if(pageId === 'csharp2' && !this.cs2ChartLoaded) {
+                    new Chart(document.getElementById('featureChart').getContext('2d'), { type: 'radar', data: { labels: ['객체지향 설계(OOP)', '배우기 쉬운 문법', '다형성/유연성', '데이터/파일 관리', '예외 안정성'], datasets: [{ label: 'C# 강점 지수', data: [95, 85, 90, 80, 85], backgroundColor: 'rgba(99, 102, 241, 0.2)', borderColor: 'rgba(99, 102, 241, 1)', borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { r: { ticks: { display: false, min: 0, max: 100 } } }, plugins: { legend: { display: false } } } });
+                    this.cs2ChartLoaded = true;
+                }
+                if(pageId === 'database' && !this.dbEngineLoaded) {
+                    initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/${file}` }).then(SQL => {
+                        this.state.dbEngine = new SQL.Database();
+                        this.state.dbEngine.run(`CREATE TABLE 학생 (학번 VARCHAR(20), 이름 VARCHAR(30), 소속학과 VARCHAR(50), 학년 INT); INSERT INTO 학생 VALUES ('s001', '김연아', '컴퓨터', 4); INSERT INTO 학생 VALUES ('s002', '홍길동', '통계', 1);`);
+                        document.getElementById('db-status').innerHTML = '<span class="text-emerald-400">● Engine Ready</span>';
+                        document.getElementById('run-btn').disabled = false;
+                        document.getElementById('sql-input').value = "SELECT * FROM 학생;\n";
+                        document.getElementById('run-btn').onclick = () => this.runSQL();
+                    });
+                    this.dbEngineLoaded = true;
+                }
+            },
+
+            initSimulators() {
+                // Try-Catch Simulator
+                const btnThrow = document.getElementById('btn-throw');
+                const blockTry = document.getElementById('block-try');
+                const blockCatch = document.getElementById('block-catch');
+                const blockFinally = document.getElementById('block-finally');
+                const codeNormal = document.getElementById('code-normal');
+                const codeError = document.getElementById('code-error');
+
+                btnThrow.addEventListener('click', () => {
+                    blockTry.classList.remove('bg-rose-50', 'border-rose-400');
+                    blockCatch.classList.remove('bg-rose-100', 'border-rose-500');
+                    blockFinally.classList.remove('bg-emerald-50', 'border-emerald-400');
+                    
+                    setTimeout(() => { codeNormal.innerHTML = 'int result = 10 / 0; <span class="text-rose-500 font-bold">// 강제 예외 발생!</span>'; blockTry.classList.add('bg-rose-50', 'border-rose-400'); }, 100);
+                    setTimeout(() => { blockCatch.classList.add('bg-rose-100', 'border-rose-500'); codeError.innerHTML = 'Console.WriteLine("0으로 나눌 수 없음"); <span class="text-rose-600 font-bold">// 실행됨</span>'; }, 800);
+                    setTimeout(() => { blockFinally.classList.add('bg-emerald-50', 'border-emerald-400'); btnThrow.innerText = "리셋하기"; }, 1500);
+
+                    btnThrow.onclick = function resetTryCatch() {
+                        codeNormal.innerHTML = '// 정상 코드 실행 중...'; codeError.innerHTML = '// 오류 처리 (대기 중)';
+                        blockTry.classList.remove('bg-rose-50', 'border-rose-400'); blockCatch.classList.remove('bg-rose-100', 'border-rose-500'); blockFinally.classList.remove('bg-emerald-50', 'border-emerald-400');
+                        btnThrow.innerText = "예외 발생시키기"; btnThrow.onclick = null;
+                        App.initSimulators(); // Re-bind original click handler
+                    };
+                });
+
+                // Serialization Simulator
+                const btnSerialize = document.getElementById('btn-serialize');
+                const jsonBox = document.getElementById('json-box');
+                const jsonCode = document.getElementById('json-code');
+                const serializeArrow = document.getElementById('serialize-arrow');
+
+                btnSerialize.addEventListener('click', () => {
+                    serializeArrow.classList.add('text-indigo-500', 'translate-x-2');
+                    setTimeout(() => {
+                        jsonBox.classList.replace('bg-slate-50', 'bg-emerald-50'); jsonBox.classList.replace('border-slate-200', 'border-emerald-300');
+                        jsonCode.classList.replace('bg-slate-100', 'bg-emerald-100'); jsonCode.classList.replace('text-slate-400', 'text-emerald-800');
+                        jsonCode.innerHTML = `{<br>&nbsp;&nbsp;"Name": "홍길동",<br>&nbsp;&nbsp;"Age": 30<br>}`;
+                        serializeArrow.classList.remove('translate-x-2');
+                        btnSerialize.innerText = "완료"; btnSerialize.disabled = true; btnSerialize.classList.add('opacity-50', 'cursor-not-allowed');
+                    }, 400);
+                });
+            },
+
+            initArrayTabs() {
+                const arrayTabs = document.querySelectorAll('.array-tab');
+                const arrayContents = document.querySelectorAll('.array-content');
+                arrayTabs.forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        arrayTabs.forEach(t => { t.classList.remove('text-indigo-600', 'border-b-2', 'border-indigo-600'); t.classList.add('text-slate-500', 'border-transparent'); });
+                        e.target.classList.remove('text-slate-500', 'border-transparent'); e.target.classList.add('text-indigo-600', 'border-b-2', 'border-indigo-600');
+                        const target = e.target.dataset.target;
+                        arrayContents.forEach(c => { if (c.id === target) { c.classList.remove('hidden'); c.classList.add('block'); } else { c.classList.remove('block'); c.classList.add('hidden'); } });
+                    });
+                });
+            },
+
+            runJavaCode() {
+                document.getElementById('java-output').innerHTML = '<span class="text-yellow-400">컴파일 및 실행 중...</span>';
+                setTimeout(() => {
+                    document.getElementById('java-output').innerText = this.javaContents[this.state.sub.java].output;
+                }, 600);
+            },
+
+            runSQL() {
+                const db = this.state.dbEngine;
+                const query = document.getElementById('sql-input').value;
+                const resCon = document.getElementById('results-container');
+                resCon.innerHTML = '';
+                try {
+                    const resArray = db.exec(query);
+                    if(resArray.length > 0) {
+                        const { columns, values } = resArray[resArray.length-1];
+                        const ths = columns.map(c => `<th class="px-4 py-2 text-left text-xs font-bold text-slate-500 border-b bg-slate-50">${c}</th>`).join('');
+                        const trs = values.map(v => `<tr>${v.map(d => `<td class="px-4 py-2 text-sm text-slate-700 border-b">${d}</td>`).join('')}</tr>`).join('');
+                        resCon.innerHTML = `<div class="rounded border border-slate-200 overflow-x-auto w-full"><table class="min-w-full"><thead class="bg-slate-50"><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
+                    } else {
+                        resCon.innerHTML = `<div class="p-3 bg-emerald-50 text-emerald-700 rounded font-bold w-full text-center">✓ SQL 명령이 성공적으로 실행되었습니다.</div>`;
+                    }
+                } catch(err) { 
+                    resCon.innerHTML = `<div class="p-3 bg-rose-50 text-rose-700 rounded border border-rose-200 w-full"><strong>Error:</strong> ${err.message}</div>`; 
+                }
+            }
+        };
+
+        // 앱 초기화 시작
+        document.addEventListener('DOMContentLoaded', () => App.init());
+    </script>
 </body>
 </html>
