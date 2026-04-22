@@ -55,6 +55,18 @@ const AutoStudyData = {
             {
                 "label": "📄 05 sql",
                 "sub": "content/database/05_sql.md"
+            },
+            {
+                "label": "📄 06 sql utilize",
+                "sub": "content/database/06_sql_utilize.md"
+            },
+            {
+                "label": "📄 07 sql advanced",
+                "sub": "content/database/07_sql_advanced.md"
+            },
+            {
+                "label": "📄 08 normalization",
+                "sub": "content/database/08_normalization.md"
             }
         ]
     },
@@ -87,20 +99,24 @@ const AutoStudyData = {
         },
         "files": [
             {
-                "label": "📄 csharp2 problems",
-                "sub": "content/problems/csharp2_problems.md"
+                "label": "📄 csharp2 중간고사",
+                "sub": "content/problems/csharp2_중간고사.md"
             },
             {
-                "label": "📄 csharp problems",
-                "sub": "content/problems/csharp_problems.md"
+                "label": "📄 csharp 중간고사",
+                "sub": "content/problems/csharp_중간고사.md"
             },
             {
-                "label": "📄 database problems",
-                "sub": "content/problems/database_problems.md"
+                "label": "📄 database 중간고사",
+                "sub": "content/problems/database_중간고사.md"
             },
             {
-                "label": "📄 java problems",
-                "sub": "content/problems/java_problems.md"
+                "label": "📄 database 중간고사 심화",
+                "sub": "content/problems/database_중간고사_심화.md"
+            },
+            {
+                "label": "📄 java 중간고사(끝남)",
+                "sub": "content/problems/java_중간고사(끝남).md"
             }
         ]
     }
