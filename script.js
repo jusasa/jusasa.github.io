@@ -144,12 +144,14 @@ const App = {
                 contentDiv.querySelectorAll('pre code:not(.language-mermaid)').forEach((el) => {
                     if (typeof hljs !== 'undefined') hljs.highlightElement(el);
                 });
-
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    // 기존에 그려진 수식들을 초기화하고 새로 그립니다.
+                    window.MathJax.typesetPromise([contentDiv]).catch((err) => console.log('MathJax 에러:', err));
+                }
                 // 5. 기타 후처리
                 contentDiv.classList.remove('fade-in'); 
                 void contentDiv.offsetWidth; 
                 contentDiv.classList.add('fade-in');
-                if (window.MathJax) window.MathJax.typesetPromise();
             })
             .catch(err => {
                 contentDiv.innerHTML = `<div class="py-20 text-center"><p class="text-rose-500 font-bold">⚠️ 에러: ${err}</p></div>`;
