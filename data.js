@@ -67,6 +67,10 @@ const AutoStudyData = {
             {
                 "label": "📄 java 중간고사(끝남)",
                 "sub": "content/problems/java_중간고사(끝남).md"
+            },
+            {
+                "label": "📄 컴구조 3장 연습문제",
+                "sub": "content/problems/컴구조_3장_연습문제.md"
             }
         ]
     },
