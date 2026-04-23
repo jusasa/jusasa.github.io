@@ -40,8 +40,39 @@ flowchart TD
 
 #### 상세 명령어 사이클
 
-1. 인출 사이클 (Fetch): PC가 가리키는 주소에서 명령어를 메모리로부터 읽어와 IR에 저장하고, PC 값을 증가시킴.
+1. 인출 사이클 (Fetch): PC가 가리키는 주소에서 명령어를 메모리로부터 읽어와 IR에 저장하고, PC 값을 증가시킴. 
+    $t_0 : MAR \leftarrow PC$
+    $t_1 : MBR \leftarrow M[MAR], PC \leftarrow PC+1$
+    $t_2 : IR \leftarrow MBR$ 
+
 2. 실행 사이클 (Execute): IR에 있는 명령어를 해독하고, 필요한 오퍼랜드(데이터)를 가져와 연산을 수행.
+   
+   1. 연산의 종류
+      1. 이동
+      2. 처리
+      3. 저장
+      4. 프로그램 제어
+   
+   > | 연산 코드 | 오퍼랜드 |
+   
+   - 사례1 **LOAD addr**
+    $t_0 : MAR \leftarrow IR(addr)$
+    $t_1 : MBR \leftarrow M[MAR]$
+    $t_2 : AC \leftarrow MBR$ 
+
+   - 사례2 **STA addr**
+    $t_0 : MAR \leftarrow IR(addr)$
+    $t_1 : MBR \leftarrow AC$
+    $t_2 : M[MAR] \leftarrow MBR$
+
+    - 사례3 **ADD addr**
+    $t_0 : MAR \leftarrow IR(addr)$
+    $t_1 : MBR \leftarrow M[MAR]$
+    $t_2 : AC \leftarrow AC + MBR$ 
+    
+    - 사례4 **JMP addr**
+    $t_0 : PC \leftarrow IR(addr)$
+    
 3. 간접 사이클 (Indirect): 명령어에 포함된 주소가 실제 데이터의 주소를 가리키는 포인터일 때, 유효 주소를 한 번 더 메모리에서 읽어옴.
 4. 인터럽트 사이클 (Interrupt): 예외 상황이나 외부 장치의 요청이 발생하면 현재 상태를 저장하고 인터럽트 서비스 루틴(ISR)을 처리.
 ```mermaid
