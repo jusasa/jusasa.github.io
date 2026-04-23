@@ -19,9 +19,9 @@ CPU가 하나의 명령어를 처리하는 전체 과정입니다.
 3. 간접 사이클 (Indirect): 명령어에 포함된 주소가 실제 데이터의 주소를 가리키는 포인터일 때, 유효 주소를 한 번 더 메모리에서 읽어옴.
 4. 인터럽트 사이클 (Interrupt): 예외 상황이나 외부 장치의 요청이 발생하면 현재 상태를 저장하고 인터럽트 서비스 루틴(ISR)을 처리.
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'lineColor': '#8761bc';}}}%%
-graph TD
-    Start((시작)) --> Fetch[인출 사이클]
+%%{init: {'theme': 'base', 'themeVariables': { 'lineColor': '#8761bc'}}}%%
+flowchart TD
+    Start([시작]) --> Fetch[인출 사이클]
     Fetch --> Indirect{간접 주소?}
     Indirect -- Yes --> Ind[간접 사이클]
     Indirect -- No --> Execute[실행 사이클]
@@ -30,11 +30,13 @@ graph TD
     Interrupt -- Yes --> Int[인터럽트 사이클]
     Interrupt -- No --> Fetch
     Int --> Fetch
+
     style Start fill:#e1f5fe,stroke:#01579b
     style Fetch fill:#e1f5fe,stroke:#01579b
     style Indirect fill:#fff3e0,stroke:#e65100
     style Execute fill:#f1f8e9,stroke:#33691e
     style Int fill:#f1f8e9,stroke:#33691e
+    style Ind fill:#f1f8e9,stroke:#33691e
 ```
 
 
@@ -170,23 +172,30 @@ graph TD
 ### 2.5 CPU 내부 데이터 흐름 (Data Path)
 명령어 인출 및 실행 과정에서 각 레지스터 간의 데이터 이동 경로를 나타냅니다.
 
-
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': { 'lineColor': '#8761bc'}}}%%
-graph LR
+graph TD
     subgraph "CPU Internal"
-        PC[PC: 프로그램 카운터] --> MAR[MAR: 메모리 주소 레지스터]
-        MAR --> MBR[MBR: 메모리 버퍼 레지스터]
-        MBR --> IR[IR: 명령어 레지스터]
-        IR --> CU[제어장치]
-        CU --> ALU[ALU: 산술논리연산장치]
-        ALU <--> AC[AC: 누산기]
+        direction TB
+        PC[PC: 프로그램 카운터]
+        IR[IR: 명령어 레지스터]
+        CU[CU: 제어장치]
+        ALU[ALU: 산술논리연산장치]
+        AC[AC: 누산기]
+        MAR[MAR: 메모리 주소 레지스터]
+        MBR[MBR: 메모리 버퍼 레지스터]
+
+        PC --> MAR
+        MBR --> IR
+        IR --> CU
+        CU --> ALU
+        ALU <--> AC
     end
     
-    MAR -.-> BUS((시스템 버스))
-    BUS -.-> MEM[주기억장치]
-    MEM -.-> BUS
-    BUS -.-> MBR
+    MAR <==> BUS((시스템 버스))
+    BUS <==> MEM[주기억장치]
+    MEM <==> BUS
+    BUS <==> MBR
 
     style PC fill:#e1f5fe,stroke:#01579b
     style IR fill:#e1f5fe,stroke:#01579b

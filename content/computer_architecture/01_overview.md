@@ -14,16 +14,20 @@
   * 제어 버스: 읽기/쓰기 신호 등 제어 신호 전달.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#f9f9f9', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#f4f4f4'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'lineColor': '#8761bc'}}}%%
 graph TD
     subgraph CPU
-        ALU[산술논리연산장치]
-        CU[제어장치]
-        REG[레지스터]
+        ALU[ALU: 산술논리연산장치]
+        CU[CU: 제어장치]
+        REG[Registers: 레지스터]
     end
     CPU <--> Bus((시스템 버스))
     Bus <--> Memory[주기억장치]
     Bus <--> IO[입출력장치]
+
+    style ALU fill:#f1f8e9,stroke:#33691e
+    style CU fill:#f1f8e9,stroke:#33691e
+    style REG fill:#e1f5fe,stroke:#01579b
 ```
 
 ### 1.2 정보의 표현과 저장
@@ -36,13 +40,16 @@ graph TD
 * 메모리 계층 구조: 레지스터 -> 캐시 메모리 -> 메인 메모리 -> 보조기억장치 순으로 속도/용량/비용의 트레이드오프를 활용해 시스템 성능을 최적화.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#e1f5fe', 'lineColor': '#546e7a'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'lineColor': '#8761bc'}}}%%
 graph BT
     SSD[보조기억장치: SSD/HDD] --- RAM[메인 메모리: RAM]
     RAM --- Cache[캐시 메모리]
     Cache --- Reg[레지스터]
-    style Reg fill:#ffcc80,stroke:#ef6c00,stroke-width:2px
-    note[위로 갈수록 속도 증가 / 용량 감소] 
+    style Reg fill:#e1f5fe,stroke:#01579b
+    style Cache fill:#e1f5fe,stroke:#01579b
+    style RAM fill:#f1f8e9,stroke:#33691e
+    style SSD fill:#fff3e0,stroke:#e65100
+    note[위로 갈수록 속도 증가 / 용량 감소]
 ```
 
 ### 1.4 컴퓨터 구조의 발전 과정

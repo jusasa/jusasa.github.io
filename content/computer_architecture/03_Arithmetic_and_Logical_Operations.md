@@ -52,7 +52,6 @@
   4. 덧셈 후, 결과와 승수가 들어있는 레지스터 전체를 오른쪽으로 1비트 시프트(Shift Right) 합니다.
   5. 승수의 모든 비트를 검사할 때까지 위 과정(비트 수만큼의 사이클)을 반복합니다.
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'lineColor': '#8761bc'}}}%%
 flowchart TD
     Start([시작]) --> Init[초기화: A=0, C=0, M=피승수, Q=승수, Count=n]
     Init --> Check{Q의 마지막 비트\nQ0 == 1?}
@@ -87,7 +86,6 @@ flowchart TD
   4. 정해진 비트 수만큼 이 과정을 반복합니다.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'lineColor': '#8761bc'}}}%%
 flowchart TD
     Start([시작]) --> Init[초기화: A=0, Q-1=0, M=피승수, Q=승수, Count=n]
     Init --> Check{Q0, Q-1 비교}

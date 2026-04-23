@@ -105,3 +105,57 @@ body {
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
     font-size: 0.9em !important;
 }
+/* style.css */
+/* style.css - 기존 mermaid 스타일을 이 내용으로 덮어쓰세요 */
+.mermaid {
+    /* 🎯 하얀 배경을 날려버립니다 */
+    background: transparent !important; 
+    border: none !important;
+    
+    display: flex;
+    justify-content: center;
+    padding: 0; /* 패딩 제거 */
+    margin: 2rem 0; /* 위아래 여백만 유지 */
+    overflow: visible !important;
+}
+
+/* Mermaid 내부 SVG 엘리먼트 스타일 보정 */
+.mermaid svg {
+    background: transparent !important;
+}
+
+/* 다크모드 대응: 글자색과 선 색상을 밝게 만듭니다 */
+@media (prefers-color-scheme: dark) {
+    .mermaid {
+        color: #cbd5e1 !important; /* Slate-300 */
+    }
+}
+/* style.css 하단에 추가 */
+
+/* Mermaid 모든 선 색상 강제 지정 */
+.mermaid .edgePaths path {
+    stroke: #8761bc !important;
+    stroke-width: 2px !important;
+}
+
+/* 화살표 머리(삼각형) 색상 강제 지정 */
+.mermaid .marker {
+    fill: #8761bc !important;
+    stroke: #8761bc !important;
+}
+
+/* 점선 스타일 대응 (필요한 경우) */
+.mermaid .edgePaths .edgePath path {
+    stroke: #8761bc !important;
+}
+
+/* 노드 글자색 보정 (다크모드 가독성용) */
+.mermaid .node text {
+    fill: #334155 !important; /* Slate-700 */
+}
+
+@media (prefers-color-scheme: dark) {
+    .mermaid .node text {
+        fill: #f8fafc !important; /* 다크모드에서는 밝게 */
+    }
+}
