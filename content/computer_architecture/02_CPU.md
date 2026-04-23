@@ -4,18 +4,75 @@
 
 ### 2.1 CPU의 내부 구성 요소
 * ALU (산술논리연산장치): 덧셈, 뺄셈 등의 산술 연산과 AND, OR 등의 논리 연산을 수행.
-* 제어장치 (Control Unit): 명령어를 해독하고, 이를 수행하기 위한 제어 신호를 생성하여 시스템 각 부품에 전달.
+* 제어장치 (Control Unit): 명령어를 **해독**하고, 이를 수행하기 위한 `제어 신호`를 순차적으로 생성하여 시스템 각 부품에 전달.
+* CPU 내부 버스
+  * ALU와 레지스터들간의 데이터 이동을 위한 데이터 선들과 제어 유닛으로부터 발생되는 제어 신호선들로 구성된 내부 버스
+  * **외부의 시스템 버스들과 직접 연결 X** 반드시 **버퍼 레지스터**들 혹은 시스템 버스 **인터페이스 회로**를 통해 시스템 버스와 접촉
+* 레지스터
+  * 엑세스 속도가 가장 빠른 기억장치
+  *  cpu 내부에 포함할 수 있는 레지스터들의 수가 제한됨
 * 주요 레지스터 (Registers):
-  * PC (Program Counter): 다음에 실행할 명령어의 주소를 저장.
-  * IR (Instruction Register): 현재 실행 중인 명령어를 저장.
-  * AC (Accumulator): 연산의 중간 결과를 임시로 저장.
-  * MAR (Memory Address Register): 메모리에 접근하기 위한 주소를 저장.
-  * MBR (Memory Buffer Register): 메모리에서 읽어오거나 저장할 데이터를 보관.
+  * PC (Program Counter): 다음에 실행할 명령어의 주소를 저장. 기억장치의 비트수에 따라 결정됨.
+  * IR (Instruction Register): 현재 실행 중인(가장 최근에 인출된) 명령어를 저장.
+  * AC (Accumulator): 연산의 중간 결과를 임시로 저장. 길이는 CPU가 한번에 처리 할 수 있는 데이터 비트 수와 같음
+  * MAR (Memory Address Register): PC에 저장된 명령어 주소가 시스템 주소 버르고 출력되기 전에 일시적으로 저장되는 레지스터.
+  * MBR (Memory Buffer Register): 메모리에서 읽어오거나 저장할 데이터(=명렁어)를 보관.
 
 ### 2.2 명령어 사이클 (Instruction Cycle)
 CPU가 하나의 명령어를 처리하는 전체 과정입니다.
-1. 인출 사이클 (Fetch): PC가 가리키는 주소에서 명령어를 메모리로부터 읽어와 IR에 저장하고, PC 값을 증가시킴.
+프로그램 실행을 시작한 순간부터 전원을 끄거나 회복 불가능한 오류가 발생하여 중단할때 까지 반복.
+
+#### 기본 명령어 사이클
+
+1. 인출: 명령어 읽어오기
+2. 실행
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'lineColor': '#8761bc'}}}%%
+flowchart TD
+    Start([시작]) --> Fetch[인출]
+    Fetch --> Execute[실행]
+    Execute -->  Fetch
+    Execute --> End([중단])
+    style Start fill:#e1f5fe,stroke:#01579b
+    style Fetch fill:#e1f5fe,stroke:#01579b
+    style Execute fill:#f1f8e9,stroke:#33691e
+```   
+
+#### 상세 명령어 사이클
+
+1. 인출 사이클 (Fetch): PC가 가리키는 주소에서 명령어를 메모리로부터 읽어와 IR에 저장하고, PC 값을 증가시킴. 
+    $t_0 : MAR \leftarrow PC$
+    $t_1 : MBR \leftarrow M[MAR], PC \leftarrow PC+1$
+    $t_2 : IR \leftarrow MBR$ 
+
 2. 실행 사이클 (Execute): IR에 있는 명령어를 해독하고, 필요한 오퍼랜드(데이터)를 가져와 연산을 수행.
+   
+   1. 연산의 종류
+      1. 이동
+      2. 처리
+      3. 저장
+      4. 프로그램 제어
+   
+   > | 연산 코드 | 오퍼랜드 |
+   
+   - 사례1 **LOAD addr**
+    $t_0 : MAR \leftarrow IR(addr)$
+    $t_1 : MBR \leftarrow M[MAR]$
+    $t_2 : AC \leftarrow MBR$ 
+
+   - 사례2 **STA addr**
+    $t_0 : MAR \leftarrow IR(addr)$
+    $t_1 : MBR \leftarrow AC$
+    $t_2 : M[MAR] \leftarrow MBR$
+
+    - 사례3 **ADD addr**
+    $t_0 : MAR \leftarrow IR(addr)$
+    $t_1 : MBR \leftarrow M[MAR]$
+    $t_2 : AC \leftarrow AC + MBR$ 
+    
+    - 사례4 **JMP addr**
+    $t_0 : PC \leftarrow IR(addr)$
+    
 3. 간접 사이클 (Indirect): 명령어에 포함된 주소가 실제 데이터의 주소를 가리키는 포인터일 때, 유효 주소를 한 번 더 메모리에서 읽어옴.
 4. 인터럽트 사이클 (Interrupt): 예외 상황이나 외부 장치의 요청이 발생하면 현재 상태를 저장하고 인터럽트 서비스 루틴(ISR)을 처리.
 ```mermaid
