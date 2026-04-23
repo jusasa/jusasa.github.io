@@ -72,7 +72,7 @@ const AutoStudyData = {
     },
     "csharp": {
         "meta": {
-            "title": "C# Programming",
+            "title": "🖥️C# Programming",
             "desc": "C# 언어!",
             "color": "orange"
         },
@@ -101,8 +101,8 @@ const AutoStudyData = {
     },
     "computer_architecture": {
         "meta": {
-            "title": "📂 COMPUTER_ARCHITECTURE",
-            "desc": "computer_architecture 관련 학습 자료입니다.",
+            "title": "💽Computer Architecture",
+            "desc": "컴퓨터 아키텍처!",
             "color": "indigo"
         },
         "files": [

@@ -119,17 +119,40 @@ const App = {
                     return;
                 }
                 contentDiv.innerHTML = marked.parse(mdText);
-                
-                // 🎯 신택스 하이라이팅 적용
-                contentDiv.querySelectorAll('pre code').forEach((el) => {
+
+                // 2. Mermaid 블록 찾기 및 변환
+                const mermaidBlocks = contentDiv.querySelectorAll('pre code.language-mermaid');
+                mermaidBlocks.forEach((block) => {
+                    const pre = block.parentElement;
+                    const code = block.textContent; // innerText 대신 textContent 사용
+                    
+                    // pre 태그를 mermaid 전용 div로 교체
+                    const div = document.createElement('div');
+                    div.className = 'mermaid-container flex justify-center my-8 w-full'; 
+                    div.innerHTML = `<pre class="mermaid" style="background:transparent !important; border:none !important;">${code}</pre>`;
+                    pre.replaceWith(div);
+                });
+
+                // 3. Mermaid 실행 (렌더링)
+                if (window.mermaid) {
+                    mermaid.run({
+                        nodes: contentDiv.querySelectorAll('.mermaid'),
+                    });
+                }
+
+                // 4. 일반 코드 하이라이팅 (mermaid 제외)
+                contentDiv.querySelectorAll('pre code:not(.language-mermaid)').forEach((el) => {
                     if (typeof hljs !== 'undefined') hljs.highlightElement(el);
                 });
 
-                contentDiv.classList.remove('fade-in'); void contentDiv.offsetWidth; contentDiv.classList.add('fade-in');
+                // 5. 기타 후처리
+                contentDiv.classList.remove('fade-in'); 
+                void contentDiv.offsetWidth; 
+                contentDiv.classList.add('fade-in');
                 if (window.MathJax) window.MathJax.typesetPromise();
             })
             .catch(err => {
-                contentDiv.innerHTML = `<div class="py-20 text-center"><p class="text-rose-500 font-bold">⚠️ 문서를 로드할 수 없습니다.</p><p class="text-sm text-slate-500 mt-2">${err}</p></div>`;
+                contentDiv.innerHTML = `<div class="py-20 text-center"><p class="text-rose-500 font-bold">⚠️ 에러: ${err}</p></div>`;
             });
     }
 };
