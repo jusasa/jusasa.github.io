@@ -8,6 +8,10 @@ const AutoStudyData = {
         },
         "files": [
             {
+                "label": "📄 00 중간고사용 정리",
+                "sub": "content/database/00_중간고사용_정리.md"
+            },
+            {
                 "label": "📄 01 concept",
                 "sub": "content/database/01_concept.md"
             },
@@ -63,6 +67,10 @@ const AutoStudyData = {
             {
                 "label": "📄 database 중간고사 심화",
                 "sub": "content/problems/database_중간고사_심화.md"
+            },
+            {
+                "label": "📄 database 중간고사 최종100문제",
+                "sub": "content/problems/database_중간고사_최종100문제.md"
             },
             {
                 "label": "📄 java 중간고사(끝남)",
