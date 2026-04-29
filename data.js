@@ -150,6 +150,10 @@ const AutoStudyData = {
             {
                 "label": "📄 13 stream",
                 "sub": "content/java/13_stream.md"
+            },
+            {
+                "label": "📄 15 input output stream",
+                "sub": "content/java/15_input_output_stream.md"
             }
         ]
     }
