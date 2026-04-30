@@ -108,6 +108,10 @@ const AutoStudyData = {
             {
                 "label": "📄 05 data",
                 "sub": "content/csharp/05_data.md"
+            },
+            {
+                "label": "📄 06 winform",
+                "sub": "content/csharp/06_winform.md"
             }
         ]
     },
