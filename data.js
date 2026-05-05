@@ -36,8 +36,8 @@ const AutoStudyData = {
                 "sub": "content/database/06_sql_utilize.md"
             },
             {
-                "label": "📄 07 sql advanced",
-                "sub": "content/database/07_sql_advanced.md"
+                "label": "📄 07 sql application",
+                "sub": "content/database/07_sql_application.md"
             },
             {
                 "label": "📄 08 normalization",
