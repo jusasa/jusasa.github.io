@@ -158,6 +158,10 @@ const AutoStudyData = {
             {
                 "label": "📄 15 input output stream",
                 "sub": "content/java/15_input_output_stream.md"
+            },
+            {
+                "label": "📄 16 thread",
+                "sub": "content/java/16_thread.md"
             }
         ]
     }

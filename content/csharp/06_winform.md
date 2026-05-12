@@ -186,3 +186,7 @@
             treeView1.Nodes.Add(root);
             
             ```
+
+#### Form
+
+이벤트 추가될때 form.Designer.cs에 해당 객체의 코드에 해당 이벤트 핸들러가 자동으로 추가됨.
