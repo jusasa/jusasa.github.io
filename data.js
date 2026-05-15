@@ -133,6 +133,10 @@ const AutoStudyData = {
             {
                 "label": "📄 03 Arithmetic and Logical Operations",
                 "sub": "content/computer_architecture/03_Arithmetic_and_Logical_Operations.md"
+            },
+            {
+                "label": "📄 04 control unit",
+                "sub": "content/computer_architecture/04_control_unit.md"
             }
         ]
     },
