@@ -1,50 +1,5 @@
 // 이 파일은 build.py에 의해 자동 생성됩니다. 직접 수정하지 마세요.
 const AutoStudyData = {
-    "database": {
-        "meta": {
-            "title": "📊Database Management",
-            "desc": "데이터베이스 설계부터 관리까지!",
-            "color": "emerald"
-        },
-        "files": [
-            {
-                "label": "📄 00 중간고사용 정리",
-                "sub": "content/database/00_중간고사용_정리.md"
-            },
-            {
-                "label": "📄 01 concept",
-                "sub": "content/database/01_concept.md"
-            },
-            {
-                "label": "📄 02 system",
-                "sub": "content/database/02_system.md"
-            },
-            {
-                "label": "📄 03 relational",
-                "sub": "content/database/03_relational.md"
-            },
-            {
-                "label": "📄 04 algebra",
-                "sub": "content/database/04_algebra.md"
-            },
-            {
-                "label": "📄 05 sql",
-                "sub": "content/database/05_sql.md"
-            },
-            {
-                "label": "📄 06 sql utilize",
-                "sub": "content/database/06_sql_utilize.md"
-            },
-            {
-                "label": "📄 07 sql application",
-                "sub": "content/database/07_sql_application.md"
-            },
-            {
-                "label": "📄 08 normalization",
-                "sub": "content/database/08_normalization.md"
-            }
-        ]
-    },
     "problems": {
         "meta": {
             "title": "🧩 Problems",
@@ -115,31 +70,6 @@ const AutoStudyData = {
             }
         ]
     },
-    "computer_architecture": {
-        "meta": {
-            "title": "💽Computer Architecture",
-            "desc": "컴퓨터 아키텍처!",
-            "color": "indigo"
-        },
-        "files": [
-            {
-                "label": "📄 01 overview",
-                "sub": "content/computer_architecture/01_overview.md"
-            },
-            {
-                "label": "📄 02 CPU",
-                "sub": "content/computer_architecture/02_CPU.md"
-            },
-            {
-                "label": "📄 03 Arithmetic and Logical Operations",
-                "sub": "content/computer_architecture/03_Arithmetic_and_Logical_Operations.md"
-            },
-            {
-                "label": "📄 04 control unit",
-                "sub": "content/computer_architecture/04_control_unit.md"
-            }
-        ]
-    },
     "java": {
         "meta": {
             "title": "☕Java Programming",
@@ -166,6 +96,80 @@ const AutoStudyData = {
             {
                 "label": "📄 16 thread",
                 "sub": "content/java/16_thread.md"
+            }
+        ]
+    },
+    "database": {
+        "meta": {
+            "title": "📊Database Management",
+            "desc": "데이터베이스 설계부터 관리까지!",
+            "color": "emerald"
+        },
+        "files": [
+            {
+                "label": "📄 00 중간고사용 정리",
+                "sub": "content/database/00_중간고사용_정리.md"
+            },
+            {
+                "label": "📄 01 concept",
+                "sub": "content/database/01_concept.md"
+            },
+            {
+                "label": "📄 02 system",
+                "sub": "content/database/02_system.md"
+            },
+            {
+                "label": "📄 03 relational",
+                "sub": "content/database/03_relational.md"
+            },
+            {
+                "label": "📄 04 algebra",
+                "sub": "content/database/04_algebra.md"
+            },
+            {
+                "label": "📄 05 sql",
+                "sub": "content/database/05_sql.md"
+            },
+            {
+                "label": "📄 06 sql utilize",
+                "sub": "content/database/06_sql_utilize.md"
+            },
+            {
+                "label": "📄 07 sql application",
+                "sub": "content/database/07_sql_application.md"
+            },
+            {
+                "label": "📄 08 normalization",
+                "sub": "content/database/08_normalization.md"
+            },
+            {
+                "label": "📄 09 E-R model",
+                "sub": "content/database/09_E-R_model.md"
+            }
+        ]
+    },
+    "computer_architecture": {
+        "meta": {
+            "title": "💽Computer Architecture",
+            "desc": "컴퓨터 아키텍처!",
+            "color": "indigo"
+        },
+        "files": [
+            {
+                "label": "📄 01 overview",
+                "sub": "content/computer_architecture/01_overview.md"
+            },
+            {
+                "label": "📄 02 CPU",
+                "sub": "content/computer_architecture/02_CPU.md"
+            },
+            {
+                "label": "📄 03 Arithmetic and Logical Operations",
+                "sub": "content/computer_architecture/03_Arithmetic_and_Logical_Operations.md"
+            },
+            {
+                "label": "📄 04 control unit",
+                "sub": "content/computer_architecture/04_control_unit.md"
             }
         ]
     }
