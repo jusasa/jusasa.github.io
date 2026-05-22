@@ -170,6 +170,10 @@ const AutoStudyData = {
             {
                 "label": "📄 04 control unit",
                 "sub": "content/computer_architecture/04_control_unit.md"
+            },
+            {
+                "label": "📄 05 storage",
+                "sub": "content/computer_architecture/05_storage.md"
             }
         ]
     }
