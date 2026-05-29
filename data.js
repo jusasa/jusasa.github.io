@@ -70,32 +70,32 @@ const AutoStudyData = {
             }
         ]
     },
-    "java": {
+    "computer_architecture": {
         "meta": {
-            "title": "☕Java Programming",
-            "desc": "Java 언어 활용!",
-            "color": "rose"
+            "title": "💽Computer Architecture",
+            "desc": "컴퓨터 아키텍처!",
+            "color": "indigo"
         },
         "files": [
             {
-                "label": "📄 11 basic class",
-                "sub": "content/java/11_basic_class.md"
+                "label": "📄 01 overview",
+                "sub": "content/computer_architecture/01_overview.md"
             },
             {
-                "label": "📄 12 collection",
-                "sub": "content/java/12_collection.md"
+                "label": "📄 02 CPU",
+                "sub": "content/computer_architecture/02_CPU.md"
             },
             {
-                "label": "📄 13 stream",
-                "sub": "content/java/13_stream.md"
+                "label": "📄 03 Arithmetic and Logical Operations",
+                "sub": "content/computer_architecture/03_Arithmetic_and_Logical_Operations.md"
             },
             {
-                "label": "📄 15 input output stream",
-                "sub": "content/java/15_input_output_stream.md"
+                "label": "📄 04 control unit",
+                "sub": "content/computer_architecture/04_control_unit.md"
             },
             {
-                "label": "📄 16 thread",
-                "sub": "content/java/16_thread.md"
+                "label": "📄 05 storage",
+                "sub": "content/computer_architecture/05_storage.md"
             }
         ]
     },
@@ -145,35 +145,39 @@ const AutoStudyData = {
             {
                 "label": "📄 09 E-R model",
                 "sub": "content/database/09_E-R_model.md"
+            },
+            {
+                "label": "📄 10 database blueprint",
+                "sub": "content/database/10_database_blueprint.md"
             }
         ]
     },
-    "computer_architecture": {
+    "java": {
         "meta": {
-            "title": "💽Computer Architecture",
-            "desc": "컴퓨터 아키텍처!",
-            "color": "indigo"
+            "title": "☕Java Programming",
+            "desc": "Java 언어 활용!",
+            "color": "rose"
         },
         "files": [
             {
-                "label": "📄 01 overview",
-                "sub": "content/computer_architecture/01_overview.md"
+                "label": "📄 11 basic class",
+                "sub": "content/java/11_basic_class.md"
             },
             {
-                "label": "📄 02 CPU",
-                "sub": "content/computer_architecture/02_CPU.md"
+                "label": "📄 12 collection",
+                "sub": "content/java/12_collection.md"
             },
             {
-                "label": "📄 03 Arithmetic and Logical Operations",
-                "sub": "content/computer_architecture/03_Arithmetic_and_Logical_Operations.md"
+                "label": "📄 13 stream",
+                "sub": "content/java/13_stream.md"
             },
             {
-                "label": "📄 04 control unit",
-                "sub": "content/computer_architecture/04_control_unit.md"
+                "label": "📄 15 input output stream",
+                "sub": "content/java/15_input_output_stream.md"
             },
             {
-                "label": "📄 05 storage",
-                "sub": "content/computer_architecture/05_storage.md"
+                "label": "📄 16 thread",
+                "sub": "content/java/16_thread.md"
             }
         ]
     }
