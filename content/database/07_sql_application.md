@@ -99,3 +99,8 @@ B가 X달라고 하면
 
  빨리 끝나는걸 죽임 -> 다른 애가 얻음
 
+### 고립 수준
+
+- 수준0: 선입선출(uncommited read) dirty read
+- 수준1: 읽기 전용(commited read) non-dirty read
+- 수준2: 읽기 전용(repeatable) + 반복읽기 수준3: 완벽한 고립 non-serializable

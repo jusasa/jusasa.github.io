@@ -149,6 +149,10 @@ const AutoStudyData = {
             {
                 "label": "📄 10 database blueprint",
                 "sub": "content/database/10_database_blueprint.md"
+            },
+            {
+                "label": "📄 12 big data",
+                "sub": "content/database/12_big_data.md"
             }
         ]
     },
@@ -178,6 +182,14 @@ const AutoStudyData = {
             {
                 "label": "📄 16 thread",
                 "sub": "content/java/16_thread.md"
+            },
+            {
+                "label": "📄 exam prep guide",
+                "sub": "content/java/exam_prep_guide.md"
+            },
+            {
+                "label": "📄 quiz",
+                "sub": "content/java/quiz.md"
             }
         ]
     }
