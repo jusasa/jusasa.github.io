@@ -64,3 +64,23 @@ END
 
 * CI는 concurrency control(동시성제어) $\rightarrow \text{Locking}$ 기법
 
+    * db에 걸기 $\rightarrow$ 가용성 $\downarrow$ 성능 $\uparrow$
+    * table에 걸기 $\rightarrow$ 가용성 $\uparrow$ 성능 $\downarrow$
+    * row, collonm 에 걸기 $\rightarrow$ 가용성 $\uparrow\uparrow$ 성능 $\downarrow\downarrow$
+
+### 2Phase Locking(2PL)
+
+일단 기다리더라도 차례차례 권한 얻기(1단계)
+종료 되면 차례차례 해제하기(2단계)
+
+lock의 종류를 나누기
+
+- shared lock: 공유락 $\rightarrow$ only read no modify
+    - select
+- exclusive lock: 독점락 $\rightarrow$ read, write, modify
+    - insert, update, delete
+
+|기존 락| 공유락| 독점락 |
+|:---:|:---:|:---:|
+|공유락| O| X|
+|독점락| X| X|
