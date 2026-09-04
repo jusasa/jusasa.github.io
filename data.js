@@ -1,42 +1,5 @@
 // 이 파일은 build.py에 의해 자동 생성됩니다. 직접 수정하지 마세요.
 const AutoStudyData = {
-    "problems": {
-        "meta": {
-            "title": "🧩 Problems",
-            "desc": "문제 해결을 위한 다양한 예제와 풀이!",
-            "color": "cyan"
-        },
-        "files": [
-            {
-                "label": "📄 csharp2 중간고사",
-                "sub": "content/problems/csharp2_중간고사.md"
-            },
-            {
-                "label": "📄 csharp 중간고사",
-                "sub": "content/problems/csharp_중간고사.md"
-            },
-            {
-                "label": "📄 database 중간고사",
-                "sub": "content/problems/database_중간고사.md"
-            },
-            {
-                "label": "📄 database 중간고사 심화",
-                "sub": "content/problems/database_중간고사_심화.md"
-            },
-            {
-                "label": "📄 database 중간고사 최종100문제",
-                "sub": "content/problems/database_중간고사_최종100문제.md"
-            },
-            {
-                "label": "📄 java 중간고사(끝남)",
-                "sub": "content/problems/java_중간고사(끝남).md"
-            },
-            {
-                "label": "📄 컴구조 3장 연습문제",
-                "sub": "content/problems/컴구조_3장_연습문제.md"
-            }
-        ]
-    },
     "csharp": {
         "meta": {
             "title": "🖥️C# Programming",
@@ -99,6 +62,93 @@ const AutoStudyData = {
             }
         ]
     },
+    "problems": {
+        "meta": {
+            "title": "🧩 Problems",
+            "desc": "문제 해결을 위한 다양한 예제와 풀이!",
+            "color": "cyan"
+        },
+        "files": [
+            {
+                "label": "📄 csharp2 중간고사",
+                "sub": "content/problems/csharp2_중간고사.md"
+            },
+            {
+                "label": "📄 csharp 중간고사",
+                "sub": "content/problems/csharp_중간고사.md"
+            },
+            {
+                "label": "📄 database 중간고사",
+                "sub": "content/problems/database_중간고사.md"
+            },
+            {
+                "label": "📄 database 중간고사 심화",
+                "sub": "content/problems/database_중간고사_심화.md"
+            },
+            {
+                "label": "📄 database 중간고사 최종100문제",
+                "sub": "content/problems/database_중간고사_최종100문제.md"
+            },
+            {
+                "label": "📄 java 중간고사(끝남)",
+                "sub": "content/problems/java_중간고사(끝남).md"
+            },
+            {
+                "label": "📄 컴구조 3장 연습문제",
+                "sub": "content/problems/컴구조_3장_연습문제.md"
+            }
+        ]
+    },
+    "java": {
+        "meta": {
+            "title": "☕Java Programming",
+            "desc": "Java 언어 활용!",
+            "color": "rose"
+        },
+        "files": [
+            {
+                "label": "📄 11 basic class",
+                "sub": "content/java/11_basic_class.md"
+            },
+            {
+                "label": "📄 12 collection",
+                "sub": "content/java/12_collection.md"
+            },
+            {
+                "label": "📄 13 stream",
+                "sub": "content/java/13_stream.md"
+            },
+            {
+                "label": "📄 15 input output stream",
+                "sub": "content/java/15_input_output_stream.md"
+            },
+            {
+                "label": "📄 16 thread",
+                "sub": "content/java/16_thread.md"
+            },
+            {
+                "label": "📄 exam prep guide",
+                "sub": "content/java/exam_prep_guide.md"
+            },
+            {
+                "label": "📄 quiz",
+                "sub": "content/java/quiz.md"
+            }
+        ]
+    },
+    "secure": {
+        "meta": {
+            "title": "📂 SECURE",
+            "desc": "secure 관련 학습 자료입니다.",
+            "color": "indigo"
+        },
+        "files": [
+            {
+                "label": "📄 01 introduction",
+                "sub": "content/secure/01_introduction.md"
+            }
+        ]
+    },
     "database": {
         "meta": {
             "title": "📊Database Management",
@@ -153,43 +203,6 @@ const AutoStudyData = {
             {
                 "label": "📄 12 big data",
                 "sub": "content/database/12_big_data.md"
-            }
-        ]
-    },
-    "java": {
-        "meta": {
-            "title": "☕Java Programming",
-            "desc": "Java 언어 활용!",
-            "color": "rose"
-        },
-        "files": [
-            {
-                "label": "📄 11 basic class",
-                "sub": "content/java/11_basic_class.md"
-            },
-            {
-                "label": "📄 12 collection",
-                "sub": "content/java/12_collection.md"
-            },
-            {
-                "label": "📄 13 stream",
-                "sub": "content/java/13_stream.md"
-            },
-            {
-                "label": "📄 15 input output stream",
-                "sub": "content/java/15_input_output_stream.md"
-            },
-            {
-                "label": "📄 16 thread",
-                "sub": "content/java/16_thread.md"
-            },
-            {
-                "label": "📄 exam prep guide",
-                "sub": "content/java/exam_prep_guide.md"
-            },
-            {
-                "label": "📄 quiz",
-                "sub": "content/java/quiz.md"
             }
         ]
     }

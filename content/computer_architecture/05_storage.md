@@ -190,4 +190,12 @@ SRAM 사용 -> 비쌈, 용량이 적음
     $ i = j \mod v$
     $ v : 2^s$ -> 세트 수
 
-    
+#### 교체 알고리즘
+
+세트 연관 사상에서
+
+- LRU(Leasted Recently Used): 사용x 가장 오래된놈
+
+- FIFO(First In First Out): 처음 적재된놈(오래된놈)
+
+- LFU(Leasted Frequently Used): 참조가 가장 적은 놈
