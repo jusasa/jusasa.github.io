@@ -193,6 +193,19 @@ const AutoStudyData = {
             }
         ]
     },
+    "tcp_ip": {
+        "meta": {
+            "title": "📂 TCP_IP",
+            "desc": "tcp_ip 관련 학습 자료입니다.",
+            "color": "indigo"
+        },
+        "files": [
+            {
+                "label": "📄 01 introduction",
+                "sub": "content/tcp_ip/01_introduction.md"
+            }
+        ]
+    },
     "microprocesser": {
         "meta": {
             "title": "👨‍💻 MicroProcessor",
