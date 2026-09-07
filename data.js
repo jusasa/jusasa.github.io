@@ -37,6 +37,19 @@ const AutoStudyData = {
             }
         ]
     },
+    "database_design": {
+        "meta": {
+            "title": "📊Database Management",
+            "desc": "데이터베이스 설계부터 관리까지!",
+            "color": "emerald"
+        },
+        "files": [
+            {
+                "label": "📄 01 introduction",
+                "sub": "content/database_design/01_introduction.md"
+            }
+        ]
+    },
     "csharp": {
         "meta": {
             "title": "🖥️C# Programming",
@@ -109,8 +122,8 @@ const AutoStudyData = {
     },
     "database": {
         "meta": {
-            "title": "📊Database Management",
-            "desc": "데이터베이스 설계부터 관리까지!",
+            "title": "📊Database",
+            "desc": "데이터베이스 이론",
             "color": "emerald"
         },
         "files": [
@@ -195,9 +208,9 @@ const AutoStudyData = {
     },
     "tcp_ip": {
         "meta": {
-            "title": "📂 TCP_IP",
-            "desc": "tcp_ip 관련 학습 자료입니다.",
-            "color": "indigo"
+            "title": "🛜TCP/IP",
+            "desc": "TCP/IP 프로토콜과 네트워크 구조",
+            "color": "ocean"
         },
         "files": [
             {
