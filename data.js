@@ -193,11 +193,24 @@ const AutoStudyData = {
             }
         ]
     },
+    "microprocesser": {
+        "meta": {
+            "title": "👨‍💻 MicroProcessor",
+            "desc": "마이크로프로세서!",
+            "color": "lightblue"
+        },
+        "files": [
+            {
+                "label": "📄 01 introduction",
+                "sub": "content/microprocesser/01_introduction.md"
+            }
+        ]
+    },
     "secure": {
         "meta": {
-            "title": "📂 SECURE",
-            "desc": "secure 관련 학습 자료입니다.",
-            "color": "indigo"
+            "title": "🔐 Secure Coding",
+            "desc": "보안 및 암호학!",
+            "color": "goldenrod"
         },
         "files": [
             {
