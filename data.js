@@ -206,6 +206,19 @@ const AutoStudyData = {
             }
         ]
     },
+    "server": {
+        "meta": {
+            "title": "📂 SERVER",
+            "desc": "server 관련 학습 자료입니다.",
+            "color": "indigo"
+        },
+        "files": [
+            {
+                "label": "📄 01 web",
+                "sub": "content/server/01_web.md"
+            }
+        ]
+    },
     "tcp_ip": {
         "meta": {
             "title": "🛜TCP/IP",
@@ -242,6 +255,10 @@ const AutoStudyData = {
             {
                 "label": "📄 01 introduction",
                 "sub": "content/secure/01_introduction.md"
+            },
+            {
+                "label": "📄 02 anagram math",
+                "sub": "content/secure/02_anagram_math.md"
             }
         ]
     }
