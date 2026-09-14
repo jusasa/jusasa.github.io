@@ -47,6 +47,14 @@ const AutoStudyData = {
             {
                 "label": "📄 01 introduction",
                 "sub": "content/database_design/01_introduction.md"
+            },
+            {
+                "label": "📄 02 system construct",
+                "sub": "content/database_design/02_system_construct.md"
+            },
+            {
+                "label": "📄 03 data modeling concept",
+                "sub": "content/database_design/03_data_modeling_concept.md"
             }
         ]
     },
