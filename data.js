@@ -259,6 +259,10 @@ const AutoStudyData = {
             {
                 "label": "📄 02 anagram math",
                 "sub": "content/secure/02_anagram_math.md"
+            },
+            {
+                "label": "📄 03 retro symetrical",
+                "sub": "content/secure/03_retro_symetrical.md"
             }
         ]
     }
