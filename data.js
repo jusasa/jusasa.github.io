@@ -229,6 +229,14 @@ const AutoStudyData = {
             {
                 "label": "📄 01 introduction",
                 "sub": "content/tcp_ip/01_introduction.md"
+            },
+            {
+                "label": "📄 02 socket and protocol",
+                "sub": "content/tcp_ip/02_socket_and_protocol.md"
+            },
+            {
+                "label": "📄 03 addr and data sort",
+                "sub": "content/tcp_ip/03_addr_and_data_sort.md"
             }
         ]
     },
