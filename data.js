@@ -224,6 +224,10 @@ const AutoStudyData = {
             {
                 "label": "📄 01 web",
                 "sub": "content/server/01_web.md"
+            },
+            {
+                "label": "📄 02 M",
+                "sub": "content/server/02_M.md"
             }
         ]
     },
