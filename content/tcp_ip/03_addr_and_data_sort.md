@@ -66,4 +66,3 @@ struct in_addr
 h:host, n:network, s:short, l:long
 
 ex) `htonl()` 호스트를 네트워크로 롱타입(IP주소)
-
