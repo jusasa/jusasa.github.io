@@ -55,6 +55,10 @@ const AutoStudyData = {
             {
                 "label": "📄 03 data modeling concept",
                 "sub": "content/database_design/03_data_modeling_concept.md"
+            },
+            {
+                "label": "📄 05 task analysys",
+                "sub": "content/database_design/05_task_analysys.md"
             }
         ]
     },
@@ -249,6 +253,10 @@ const AutoStudyData = {
             {
                 "label": "📄 03 addr and data sort",
                 "sub": "content/tcp_ip/03_addr_and_data_sort.md"
+            },
+            {
+                "label": "📄 04 address transform",
+                "sub": "content/tcp_ip/04_address_transform.md"
             }
         ]
     },
@@ -262,6 +270,10 @@ const AutoStudyData = {
             {
                 "label": "📄 01 introduction",
                 "sub": "content/microprocesser/01_introduction.md"
+            },
+            {
+                "label": "📄 02 hw",
+                "sub": "content/microprocesser/02_hw.md"
             }
         ]
     },
