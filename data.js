@@ -1,64 +1,31 @@
 // 이 파일은 build.py에 의해 자동 생성됩니다. 직접 수정하지 마세요.
 const AutoStudyData = {
-    "java": {
+    "tcp_ip": {
         "meta": {
-            "title": "☕Java Programming",
-            "desc": "Java 언어 활용!",
-            "color": "rose"
-        },
-        "files": [
-            {
-                "label": "📄 11 basic class",
-                "sub": "content/java/11_basic_class.md"
-            },
-            {
-                "label": "📄 12 collection",
-                "sub": "content/java/12_collection.md"
-            },
-            {
-                "label": "📄 13 stream",
-                "sub": "content/java/13_stream.md"
-            },
-            {
-                "label": "📄 15 input output stream",
-                "sub": "content/java/15_input_output_stream.md"
-            },
-            {
-                "label": "📄 16 thread",
-                "sub": "content/java/16_thread.md"
-            },
-            {
-                "label": "📄 exam prep guide",
-                "sub": "content/java/exam_prep_guide.md"
-            },
-            {
-                "label": "📄 quiz",
-                "sub": "content/java/quiz.md"
-            }
-        ]
-    },
-    "database_design": {
-        "meta": {
-            "title": "📊Database Management",
-            "desc": "데이터베이스 설계부터 관리까지!",
-            "color": "emerald"
+            "title": "🛜TCP/IP",
+            "desc": "TCP/IP 프로토콜과 네트워크 구조",
+            "color": "ocean"
         },
         "files": [
             {
                 "label": "📄 01 introduction",
-                "sub": "content/database_design/01_introduction.md"
+                "sub": "content/tcp_ip/01_introduction.md"
             },
             {
-                "label": "📄 02 system construct",
-                "sub": "content/database_design/02_system_construct.md"
+                "label": "📄 02 socket and protocol",
+                "sub": "content/tcp_ip/02_socket_and_protocol.md"
             },
             {
-                "label": "📄 03 data modeling concept",
-                "sub": "content/database_design/03_data_modeling_concept.md"
+                "label": "📄 03 addr and data sort",
+                "sub": "content/tcp_ip/03_addr_and_data_sort.md"
             },
             {
-                "label": "📄 05 task analysys",
-                "sub": "content/database_design/05_task_analysys.md"
+                "label": "📄 04 address transform",
+                "sub": "content/tcp_ip/04_address_transform.md"
+            },
+            {
+                "label": "📄 05 tcp",
+                "sub": "content/tcp_ip/05_tcp.md"
             }
         ]
     },
@@ -92,6 +59,35 @@ const AutoStudyData = {
             {
                 "label": "📄 06 winform",
                 "sub": "content/csharp/06_winform.md"
+            }
+        ]
+    },
+    "computer_architecture": {
+        "meta": {
+            "title": "💽Computer Architecture",
+            "desc": "컴퓨터 아키텍처!",
+            "color": "indigo"
+        },
+        "files": [
+            {
+                "label": "📄 01 overview",
+                "sub": "content/computer_architecture/01_overview.md"
+            },
+            {
+                "label": "📄 02 CPU",
+                "sub": "content/computer_architecture/02_CPU.md"
+            },
+            {
+                "label": "📄 03 Arithmetic and Logical Operations",
+                "sub": "content/computer_architecture/03_Arithmetic_and_Logical_Operations.md"
+            },
+            {
+                "label": "📄 04 control unit",
+                "sub": "content/computer_architecture/04_control_unit.md"
+            },
+            {
+                "label": "📄 05 storage",
+                "sub": "content/computer_architecture/05_storage.md"
             }
         ]
     },
@@ -129,6 +125,69 @@ const AutoStudyData = {
             {
                 "label": "📄 컴구조 3장 연습문제",
                 "sub": "content/problems/컴구조_3장_연습문제.md"
+            }
+        ]
+    },
+    "server": {
+        "meta": {
+            "title": "📂 SERVER",
+            "desc": "server 관련 학습 자료입니다.",
+            "color": "indigo"
+        },
+        "files": [
+            {
+                "label": "📄 01 web",
+                "sub": "content/server/01_web.md"
+            },
+            {
+                "label": "📄 02 M",
+                "sub": "content/server/02_M.md"
+            },
+            {
+                "label": "📄 04 h",
+                "sub": "content/server/04_h.md"
+            }
+        ]
+    },
+    "database_design": {
+        "meta": {
+            "title": "📊Database Management",
+            "desc": "데이터베이스 설계부터 관리까지!",
+            "color": "emerald"
+        },
+        "files": [
+            {
+                "label": "📄 01 introduction",
+                "sub": "content/database_design/01_introduction.md"
+            },
+            {
+                "label": "📄 02 system construct",
+                "sub": "content/database_design/02_system_construct.md"
+            },
+            {
+                "label": "📄 03 data modeling concept",
+                "sub": "content/database_design/03_data_modeling_concept.md"
+            },
+            {
+                "label": "📄 05 task analysys",
+                "sub": "content/database_design/05_task_analysys.md"
+            }
+        ]
+    },
+    "microprocesser": {
+        "meta": {
+            "title": "👨‍💻 MicroProcessor",
+            "desc": "마이크로프로세서!",
+            "color": "lightblue"
+        },
+        "files": [
+            {
+                "label": "📄 01 introduction",
+                "sub": "content/microprocesser/01_introduction.md"
+            },
+            {
+                "label": "📄 02 hw",
+                "sub": "content/microprocesser/02_hw.md"
             }
         ]
     },
@@ -189,94 +248,6 @@ const AutoStudyData = {
             }
         ]
     },
-    "computer_architecture": {
-        "meta": {
-            "title": "💽Computer Architecture",
-            "desc": "컴퓨터 아키텍처!",
-            "color": "indigo"
-        },
-        "files": [
-            {
-                "label": "📄 01 overview",
-                "sub": "content/computer_architecture/01_overview.md"
-            },
-            {
-                "label": "📄 02 CPU",
-                "sub": "content/computer_architecture/02_CPU.md"
-            },
-            {
-                "label": "📄 03 Arithmetic and Logical Operations",
-                "sub": "content/computer_architecture/03_Arithmetic_and_Logical_Operations.md"
-            },
-            {
-                "label": "📄 04 control unit",
-                "sub": "content/computer_architecture/04_control_unit.md"
-            },
-            {
-                "label": "📄 05 storage",
-                "sub": "content/computer_architecture/05_storage.md"
-            }
-        ]
-    },
-    "server": {
-        "meta": {
-            "title": "📂 SERVER",
-            "desc": "server 관련 학습 자료입니다.",
-            "color": "indigo"
-        },
-        "files": [
-            {
-                "label": "📄 01 web",
-                "sub": "content/server/01_web.md"
-            },
-            {
-                "label": "📄 02 M",
-                "sub": "content/server/02_M.md"
-            }
-        ]
-    },
-    "tcp_ip": {
-        "meta": {
-            "title": "🛜TCP/IP",
-            "desc": "TCP/IP 프로토콜과 네트워크 구조",
-            "color": "ocean"
-        },
-        "files": [
-            {
-                "label": "📄 01 introduction",
-                "sub": "content/tcp_ip/01_introduction.md"
-            },
-            {
-                "label": "📄 02 socket and protocol",
-                "sub": "content/tcp_ip/02_socket_and_protocol.md"
-            },
-            {
-                "label": "📄 03 addr and data sort",
-                "sub": "content/tcp_ip/03_addr_and_data_sort.md"
-            },
-            {
-                "label": "📄 04 address transform",
-                "sub": "content/tcp_ip/04_address_transform.md"
-            }
-        ]
-    },
-    "microprocesser": {
-        "meta": {
-            "title": "👨‍💻 MicroProcessor",
-            "desc": "마이크로프로세서!",
-            "color": "lightblue"
-        },
-        "files": [
-            {
-                "label": "📄 01 introduction",
-                "sub": "content/microprocesser/01_introduction.md"
-            },
-            {
-                "label": "📄 02 hw",
-                "sub": "content/microprocesser/02_hw.md"
-            }
-        ]
-    },
     "secure": {
         "meta": {
             "title": "🔐 Secure Coding",
@@ -295,6 +266,43 @@ const AutoStudyData = {
             {
                 "label": "📄 03 retro symetrical",
                 "sub": "content/secure/03_retro_symetrical.md"
+            }
+        ]
+    },
+    "java": {
+        "meta": {
+            "title": "☕Java Programming",
+            "desc": "Java 언어 활용!",
+            "color": "rose"
+        },
+        "files": [
+            {
+                "label": "📄 11 basic class",
+                "sub": "content/java/11_basic_class.md"
+            },
+            {
+                "label": "📄 12 collection",
+                "sub": "content/java/12_collection.md"
+            },
+            {
+                "label": "📄 13 stream",
+                "sub": "content/java/13_stream.md"
+            },
+            {
+                "label": "📄 15 input output stream",
+                "sub": "content/java/15_input_output_stream.md"
+            },
+            {
+                "label": "📄 16 thread",
+                "sub": "content/java/16_thread.md"
+            },
+            {
+                "label": "📄 exam prep guide",
+                "sub": "content/java/exam_prep_guide.md"
+            },
+            {
+                "label": "📄 quiz",
+                "sub": "content/java/quiz.md"
             }
         ]
     }
