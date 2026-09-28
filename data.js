@@ -171,6 +171,10 @@ const AutoStudyData = {
             {
                 "label": "📄 05 task analysys",
                 "sub": "content/database_design/05_task_analysys.md"
+            },
+            {
+                "label": "📄 06 entities",
+                "sub": "content/database_design/06_entities.md"
             }
         ]
     },
