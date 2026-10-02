@@ -192,6 +192,10 @@ const AutoStudyData = {
             {
                 "label": "📄 02 hw",
                 "sub": "content/microprocesser/02_hw.md"
+            },
+            {
+                "label": "📄 03 resister",
+                "sub": "content/microprocesser/03_resister.md"
             }
         ]
     },
