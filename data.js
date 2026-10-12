@@ -26,6 +26,10 @@ const AutoStudyData = {
             {
                 "label": "📄 05 tcp",
                 "sub": "content/tcp_ip/05_tcp.md"
+            },
+            {
+                "label": "📄 06 udp",
+                "sub": "content/tcp_ip/06_udp.md"
             }
         ]
     },
@@ -146,6 +150,10 @@ const AutoStudyData = {
             {
                 "label": "📄 04 h",
                 "sub": "content/server/04_h.md"
+            },
+            {
+                "label": "📄 06 re",
+                "sub": "content/server/06_re.md"
             }
         ]
     },
@@ -175,6 +183,10 @@ const AutoStudyData = {
             {
                 "label": "📄 06 entities",
                 "sub": "content/database_design/06_entities.md"
+            },
+            {
+                "label": "📄 08 normalization",
+                "sub": "content/database_design/08_normalization.md"
             }
         ]
     },
