@@ -34,6 +34,10 @@ const AutoStudyData = {
             {
                 "label": "📄 09 socket option",
                 "sub": "content/tcp_ip/09_socket_option.md"
+            },
+            {
+                "label": "📄 10 muilty",
+                "sub": "content/tcp_ip/10_muilty.md"
             }
         ]
     },
