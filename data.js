@@ -30,6 +30,10 @@ const AutoStudyData = {
             {
                 "label": "📄 06 udp",
                 "sub": "content/tcp_ip/06_udp.md"
+            },
+            {
+                "label": "📄 09 socket option",
+                "sub": "content/tcp_ip/09_socket_option.md"
             }
         ]
     },
@@ -286,6 +290,14 @@ const AutoStudyData = {
             {
                 "label": "📄 03 retro symetrical",
                 "sub": "content/secure/03_retro_symetrical.md"
+            },
+            {
+                "label": "📄 07 AES",
+                "sub": "content/secure/07_AES.md"
+            },
+            {
+                "label": "📄 08 encipherment",
+                "sub": "content/secure/08_encipherment.md"
             }
         ]
     },
