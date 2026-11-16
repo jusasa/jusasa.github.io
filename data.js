@@ -265,6 +265,14 @@ const AutoStudyData = {
             {
                 "label": "📄 10 muilty",
                 "sub": "content/tcp_ip/10_muilty.md"
+            },
+            {
+                "label": "📄 12 multiplexing",
+                "sub": "content/tcp_ip/12_multiplexing.md"
+            },
+            {
+                "label": "📄 18 thread",
+                "sub": "content/tcp_ip/18_thread.md"
             }
         ]
     },
