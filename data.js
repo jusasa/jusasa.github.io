@@ -1,5 +1,38 @@
 // 이 파일은 build.py에 의해 자동 생성됩니다. 직접 수정하지 마세요.
 const AutoStudyData = {
+    "csharp": {
+        "meta": {
+            "title": "🖥️C# Programming",
+            "desc": "C# 언어!",
+            "color": "orange"
+        },
+        "files": [
+            {
+                "label": "📄 01 overview",
+                "sub": "content/csharp/01_overview.md"
+            },
+            {
+                "label": "📄 02 core",
+                "sub": "content/csharp/02_core.md"
+            },
+            {
+                "label": "📄 03 oop",
+                "sub": "content/csharp/03_oop.md"
+            },
+            {
+                "label": "📄 04 arrays",
+                "sub": "content/csharp/04_arrays.md"
+            },
+            {
+                "label": "📄 05 data",
+                "sub": "content/csharp/05_data.md"
+            },
+            {
+                "label": "📄 06 winform",
+                "sub": "content/csharp/06_winform.md"
+            }
+        ]
+    },
     "database_design": {
         "meta": {
             "title": "📊Database Management",
@@ -38,274 +71,10 @@ const AutoStudyData = {
             {
                 "label": "📄 10 entity check",
                 "sub": "content/database_design/10_entity_check.md"
-            }
-        ]
-    },
-    "csharp": {
-        "meta": {
-            "title": "🖥️C# Programming",
-            "desc": "C# 언어!",
-            "color": "orange"
-        },
-        "files": [
-            {
-                "label": "📄 01 overview",
-                "sub": "content/csharp/01_overview.md"
             },
             {
-                "label": "📄 02 core",
-                "sub": "content/csharp/02_core.md"
-            },
-            {
-                "label": "📄 03 oop",
-                "sub": "content/csharp/03_oop.md"
-            },
-            {
-                "label": "📄 04 arrays",
-                "sub": "content/csharp/04_arrays.md"
-            },
-            {
-                "label": "📄 05 data",
-                "sub": "content/csharp/05_data.md"
-            },
-            {
-                "label": "📄 06 winform",
-                "sub": "content/csharp/06_winform.md"
-            }
-        ]
-    },
-    "problems": {
-        "meta": {
-            "title": "🧩 Problems",
-            "desc": "문제 해결을 위한 다양한 예제와 풀이!",
-            "color": "cyan"
-        },
-        "files": [
-            {
-                "label": "📄 csharp2 중간고사",
-                "sub": "content/problems/csharp2_중간고사.md"
-            },
-            {
-                "label": "📄 csharp 중간고사",
-                "sub": "content/problems/csharp_중간고사.md"
-            },
-            {
-                "label": "📄 database 중간고사",
-                "sub": "content/problems/database_중간고사.md"
-            },
-            {
-                "label": "📄 database 중간고사 심화",
-                "sub": "content/problems/database_중간고사_심화.md"
-            },
-            {
-                "label": "📄 database 중간고사 최종100문제",
-                "sub": "content/problems/database_중간고사_최종100문제.md"
-            },
-            {
-                "label": "📄 java 중간고사(끝남)",
-                "sub": "content/problems/java_중간고사(끝남).md"
-            },
-            {
-                "label": "📄 컴구조 3장 연습문제",
-                "sub": "content/problems/컴구조_3장_연습문제.md"
-            }
-        ]
-    },
-    "java": {
-        "meta": {
-            "title": "☕Java Programming",
-            "desc": "Java 언어 활용!",
-            "color": "rose"
-        },
-        "files": [
-            {
-                "label": "📄 11 basic class",
-                "sub": "content/java/11_basic_class.md"
-            },
-            {
-                "label": "📄 12 collection",
-                "sub": "content/java/12_collection.md"
-            },
-            {
-                "label": "📄 13 stream",
-                "sub": "content/java/13_stream.md"
-            },
-            {
-                "label": "📄 15 input output stream",
-                "sub": "content/java/15_input_output_stream.md"
-            },
-            {
-                "label": "📄 16 thread",
-                "sub": "content/java/16_thread.md"
-            },
-            {
-                "label": "📄 exam prep guide",
-                "sub": "content/java/exam_prep_guide.md"
-            },
-            {
-                "label": "📄 quiz",
-                "sub": "content/java/quiz.md"
-            }
-        ]
-    },
-    "server": {
-        "meta": {
-            "title": "📂 SERVER",
-            "desc": "server 관련 학습 자료입니다.",
-            "color": "indigo"
-        },
-        "files": [
-            {
-                "label": "📄 01 web",
-                "sub": "content/server/01_web.md"
-            },
-            {
-                "label": "📄 02 M",
-                "sub": "content/server/02_M.md"
-            },
-            {
-                "label": "📄 04 h",
-                "sub": "content/server/04_h.md"
-            },
-            {
-                "label": "📄 06 re",
-                "sub": "content/server/06_re.md"
-            },
-            {
-                "label": "📄 09 db",
-                "sub": "content/server/09_db.md"
-            }
-        ]
-    },
-    "microprocesser": {
-        "meta": {
-            "title": "👨‍💻 MicroProcessor",
-            "desc": "마이크로프로세서!",
-            "color": "lightblue"
-        },
-        "files": [
-            {
-                "label": "📄 01 introduction",
-                "sub": "content/microprocesser/01_introduction.md"
-            },
-            {
-                "label": "📄 02 hw",
-                "sub": "content/microprocesser/02_hw.md"
-            },
-            {
-                "label": "📄 03 resister",
-                "sub": "content/microprocesser/03_resister.md"
-            }
-        ]
-    },
-    "computer_architecture": {
-        "meta": {
-            "title": "💽Computer Architecture",
-            "desc": "컴퓨터 아키텍처!",
-            "color": "indigo"
-        },
-        "files": [
-            {
-                "label": "📄 01 overview",
-                "sub": "content/computer_architecture/01_overview.md"
-            },
-            {
-                "label": "📄 02 CPU",
-                "sub": "content/computer_architecture/02_CPU.md"
-            },
-            {
-                "label": "📄 03 Arithmetic and Logical Operations",
-                "sub": "content/computer_architecture/03_Arithmetic_and_Logical_Operations.md"
-            },
-            {
-                "label": "📄 04 control unit",
-                "sub": "content/computer_architecture/04_control_unit.md"
-            },
-            {
-                "label": "📄 05 storage",
-                "sub": "content/computer_architecture/05_storage.md"
-            }
-        ]
-    },
-    "tcp_ip": {
-        "meta": {
-            "title": "🛜TCP/IP",
-            "desc": "TCP/IP 프로토콜과 네트워크 구조",
-            "color": "ocean"
-        },
-        "files": [
-            {
-                "label": "📄 01 introduction",
-                "sub": "content/tcp_ip/01_introduction.md"
-            },
-            {
-                "label": "📄 02 socket and protocol",
-                "sub": "content/tcp_ip/02_socket_and_protocol.md"
-            },
-            {
-                "label": "📄 03 addr and data sort",
-                "sub": "content/tcp_ip/03_addr_and_data_sort.md"
-            },
-            {
-                "label": "📄 04 address transform",
-                "sub": "content/tcp_ip/04_address_transform.md"
-            },
-            {
-                "label": "📄 05 tcp",
-                "sub": "content/tcp_ip/05_tcp.md"
-            },
-            {
-                "label": "📄 06 udp",
-                "sub": "content/tcp_ip/06_udp.md"
-            },
-            {
-                "label": "📄 09 socket option",
-                "sub": "content/tcp_ip/09_socket_option.md"
-            },
-            {
-                "label": "📄 10 muilty",
-                "sub": "content/tcp_ip/10_muilty.md"
-            },
-            {
-                "label": "📄 12 multiplexing",
-                "sub": "content/tcp_ip/12_multiplexing.md"
-            },
-            {
-                "label": "📄 18 thread",
-                "sub": "content/tcp_ip/18_thread.md"
-            }
-        ]
-    },
-    "secure": {
-        "meta": {
-            "title": "🔐 Secure Coding",
-            "desc": "보안 및 암호학!",
-            "color": "goldenrod"
-        },
-        "files": [
-            {
-                "label": "📄 01 introduction",
-                "sub": "content/secure/01_introduction.md"
-            },
-            {
-                "label": "📄 02 anagram math",
-                "sub": "content/secure/02_anagram_math.md"
-            },
-            {
-                "label": "📄 03 retro symetrical",
-                "sub": "content/secure/03_retro_symetrical.md"
-            },
-            {
-                "label": "📄 07 AES",
-                "sub": "content/secure/07_AES.md"
-            },
-            {
-                "label": "📄 08 encipherment",
-                "sub": "content/secure/08_encipherment.md"
-            },
-            {
-                "label": "📄 12 hash",
-                "sub": "content/secure/12_hash.md"
+                "label": "📄 11 physical plan",
+                "sub": "content/database_design/11_physical_plan.md"
             }
         ]
     },
@@ -363,6 +132,241 @@ const AutoStudyData = {
             {
                 "label": "📄 12 big data",
                 "sub": "content/database/12_big_data.md"
+            }
+        ]
+    },
+    "secure": {
+        "meta": {
+            "title": "🔐 Secure Coding",
+            "desc": "보안 및 암호학!",
+            "color": "goldenrod"
+        },
+        "files": [
+            {
+                "label": "📄 01 introduction",
+                "sub": "content/secure/01_introduction.md"
+            },
+            {
+                "label": "📄 02 anagram math",
+                "sub": "content/secure/02_anagram_math.md"
+            },
+            {
+                "label": "📄 03 retro symetrical",
+                "sub": "content/secure/03_retro_symetrical.md"
+            },
+            {
+                "label": "📄 07 AES",
+                "sub": "content/secure/07_AES.md"
+            },
+            {
+                "label": "📄 08 encipherment",
+                "sub": "content/secure/08_encipherment.md"
+            },
+            {
+                "label": "📄 12 hash",
+                "sub": "content/secure/12_hash.md"
+            }
+        ]
+    },
+    "problems": {
+        "meta": {
+            "title": "🧩 Problems",
+            "desc": "문제 해결을 위한 다양한 예제와 풀이!",
+            "color": "cyan"
+        },
+        "files": [
+            {
+                "label": "📄 csharp2 중간고사",
+                "sub": "content/problems/csharp2_중간고사.md"
+            },
+            {
+                "label": "📄 csharp 중간고사",
+                "sub": "content/problems/csharp_중간고사.md"
+            },
+            {
+                "label": "📄 database 중간고사",
+                "sub": "content/problems/database_중간고사.md"
+            },
+            {
+                "label": "📄 database 중간고사 심화",
+                "sub": "content/problems/database_중간고사_심화.md"
+            },
+            {
+                "label": "📄 database 중간고사 최종100문제",
+                "sub": "content/problems/database_중간고사_최종100문제.md"
+            },
+            {
+                "label": "📄 java 중간고사(끝남)",
+                "sub": "content/problems/java_중간고사(끝남).md"
+            },
+            {
+                "label": "📄 컴구조 3장 연습문제",
+                "sub": "content/problems/컴구조_3장_연습문제.md"
+            }
+        ]
+    },
+    "server": {
+        "meta": {
+            "title": "📂 SERVER",
+            "desc": "server 관련 학습 자료입니다.",
+            "color": "indigo"
+        },
+        "files": [
+            {
+                "label": "📄 01 web",
+                "sub": "content/server/01_web.md"
+            },
+            {
+                "label": "📄 02 M",
+                "sub": "content/server/02_M.md"
+            },
+            {
+                "label": "📄 04 h",
+                "sub": "content/server/04_h.md"
+            },
+            {
+                "label": "📄 06 re",
+                "sub": "content/server/06_re.md"
+            },
+            {
+                "label": "📄 09 db",
+                "sub": "content/server/09_db.md"
+            }
+        ]
+    },
+    "tcp_ip": {
+        "meta": {
+            "title": "🛜TCP/IP",
+            "desc": "TCP/IP 프로토콜과 네트워크 구조",
+            "color": "ocean"
+        },
+        "files": [
+            {
+                "label": "📄 01 introduction",
+                "sub": "content/tcp_ip/01_introduction.md"
+            },
+            {
+                "label": "📄 02 socket and protocol",
+                "sub": "content/tcp_ip/02_socket_and_protocol.md"
+            },
+            {
+                "label": "📄 03 addr and data sort",
+                "sub": "content/tcp_ip/03_addr_and_data_sort.md"
+            },
+            {
+                "label": "📄 04 address transform",
+                "sub": "content/tcp_ip/04_address_transform.md"
+            },
+            {
+                "label": "📄 05 tcp",
+                "sub": "content/tcp_ip/05_tcp.md"
+            },
+            {
+                "label": "📄 06 udp",
+                "sub": "content/tcp_ip/06_udp.md"
+            },
+            {
+                "label": "📄 09 socket option",
+                "sub": "content/tcp_ip/09_socket_option.md"
+            },
+            {
+                "label": "📄 10 muilty",
+                "sub": "content/tcp_ip/10_muilty.md"
+            },
+            {
+                "label": "📄 12 multiplexing",
+                "sub": "content/tcp_ip/12_multiplexing.md"
+            },
+            {
+                "label": "📄 18 thread",
+                "sub": "content/tcp_ip/18_thread.md"
+            }
+        ]
+    },
+    "computer_architecture": {
+        "meta": {
+            "title": "💽Computer Architecture",
+            "desc": "컴퓨터 아키텍처!",
+            "color": "indigo"
+        },
+        "files": [
+            {
+                "label": "📄 01 overview",
+                "sub": "content/computer_architecture/01_overview.md"
+            },
+            {
+                "label": "📄 02 CPU",
+                "sub": "content/computer_architecture/02_CPU.md"
+            },
+            {
+                "label": "📄 03 Arithmetic and Logical Operations",
+                "sub": "content/computer_architecture/03_Arithmetic_and_Logical_Operations.md"
+            },
+            {
+                "label": "📄 04 control unit",
+                "sub": "content/computer_architecture/04_control_unit.md"
+            },
+            {
+                "label": "📄 05 storage",
+                "sub": "content/computer_architecture/05_storage.md"
+            }
+        ]
+    },
+    "java": {
+        "meta": {
+            "title": "☕Java Programming",
+            "desc": "Java 언어 활용!",
+            "color": "rose"
+        },
+        "files": [
+            {
+                "label": "📄 11 basic class",
+                "sub": "content/java/11_basic_class.md"
+            },
+            {
+                "label": "📄 12 collection",
+                "sub": "content/java/12_collection.md"
+            },
+            {
+                "label": "📄 13 stream",
+                "sub": "content/java/13_stream.md"
+            },
+            {
+                "label": "📄 15 input output stream",
+                "sub": "content/java/15_input_output_stream.md"
+            },
+            {
+                "label": "📄 16 thread",
+                "sub": "content/java/16_thread.md"
+            },
+            {
+                "label": "📄 exam prep guide",
+                "sub": "content/java/exam_prep_guide.md"
+            },
+            {
+                "label": "📄 quiz",
+                "sub": "content/java/quiz.md"
+            }
+        ]
+    },
+    "microprocesser": {
+        "meta": {
+            "title": "👨‍💻 MicroProcessor",
+            "desc": "마이크로프로세서!",
+            "color": "lightblue"
+        },
+        "files": [
+            {
+                "label": "📄 01 introduction",
+                "sub": "content/microprocesser/01_introduction.md"
+            },
+            {
+                "label": "📄 02 hw",
+                "sub": "content/microprocesser/02_hw.md"
+            },
+            {
+                "label": "📄 03 resister",
+                "sub": "content/microprocesser/03_resister.md"
             }
         ]
     }
